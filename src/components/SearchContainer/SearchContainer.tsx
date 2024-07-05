@@ -2,8 +2,9 @@ import React, { ChangeEvent, Component, createRef, RefObject } from 'react';
 import S from './SearchContainer.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
+import { SearchContainerProps, SearchContainerState } from '../../types/types';
 
-export class SearchContainer extends Component {
+export class SearchContainer extends Component<SearchContainerProps, unknown> {
   inputRef: RefObject<HTMLInputElement>;
 
   state: SearchContainerState = {
@@ -27,7 +28,13 @@ export class SearchContainer extends Component {
     }
   }
 
-  onClickGetVehiclesHandler = () => {};
+  onClickFetchVehiclesHandler = () => {
+    // this.props.setIsLoading()
+    // this.props.setVehicles()
+    // this.setState({error: err.message})
+    // this.setState({error: null})
+    console.log('llll');
+  };
 
   onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({ text: e.currentTarget.value });
@@ -47,7 +54,7 @@ export class SearchContainer extends Component {
 
   render() {
     if (this.state.error !== null) throw new Error(this.state.error);
-    const { text } = this.state.text;
+    const { text } = this.state;
 
     return (
       <section className={S.searchContainer}>
@@ -60,7 +67,7 @@ export class SearchContainer extends Component {
 
         <Button
           className={S.searchButton}
-          onClickCallBack={this.onClickGetVehiclesHandler}
+          onClickCallBack={this.onClickFetchVehiclesHandler}
         >
           Search
         </Button>
@@ -74,8 +81,3 @@ export class SearchContainer extends Component {
     );
   }
 }
-
-export type SearchContainerState = {
-  text: string;
-  error: string | null;
-};

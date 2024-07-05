@@ -4,6 +4,7 @@ import { SearchContainer } from './components/SearchContainer/SearchContainer';
 import { StateApp, Vehicle } from './types/types';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { ViewContainer } from './components/ViewContainer/ViewContainer';
+import loadSpinner from './assets/load-spinner.gif';
 
 class App extends Component {
   state: StateApp = {
@@ -11,7 +12,7 @@ class App extends Component {
     vehicles: [],
   };
 
-  getVehicles = (vehicles: Vehicle[]) => {
+  setVehicles = (vehicles: Vehicle[]) => {
     this.setState({ vehicles });
   };
 
@@ -24,11 +25,11 @@ class App extends Component {
     return (
       <ErrorBoundary>
         <SearchContainer
-          getVechicles={this.getVehicles}
+          setVehicles={this.setVehicles}
           setIsLoading={this.setIsLoading}
         />
         {isLoading ? (
-          <span>Loading...</span>
+          <img src={loadSpinner} alt={'loading'} />
         ) : (
           <ViewContainer vehicles={vehicles} />
         )}

@@ -8,7 +8,7 @@ type SearchFieldProps = {
   onChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-class SearchField extends Component<SearchFieldProps> {
+class SearchField extends Component<SearchFieldProps, unknown> {
   render() {
     const { placeholder, value, onChangeHandler, forwardedRef } = this.props;
 

@@ -8,7 +8,6 @@ export class ErrorBoundary extends Component<
 > {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    console.log(props);
     this.state = {
       hasError: false,
       errorMessage: null,

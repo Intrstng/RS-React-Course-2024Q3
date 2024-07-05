@@ -1,6 +1,17 @@
 import { ReactNode } from 'react';
 
-export type Vehicle = string;
+export type Vehicle = {
+  name: string;
+  model: string;
+  vehicleClass: string;
+  manufacturer: string;
+  length: string;
+  crew: string;
+  passengers: string;
+  maxAtmospheringSpeed: string;
+  cargoCapacity: string;
+  consumables: string;
+};
 
 export type StateApp = {
   isLoading: boolean;
@@ -25,4 +36,18 @@ export type ButtonProps = {
   className?: string;
   disabled?: boolean;
   children: ReactNode;
+};
+
+export type SearchContainerState = {
+  text: string;
+  error: string | null;
+};
+
+export type SearchContainerProps = {
+  setVehicles: (vehicles: Vehicle[]) => void;
+  setIsLoading: (isLoading: boolean) => void;
+};
+
+export type VehicleProps = {
+  vehicle: Vehicle;
 };
