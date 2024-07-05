@@ -13,6 +13,7 @@ export type ErrorBoundaryProps = {
 
 export type ErrorBoundaryState = {
   hasError: boolean;
+  errorMessage: string | null;
 };
 
 export type ViewContainerProps = {
