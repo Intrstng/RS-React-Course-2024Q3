@@ -1,6 +1,7 @@
 import React, { ChangeEvent, Component, createRef, RefObject } from 'react';
 import S from './SearchContainer.module.css';
 import { Button } from '../Button';
+import { SearchField } from '../SearchField/SearchField';
 
 export class SearchContainer extends Component {
   inputRef: RefObject<HTMLInputElement>;
@@ -50,13 +51,11 @@ export class SearchContainer extends Component {
 
     return (
       <section className={S.searchContainer}>
-        <input
+        <SearchField
           ref={this.inputRef}
-          type="text"
           placeholder={'search'}
           value={text}
-          className={S.searchInput}
-          onChange={this.onChangeSetInputValueHandler}
+          onChangeHandler={this.onChangeSetInputValueHandler}
         />
 
         <Button

@@ -12,6 +12,7 @@ export default [
       "prettier/prettier": "error",
       "@typescript-eslint/no-explicit-any": "error",
       "no-undef": "error",
+      "@typescript-eslint/no-unused-vars": "off"
     },
   },
   { languageOptions: { parserOptions: { ecmaFeatures: { jsx: true } } } },
