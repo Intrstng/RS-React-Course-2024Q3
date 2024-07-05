@@ -1,0 +1,15 @@
+.*
+node_modules/
+dist/
+build/
+coverage/
+*.js
+*.jsx
+*.map
+*.log
+.eslintignore
+.eslintrc.cjs
+test/
+tests/
+.vscode/
+.idea/
