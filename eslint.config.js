@@ -10,7 +10,7 @@ export default [
   {files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     rules: {
       "prettier/prettier": "error",
-      "@typescript-eslint/no-explicit-any": 'error',
+      "@typescript-eslint/no-explicit-any": "error",
       "no-undef": "error",
     },
   },

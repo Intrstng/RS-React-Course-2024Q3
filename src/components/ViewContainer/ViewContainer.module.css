@@ -1,6 +1,6 @@
 .viewContainer {
-    flex: 1 1 80%;
-    width: 100vw;
-    text-align: center;
-    background-color: lightcoral;
+  flex: 1 1 80%;
+  width: 100vw;
+  text-align: center;
+  background-color: lightcoral;
 }
