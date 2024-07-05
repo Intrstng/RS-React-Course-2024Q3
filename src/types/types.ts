@@ -13,7 +13,7 @@ export type Vehicle = {
   consumables: string;
 };
 
-export type StateApp = {
+export type AppState = {
   isLoading: boolean;
   vehicles: Vehicle[];
 };

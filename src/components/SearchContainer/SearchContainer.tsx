@@ -6,9 +6,9 @@ import { SearchContainerProps, SearchContainerState } from '../../types/types';
 
 export class SearchContainer extends Component<SearchContainerProps, unknown> {
   inputRef: RefObject<HTMLInputElement>;
-
+  key = 'searchValue' as const;
   state: SearchContainerState = {
-    text: this.getFromLocalStorage('searchValue'),
+    text: '',
     error: null,
   };
   constructor(props) {
@@ -28,7 +28,17 @@ export class SearchContainer extends Component<SearchContainerProps, unknown> {
     }
   }
 
+  private saveToLocalStorage = (key: string, value): void => {
+    try {
+      const serializedState = JSON.stringify(value);
+      localStorage.setItem(key, serializedState);
+    } catch {
+      throw new Error('Data is not saved to local storage');
+    }
+  };
+
   onClickFetchVehiclesHandler = () => {
+    this.saveToLocalStorage(this.key, this.state.text);
     // this.props.setIsLoading()
     // this.props.setVehicles()
     // this.setState({error: err.message})
@@ -47,6 +57,9 @@ export class SearchContainer extends Component<SearchContainerProps, unknown> {
     });
 
   async componentDidMount(): Promise<void> {
+    const searchValueFromLocalStorage = this.getFromLocalStorage(this.key);
+    this.setState({ text: searchValueFromLocalStorage });
+
     if (this.inputRef.current !== null) {
       this.inputRef.current.focus();
     }

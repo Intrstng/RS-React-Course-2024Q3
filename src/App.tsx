@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 import { SearchContainer } from './components/SearchContainer/SearchContainer';
-import { StateApp, Vehicle } from './types/types';
+import { AppState, Vehicle } from './types/types';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { ViewContainer } from './components/ViewContainer/ViewContainer';
 import loadSpinner from './assets/load-spinner.gif';
 
-class App extends Component {
-  state: StateApp = {
+export class App extends Component {
+  state: AppState = {
     isLoading: false,
     vehicles: [],
   };
@@ -37,5 +37,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
