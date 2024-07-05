@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   return (
     <>
-      <div>{err}</div>
+      <div>husky added</div>
     </>
   );
 }
