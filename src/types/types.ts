@@ -19,6 +19,8 @@ export type AppState = {
   error: string | null;
 };
 
+export type SetStateApp = (state: (prevState: AppState) => AppState) => void;
+
 export type ErrorBoundaryProps = {
   children: ReactNode;
 };

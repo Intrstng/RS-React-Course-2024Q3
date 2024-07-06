@@ -10,7 +10,7 @@ import {
   searchVehiclesThunks,
 } from './components/bll/vehiclesThunks';
 
-export class App extends Component {
+export class App extends Component<unknown, AppState> {
   state: AppState = {
     isLoading: false,
     vehicles: [],
@@ -26,7 +26,7 @@ export class App extends Component {
   };
 
   setError = (error: string | null) => {
-    this.setState({ error });
+    this.setState((prevState) => ({ ...prevState, error }));
   };
 
   render() {

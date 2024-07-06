@@ -40,13 +40,14 @@ export class SearchContainer extends Component<SearchContainerProps, unknown> {
 
   onClickFetchVehiclesHandler = () => {
     const trimmedText = this.state.text.trim();
-    this.setState({ text: trimmedText });
+    this.setState((prevState) => ({ ...prevState, text: trimmedText }));
     this.saveToLocalStorage(this.key, trimmedText);
     this.props.fetchVehicles(trimmedText);
   };
 
   onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ text: e.currentTarget.value });
+    const currentValue = e.currentTarget.value;
+    this.setState((prevState) => ({ ...prevState, text: currentValue }));
   };
 
   onClickSetError = () => {
@@ -57,7 +58,10 @@ export class SearchContainer extends Component<SearchContainerProps, unknown> {
 
   async componentDidMount(): Promise<void> {
     const searchValueFromLocalStorage = this.getFromLocalStorage(this.key);
-    this.setState({ text: searchValueFromLocalStorage });
+    this.setState((prevState) => ({
+      ...prevState,
+      text: searchValueFromLocalStorage,
+    }));
     this.props.fetchVehicles(searchValueFromLocalStorage);
     if (this.inputRef.current !== null) {
       this.inputRef.current.focus();

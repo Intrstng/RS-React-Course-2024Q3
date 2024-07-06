@@ -1,18 +1,30 @@
-import { AppState } from '../../types/types';
+import { AppState, SetStateApp } from '../../types/types';
 import { vehiclesAPI } from '../dal/api/vehiclesAPI';
 
 export const fetchVehiclesThunks = async (
-  setState: (state: Partial<AppState>) => void,
+  setState: SetStateApp,
 ): Promise<void> => {
-  setState({ isLoading: true, error: null });
+  setState((prevState) => ({ ...prevState, isLoading: true, error: null }));
   try {
     const { results } = await vehiclesAPI.getVehicles();
-    setState({ isLoading: false, vehicles: results });
+    setState((prevState) => ({
+      ...prevState,
+      isLoading: false,
+      vehicles: results,
+    }));
   } catch (error) {
     if (error instanceof Error) {
-      setState({ isLoading: false, error: error.message });
+      setState((prevState) => ({
+        ...prevState,
+        isLoading: false,
+        error: error.message,
+      }));
     } else {
-      setState({ isLoading: false, error: 'An unexpected error occurred' });
+      setState((prevState) => ({
+        ...prevState,
+        isLoading: false,
+        error: 'An unexpected error occurred',
+      }));
     }
   }
 };
