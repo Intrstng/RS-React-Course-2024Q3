@@ -8,7 +8,7 @@ export const vehiclesAPI = {
   },
   searchVehicles: async (value: string) => {
     const response = await fetch(
-      `https://swapi.dev/api/vehicles?search=${value}`,
+      `https://swapi.dev/api/vehicles?search=${value}&page=1`,
     );
     if (!response.ok) {
       throw new Error('Network response was not ok');
