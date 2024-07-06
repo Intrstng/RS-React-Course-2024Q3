@@ -7,9 +7,13 @@ export class ViewContainer extends Component<ViewContainerProps, unknown> {
   render() {
     return (
       <section className={S.viewContainer}>
-        {this.props.vehicles.map((vehicle, idx) => (
-          <Vehicle key={idx} vehicle={vehicle} />
-        ))}
+        <ul className={S.vehiclesList}>
+          {this.props.vehicles.map((vehicle, idx) => (
+            <li key={idx} className={S.vehicle}>
+              <Vehicle vehicle={vehicle} />
+            </li>
+          ))}
+        </ul>
       </section>
     );
   }

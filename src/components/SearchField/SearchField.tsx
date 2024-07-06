@@ -11,7 +11,6 @@ type SearchFieldProps = {
 class SearchField extends Component<SearchFieldProps, unknown> {
   render() {
     const { placeholder, value, onChangeHandler, forwardedRef } = this.props;
-
     return (
       <input
         ref={forwardedRef}
