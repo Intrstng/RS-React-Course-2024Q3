@@ -1,6 +1,6 @@
-# Rolling Scopes School React Course 2024Q3 Task
+# Rolling Scopes School React Course 2024Q3
 
-### [Task 1 - React project setup. Class components. Error boundary.](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/class-components.md)
+## [Task 1 - React project setup. Class components. Error boundary.](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/class-components.md)
 
 ### How to start
 

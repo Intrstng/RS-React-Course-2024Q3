@@ -17,7 +17,7 @@ export class ViewContainer extends Component<ViewContainerProps, unknown> {
           </ul>
         ) : (
           <h2 className={S.notification}>
-            No results were found for your request
+            No results were found for your request...
           </h2>
         )}
       </section>

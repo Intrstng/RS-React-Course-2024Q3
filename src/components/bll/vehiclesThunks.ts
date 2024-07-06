@@ -1,5 +1,6 @@
 import { SetStateApp } from '../../types/types';
 import { vehiclesAPI } from '../dal/api/vehiclesAPI';
+import { handleError } from '../utils/handleError';
 
 export const fetchVehiclesThunks = async (
   setState: SetStateApp,
@@ -13,19 +14,7 @@ export const fetchVehiclesThunks = async (
       vehicles: results,
     }));
   } catch (error) {
-    if (error instanceof Error) {
-      setState((prevState) => ({
-        ...prevState,
-        isLoading: false,
-        error: error.message,
-      }));
-    } else {
-      setState((prevState) => ({
-        ...prevState,
-        isLoading: false,
-        error: 'An unexpected error occurred',
-      }));
-    }
+    handleError(setState, error);
   }
 };
 
@@ -42,18 +31,6 @@ export const searchVehiclesThunks = async (
       vehicles: results,
     }));
   } catch (error) {
-    if (error instanceof Error) {
-      setState((prevState) => ({
-        ...prevState,
-        isLoading: false,
-        error: error.message,
-      }));
-    } else {
-      setState((prevState) => ({
-        ...prevState,
-        isLoading: false,
-        error: 'An unexpected error occurred',
-      }));
-    }
+    handleError(setState, error);
   }
 };
