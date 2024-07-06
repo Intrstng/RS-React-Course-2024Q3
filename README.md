@@ -1,30 +1,25 @@
-# React + TypeScript + Vite
+# Rolling Scopes School React Course 2024Q3
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## [Task 1 - React project setup. Class components. Error boundary.](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/class-components.md)
 
-Currently, two official plugins are available:
+### How to start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Clone the repo - run command in CLI `git clone https://github.com/Intrstng/RS-React-Course-2024Q3.git`
 
-## Expanding the ESLint configuration
+2. Move to the root folder of the app - run command in CLI `cd RS-React-Course-2024Q3`
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+3. Install dependencies - run command in CLI `npm install`
 
-- Configure the top-level `parserOptions` property like this:
+4. Switch to the branch **class-components** - run in CLI `git checkout class-components`
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+5. Start the application - run command in CLI `npm run dev`
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+6. Start the application in browser by provided link in CLI
+
+## Script commands
+
+1. Start **esLint** to run code analysis and verification for compliance with established rules - run command in CLI `npm run lint`
+
+2. Start **Prettier** to automatically format code - run command in CLI `npm run format:fix`
+
+3. **Husky** is configured to automatically start **esLint** and **Prettier** during `pre-commit` Git-operations

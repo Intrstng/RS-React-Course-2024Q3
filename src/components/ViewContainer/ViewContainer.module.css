@@ -1,0 +1,19 @@
+.viewContainer {
+  width: 100%;
+  text-align: center;
+  min-height: calc(100vh - 155px);
+}
+
+.vehiclesList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.notification {
+  color: #fff;
+  font-size: 24px;
+  letter-spacing: 1px;
+}
