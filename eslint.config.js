@@ -7,12 +7,17 @@ import prettierPlugin from "eslint-plugin-prettier";
 import prettierConfig from "eslint-config-prettier";
 
 export default [
-  {files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
+  { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     rules: {
       "prettier/prettier": "error",
       "@typescript-eslint/no-explicit-any": "error",
       "no-undef": "error",
       "@typescript-eslint/no-unused-vars": "off"
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
     },
   },
   { languageOptions: { parserOptions: { ecmaFeatures: { jsx: true } } } },

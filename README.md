@@ -16,7 +16,6 @@
 
 6. Start the application in browser by provided link in CLI
 
-
 ## Script commands
 
 1. Start **esLint** to run code analysis and verification for compliance with established rules - run command in CLI `npm run lint`
