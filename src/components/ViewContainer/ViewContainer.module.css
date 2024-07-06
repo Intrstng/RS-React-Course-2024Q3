@@ -1,14 +1,11 @@
 .viewContainer {
-  flex: 1 1 80%;
   width: 100vw;
   text-align: center;
   background-color: lightcoral;
 }
 
 .vehiclesList {
-
 }
 
 .vehicle {
-
 }

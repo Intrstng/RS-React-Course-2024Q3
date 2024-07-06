@@ -1,5 +1,5 @@
 .searchContainer {
-  flex: 0 1 20%;
+  padding: 60px 10px;
   width: 100vw;
   text-align: center;
   background-color: lightblue;

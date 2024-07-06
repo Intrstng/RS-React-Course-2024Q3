@@ -14,7 +14,7 @@ class SearchField extends Component<SearchFieldProps, unknown> {
     return (
       <input
         ref={forwardedRef}
-        type="text"
+        type={'text'}
         placeholder={placeholder}
         value={value}
         className={S.searchInput}

@@ -15,7 +15,7 @@ export class Vehicle extends Component<VehicleProps, unknown> {
       maxAtmospheringSpeed,
       cargoCapacity,
       consumables,
-    } = this.props;
+    } = this.props.vehicle;
     return (
       <>
         <h2 className={S.name}>Name: {name}</h2>

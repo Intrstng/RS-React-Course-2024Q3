@@ -16,6 +16,7 @@ export type Vehicle = {
 export type AppState = {
   isLoading: boolean;
   vehicles: Vehicle[];
+  error: string | null;
 };
 
 export type ErrorBoundaryProps = {
@@ -40,12 +41,12 @@ export type ButtonProps = {
 
 export type SearchContainerState = {
   text: string;
-  error: string | null;
 };
 
 export type SearchContainerProps = {
-  setVehicles: (vehicles: Vehicle[]) => void;
-  setIsLoading: (isLoading: boolean) => void;
+  error: string | null;
+  fetchVehicles: (value: string) => void;
+  setError: (error: string | null) => void;
 };
 
 export type VehicleProps = {

@@ -7,10 +7,11 @@ import { SearchContainerProps, SearchContainerState } from '../../types/types';
 export class SearchContainer extends Component<SearchContainerProps, unknown> {
   inputRef: RefObject<HTMLInputElement>;
   key = 'searchValue' as const;
+
   state: SearchContainerState = {
     text: '',
-    error: null,
   };
+
   constructor(props) {
     super(props);
     this.inputRef = createRef();
@@ -19,7 +20,7 @@ export class SearchContainer extends Component<SearchContainerProps, unknown> {
   private getFromLocalStorage(key: string): string {
     try {
       const serializedState = localStorage.getItem(key);
-      if (serializedState === null) {
+      if (!serializedState) {
         return '';
       }
       return JSON.parse(serializedState);
@@ -39,34 +40,30 @@ export class SearchContainer extends Component<SearchContainerProps, unknown> {
 
   onClickFetchVehiclesHandler = () => {
     this.saveToLocalStorage(this.key, this.state.text);
-    // this.props.setIsLoading()
-    // this.props.setVehicles()
-    // this.setState({error: err.message})
-    // this.setState({error: null})
-    console.log('llll');
+    this.props.fetchVehicles(this.state.text);
   };
 
   onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({ text: e.currentTarget.value });
   };
 
-  onClickSetError = () =>
-    this.setState({
-      error:
-        "An error occurred when the user clicked the 'Throw error on click' button",
-    });
+  onClickSetError = () => {
+    this.props.setError(
+      "An error occurred when the user clicked the 'Throw error on click' button",
+    );
+  };
 
   async componentDidMount(): Promise<void> {
     const searchValueFromLocalStorage = this.getFromLocalStorage(this.key);
     this.setState({ text: searchValueFromLocalStorage });
-
+    this.props.fetchVehicles(searchValueFromLocalStorage);
     if (this.inputRef.current !== null) {
       this.inputRef.current.focus();
     }
   }
 
   render() {
-    if (this.state.error !== null) throw new Error(this.state.error);
+    if (this.props.error !== null) throw new Error(this.props.error);
     const { text } = this.state;
 
     return (
