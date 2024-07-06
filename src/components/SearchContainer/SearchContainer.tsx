@@ -39,8 +39,10 @@ export class SearchContainer extends Component<SearchContainerProps, unknown> {
   };
 
   onClickFetchVehiclesHandler = () => {
-    this.saveToLocalStorage(this.key, this.state.text);
-    this.props.fetchVehicles(this.state.text);
+    const trimmedText = this.state.text.trim();
+    this.setState({ text: trimmedText });
+    this.saveToLocalStorage(this.key, trimmedText);
+    this.props.fetchVehicles(trimmedText);
   };
 
   onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
