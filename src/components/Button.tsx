@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { ButtonProps } from '../types/types';
 
-export class Button extends Component<ButtonProps> {
+export class Button extends Component<ButtonProps, unknown> {
   onClickHandler = () => this.props.onClickCallBack();
-
   render() {
     return (
       <button

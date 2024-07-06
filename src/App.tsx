@@ -41,7 +41,7 @@ export class App extends Component<unknown, AppState> {
         {isLoading ? (
           <>
             <img src={loadSpinner} alt={'loading'} />
-            <p>Loading...</p>
+            <p className={'loading'}>Loading...</p>
           </>
         ) : (
           <ViewContainer vehicles={vehicles} />

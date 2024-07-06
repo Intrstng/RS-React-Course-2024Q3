@@ -52,7 +52,7 @@ export class SearchContainer extends Component<SearchContainerProps, unknown> {
 
   onClickSetError = () => {
     this.props.setError(
-      "An error occurred when the user clicked the 'Throw error on click' button",
+      "An error occurred when user clicked the 'Throw error on click' button",
     );
   };
 
@@ -81,18 +81,20 @@ export class SearchContainer extends Component<SearchContainerProps, unknown> {
           onChangeHandler={this.onChangeSetInputValueHandler}
         />
 
-        <Button
-          className={S.searchButton}
-          onClickCallBack={this.onClickFetchVehiclesHandler}
-        >
-          Search
-        </Button>
-        <Button
-          className={S.errorButton}
-          onClickCallBack={this.onClickSetError}
-        >
-          Throw error on click
-        </Button>
+        <div className={S.searchControls}>
+          <Button
+            className={S.searchButton}
+            onClickCallBack={this.onClickFetchVehiclesHandler}
+          >
+            Search
+          </Button>
+          <Button
+            className={S.errorButton}
+            onClickCallBack={this.onClickSetError}
+          >
+            Throw error on click
+          </Button>
+        </div>
       </section>
     );
   }

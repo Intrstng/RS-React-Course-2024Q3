@@ -1,6 +1,7 @@
 import React, { Component, ErrorInfo } from 'react';
 import { ErrorBoundaryProps, ErrorBoundaryState } from '../../types/types';
 import S from './ErrorBoundary.module.css';
+import errorImg from '../../assets/error.png';
 
 export class ErrorBoundary extends Component<
   ErrorBoundaryProps,
@@ -27,7 +28,12 @@ export class ErrorBoundary extends Component<
 
   render() {
     if (this.state.hasError) {
-      return <h1 className={S.error}>{this.state.errorMessage}</h1>;
+      return (
+        <div className={S.errorContainer}>
+          <img src={errorImg} alt={'error'} className={S.errorImg} />
+          <h1 className={S.error}>{this.state.errorMessage}</h1>
+        </div>
+      );
     }
     return this.props.children;
   }
