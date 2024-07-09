@@ -1,15 +1,9 @@
-import React, {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { ChangeEvent, FC, FormEvent, useEffect, useRef } from 'react';
 import S from './SearchContainer.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
 import { ButtonType, SearchContainerProps } from '../../types/types';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 const LOCAL_STORAGE_KEY = 'searchValue';
 
@@ -18,50 +12,25 @@ export const SearchContainer: FC<SearchContainerProps> = ({
   fetchVehicles,
   setAppError,
 }) => {
-  const [text, setText] = useState<string>('');
+  const [text, setText] = useLocalStorage<string>(LOCAL_STORAGE_KEY);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    const searchValueFromLocalStorage = getFromLocalStorage(LOCAL_STORAGE_KEY);
-    setText(searchValueFromLocalStorage);
-    fetchVehicles(searchValueFromLocalStorage);
+    fetchVehicles(text);
     if (inputRef.current !== null) {
       inputRef.current!.focus();
     }
   }, []);
 
-  const getFromLocalStorage = (key: string): string => {
-    try {
-      const serializedState = localStorage.getItem(key);
-      if (!serializedState) {
-        return '';
-      }
-      return JSON.parse(serializedState);
-    } catch {
-      throw new Error('Data from local storage is not loaded');
-    }
-  };
-
-  const saveToLocalStorage = (key: string, value): void => {
-    try {
-      const serializedState = JSON.stringify(value);
-      localStorage.setItem(key, serializedState);
-    } catch {
-      throw new Error('Data is not saved to local storage');
-    }
-  };
-
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const trimmedText = text.trim();
     setText(trimmedText);
-    saveToLocalStorage(LOCAL_STORAGE_KEY, trimmedText);
     fetchVehicles(trimmedText);
   };
 
   const onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const currentValue = e.currentTarget.value;
-    setText(currentValue);
+    setText(e.currentTarget.value);
   };
 
   const onClickSetError = () => {

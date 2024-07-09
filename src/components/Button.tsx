@@ -6,7 +6,9 @@ export const Button: FC<ButtonProps> = ({
   children,
   ...rest
 }) => {
-  const onClickHandler = () => onClickCallBack();
+  const onClickHandler = () => {
+    onClickCallBack && onClickCallBack();
+  };
   return (
     <button onClick={onClickHandler} {...rest}>
       {children}
