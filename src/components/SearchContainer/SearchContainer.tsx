@@ -1,23 +1,29 @@
-import React, { ChangeEvent, Component, createRef, RefObject } from 'react';
+import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
 import S from './SearchContainer.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
-import { SearchContainerProps, SearchContainerState } from '../../types/types';
+import { SearchContainerProps } from '../../types/types';
 
-export class SearchContainer extends Component<SearchContainerProps, unknown> {
-  inputRef: RefObject<HTMLInputElement>;
-  key = 'searchValue' as const;
+const LOCAL_STORAGE_KEY = 'searchValue';
 
-  state: SearchContainerState = {
-    text: '',
-  };
+export const SearchContainer: FC<SearchContainerProps> = ({
+  error,
+  fetchVehicles,
+  setError,
+}) => {
+  const [text, setText] = useState<string>('');
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  constructor(props) {
-    super(props);
-    this.inputRef = createRef();
-  }
+  useEffect(() => {
+    const searchValueFromLocalStorage = getFromLocalStorage(LOCAL_STORAGE_KEY);
+    setText(searchValueFromLocalStorage);
+    fetchVehicles(searchValueFromLocalStorage);
+    if (inputRef.current !== null) {
+      inputRef.current!.focus();
+    }
+  }, []);
 
-  private getFromLocalStorage(key: string): string {
+  const getFromLocalStorage = (key: string): string => {
     try {
       const serializedState = localStorage.getItem(key);
       if (!serializedState) {
@@ -27,9 +33,9 @@ export class SearchContainer extends Component<SearchContainerProps, unknown> {
     } catch {
       throw new Error('Data from local storage is not loaded');
     }
-  }
+  };
 
-  private saveToLocalStorage = (key: string, value): void => {
+  const saveToLocalStorage = (key: string, value): void => {
     try {
       const serializedState = JSON.stringify(value);
       localStorage.setItem(key, serializedState);
@@ -38,64 +44,46 @@ export class SearchContainer extends Component<SearchContainerProps, unknown> {
     }
   };
 
-  onClickFetchVehiclesHandler = () => {
-    const trimmedText = this.state.text.trim();
-    this.setState((prevState) => ({ ...prevState, text: trimmedText }));
-    this.saveToLocalStorage(this.key, trimmedText);
-    this.props.fetchVehicles(trimmedText);
+  const onClickFetchVehiclesHandler = () => {
+    const trimmedText = text.trim();
+    setText(trimmedText);
+    saveToLocalStorage(LOCAL_STORAGE_KEY, trimmedText);
+    fetchVehicles(trimmedText);
   };
 
-  onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const currentValue = e.currentTarget.value;
-    this.setState((prevState) => ({ ...prevState, text: currentValue }));
+    setText(currentValue);
   };
 
-  onClickSetError = () => {
-    this.props.setError(
+  const onClickSetError = () => {
+    setError(
       "An error occurred when user clicked the 'Throw error on click' button",
     );
   };
 
-  async componentDidMount(): Promise<void> {
-    const searchValueFromLocalStorage = this.getFromLocalStorage(this.key);
-    this.setState((prevState) => ({
-      ...prevState,
-      text: searchValueFromLocalStorage,
-    }));
-    this.props.fetchVehicles(searchValueFromLocalStorage);
-    if (this.inputRef.current !== null) {
-      this.inputRef.current.focus();
-    }
-  }
+  if (error !== null) throw new Error(error);
 
-  render() {
-    if (this.props.error !== null) throw new Error(this.props.error);
-    const { text } = this.state;
+  return (
+    <section className={S.searchContainer}>
+      <SearchField
+        ref={inputRef}
+        placeholder={'search'}
+        value={text}
+        onChangeHandler={onChangeSetInputValueHandler}
+      />
 
-    return (
-      <section className={S.searchContainer}>
-        <SearchField
-          ref={this.inputRef}
-          placeholder={'search'}
-          value={text}
-          onChangeHandler={this.onChangeSetInputValueHandler}
-        />
-
-        <div className={S.searchControls}>
-          <Button
-            className={S.searchButton}
-            onClickCallBack={this.onClickFetchVehiclesHandler}
-          >
-            Search
-          </Button>
-          <Button
-            className={S.errorButton}
-            onClickCallBack={this.onClickSetError}
-          >
-            Throw error on click
-          </Button>
-        </div>
-      </section>
-    );
-  }
-}
+      <div className={S.searchControls}>
+        <Button
+          className={S.searchButton}
+          onClickCallBack={onClickFetchVehiclesHandler}
+        >
+          Search
+        </Button>
+        <Button className={S.errorButton} onClickCallBack={onClickSetError}>
+          Throw error on click
+        </Button>
+      </div>
+    </section>
+  );
+};

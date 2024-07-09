@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ChangeEvent, ReactNode } from 'react';
 
 export type Vehicle = {
   name: string;
@@ -53,4 +53,10 @@ export type SearchContainerProps = {
 
 export type VehicleProps = {
   vehicle: Vehicle;
+};
+
+export type SearchFieldProps = {
+  placeholder: string;
+  value: string;
+  onChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void;
 };
