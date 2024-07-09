@@ -1,8 +1,15 @@
-import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import S from './SearchContainer.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
-import { SearchContainerProps } from '../../types/types';
+import { ButtonType, SearchContainerProps } from '../../types/types';
 
 const LOCAL_STORAGE_KEY = 'searchValue';
 
@@ -44,7 +51,8 @@ export const SearchContainer: FC<SearchContainerProps> = ({
     }
   };
 
-  const onClickFetchVehiclesHandler = () => {
+  const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const trimmedText = text.trim();
     setText(trimmedText);
     saveToLocalStorage(LOCAL_STORAGE_KEY, trimmedText);
@@ -65,25 +73,27 @@ export const SearchContainer: FC<SearchContainerProps> = ({
   if (error !== null) throw new Error(error);
 
   return (
-    <section className={S.searchContainer}>
-      <SearchField
-        ref={inputRef}
-        placeholder={'search'}
-        value={text}
-        onChangeHandler={onChangeSetInputValueHandler}
-      />
+    <section>
+      <form
+        onSubmit={onClickFetchVehiclesHandler}
+        className={S.searchContainer}
+      >
+        <SearchField
+          ref={inputRef}
+          placeholder={'search'}
+          value={text}
+          onChangeHandler={onChangeSetInputValueHandler}
+        />
 
-      <div className={S.searchControls}>
-        <Button
-          className={S.searchButton}
-          onClickCallBack={onClickFetchVehiclesHandler}
-        >
-          Search
-        </Button>
-        <Button className={S.errorButton} onClickCallBack={onClickSetError}>
-          Throw error on click
-        </Button>
-      </div>
+        <div className={S.searchControls}>
+          <Button type={ButtonType.SUBMIT} className={S.searchButton}>
+            Search
+          </Button>
+          <Button className={S.errorButton} onClickCallBack={onClickSetError}>
+            Throw error on click
+          </Button>
+        </div>
+      </form>
     </section>
   );
 };

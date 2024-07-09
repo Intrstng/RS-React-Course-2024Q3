@@ -34,10 +34,17 @@ export type ViewContainerProps = {
   vehicles: Vehicle[];
 };
 
+export enum ButtonType {
+  BUTTON = 'button',
+  RESET = 'reset',
+  SUBMIT = 'submit',
+}
+
 export type ButtonProps = {
-  onClickCallBack: () => void;
+  onClickCallBack?: () => void;
   className?: string;
   disabled?: boolean;
+  type?: ButtonType;
   children: ReactNode;
 };
 
