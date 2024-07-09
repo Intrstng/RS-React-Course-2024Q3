@@ -1,36 +1,36 @@
-import { SetStateApp } from '../../types/types';
+import { Vehicle } from '../../types/types';
 import { vehiclesAPI } from '../dal/api/vehiclesAPI';
 import { handleError } from '../utils/handleError';
 
 export const fetchVehiclesThunks = async (
-  setState: SetStateApp,
+  setVehiclesData: (vehicles: Vehicle[]) => void,
+  setAppIsLoading: (isLoading: boolean) => void,
+  setAppError: (error: string | null) => void,
 ): Promise<void> => {
-  setState((prevState) => ({ ...prevState, isLoading: true, error: null }));
+  setAppIsLoading(true);
+  setAppError(null);
   try {
     const { results } = await vehiclesAPI.getVehicles();
-    setState((prevState) => ({
-      ...prevState,
-      isLoading: false,
-      vehicles: results,
-    }));
+    setVehiclesData(results);
+    setAppIsLoading(false);
   } catch (error) {
-    handleError(setState, error);
+    handleError(setAppError, error);
   }
 };
 
 export const searchVehiclesThunks = async (
-  setState: SetStateApp,
+  setVehiclesData: (vehicles: Vehicle[]) => void,
+  setAppIsLoading: (isLoading: boolean) => void,
+  setAppError: (error: string | null) => void,
   value: string,
 ): Promise<void> => {
-  setState((prevState) => ({ ...prevState, isLoading: true, error: null }));
+  setAppIsLoading(true);
+  setAppError(null);
   try {
     const { results } = await vehiclesAPI.searchVehicles(value);
-    setState((prevState) => ({
-      ...prevState,
-      isLoading: false,
-      vehicles: results,
-    }));
+    setVehiclesData(results);
+    setAppIsLoading(false);
   } catch (error) {
-    handleError(setState, error);
+    handleError(setAppError, error);
   }
 };

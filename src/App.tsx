@@ -1,52 +1,53 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { SearchContainer } from './components/SearchContainer/SearchContainer';
-import { AppState } from './types/types';
+import { Vehicle } from './types/types';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { ViewContainer } from './components/ViewContainer/ViewContainer';
-import loadSpinner from './assets/load-spinner.gif';
 import {
   fetchVehiclesThunks,
   searchVehiclesThunks,
 } from './components/bll/vehiclesThunks';
+import { Loader } from './components/Loader/Loader';
 
-export class App extends Component<unknown, AppState> {
-  state: AppState = {
-    isLoading: false,
-    vehicles: [],
-    error: null,
+export const App = () => {
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const setVehiclesData = (vehicles: Vehicle[]) => {
+    setVehicles(vehicles);
   };
 
-  private fetchVehicles = async (value: string) => {
+  const setAppIsLoading = (isLoading: boolean) => {
+    setIsLoading(isLoading);
+  };
+
+  const setAppError = (error: string | null) => {
+    setError(error);
+  };
+
+  const fetchVehicles = async (value: string) => {
     if (value.length !== 0) {
-      await searchVehiclesThunks(this.setState.bind(this), value);
+      await searchVehiclesThunks(
+        setVehiclesData,
+        setAppIsLoading,
+        setAppError,
+        value,
+      );
     } else {
-      await fetchVehiclesThunks(this.setState.bind(this));
+      await fetchVehiclesThunks(setVehiclesData, setAppIsLoading, setAppError);
     }
   };
 
-  setError = (error: string | null) => {
-    this.setState((prevState) => ({ ...prevState, error }));
-  };
-
-  render() {
-    const { isLoading, vehicles } = this.state;
-    return (
-      <ErrorBoundary>
-        <SearchContainer
-          error={this.state.error}
-          fetchVehicles={this.fetchVehicles}
-          setError={this.setError}
-        />
-        {isLoading ? (
-          <>
-            <img src={loadSpinner} alt={'loading'} />
-            <p className={'loading'}>Loading...</p>
-          </>
-        ) : (
-          <ViewContainer vehicles={vehicles} />
-        )}
-      </ErrorBoundary>
-    );
-  }
-}
+  return (
+    <ErrorBoundary>
+      <SearchContainer
+        error={error}
+        fetchVehicles={fetchVehicles}
+        setAppError={setAppError}
+      />
+      {isLoading ? <Loader /> : <ViewContainer vehicles={vehicles} />}
+    </ErrorBoundary>
+  );
+};

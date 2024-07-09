@@ -41,14 +41,10 @@ export type ButtonProps = {
   children: ReactNode;
 };
 
-export type SearchContainerState = {
-  text: string;
-};
-
 export type SearchContainerProps = {
   error: string | null;
   fetchVehicles: (value: string) => void;
-  setError: (error: string | null) => void;
+  setAppError: (error: string | null) => void;
 };
 
 export type VehicleProps = {

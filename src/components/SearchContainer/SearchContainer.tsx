@@ -9,7 +9,7 @@ const LOCAL_STORAGE_KEY = 'searchValue';
 export const SearchContainer: FC<SearchContainerProps> = ({
   error,
   fetchVehicles,
-  setError,
+  setAppError,
 }) => {
   const [text, setText] = useState<string>('');
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -57,7 +57,7 @@ export const SearchContainer: FC<SearchContainerProps> = ({
   };
 
   const onClickSetError = () => {
-    setError(
+    setAppError(
       "An error occurred when user clicked the 'Throw error on click' button",
     );
   };
