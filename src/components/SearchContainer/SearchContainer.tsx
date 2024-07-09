@@ -4,11 +4,14 @@ import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
 import { ButtonType, SearchContainerProps } from '../../types/types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { Pagination } from '../Pagination/Pagination';
 
 const LOCAL_STORAGE_KEY = 'searchValue';
 
 export const SearchContainer: FC<SearchContainerProps> = ({
   error,
+  pagesCount,
+  isLoading,
   fetchVehicles,
   setAppError,
 }) => {
@@ -39,6 +42,10 @@ export const SearchContainer: FC<SearchContainerProps> = ({
     );
   };
 
+  const fetchPageData = (page: number) => {
+    fetchVehicles(text, page);
+  };
+
   if (error !== null) throw new Error(error);
 
   return (
@@ -63,6 +70,9 @@ export const SearchContainer: FC<SearchContainerProps> = ({
           </Button>
         </div>
       </form>
+      {!isLoading && (
+        <Pagination pagesCount={pagesCount} fetchPageData={fetchPageData} />
+      )}
     </section>
   );
 };

@@ -50,7 +50,9 @@ export type ButtonProps = {
 
 export type SearchContainerProps = {
   error: string | null;
-  fetchVehicles: (value: string) => void;
+  pagesCount: number;
+  isLoading: boolean;
+  fetchVehicles: (value: string, page?: number) => void;
   setAppError: (error: string | null) => void;
 };
 
@@ -62,4 +64,9 @@ export type SearchFieldProps = {
   placeholder: string;
   value: string;
   onChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+};
+
+export type PaginationProps = {
+  pagesCount: number;
+  fetchPageData: (page: number) => void;
 };
