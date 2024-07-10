@@ -3,8 +3,8 @@ import { ChangeEvent, ReactNode } from 'react';
 export type Vehicle = {
   name: string;
   model: string;
-  vehicleClass: string;
   manufacturer: string;
+  vehicleClass: string;
   length: string;
   crew: string;
   passengers: string;
@@ -13,13 +13,27 @@ export type Vehicle = {
   consumables: string;
 };
 
+export type VehicleDetails = Vehicle & {
+  cost_in_credits: string;
+  pilots: string[];
+  films: string[];
+  created: Date;
+  edited: Date;
+  url: string;
+};
+
+export type VehiclesResponse<T> = {
+  count: number;
+  next: string;
+  previous: string | null;
+  results: [T];
+};
+
 export type AppState = {
   isLoading: boolean;
   vehicles: Vehicle[];
   error: string | null;
 };
-
-export type SetStateApp = (state: (prevState: AppState) => AppState) => void;
 
 export type ErrorBoundaryProps = {
   children: ReactNode;
@@ -32,6 +46,11 @@ export type ErrorBoundaryState = {
 
 export type ViewContainerProps = {
   vehicles: Vehicle[];
+};
+
+export type DetailsPageProps = {
+  setIsLoading: (isLoading: boolean) => void;
+  setError: (error: string | null) => void;
 };
 
 export enum ButtonType {
@@ -52,12 +71,14 @@ export type SearchContainerProps = {
   error: string | null;
   pagesCount: number;
   isLoading: boolean;
+  navigationPage: number;
   fetchVehicles: (value: string, page?: number) => void;
   setAppError: (error: string | null) => void;
 };
 
 export type VehicleProps = {
   vehicle: Vehicle;
+  id: number;
 };
 
 export type SearchFieldProps = {
@@ -68,5 +89,10 @@ export type SearchFieldProps = {
 
 export type PaginationProps = {
   pagesCount: number;
-  fetchPageData: (page: number) => void;
+  currentPage: number;
+};
+
+export type DetailsPageParams = {
+  pageId: string;
+  vehicleId: string;
 };

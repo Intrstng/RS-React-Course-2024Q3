@@ -1,37 +1,37 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import S from './Pagination.module.css';
 import { PaginationProps } from '../../types/types';
 import { Button } from '../Button';
+import { useNavigate } from 'react-router-dom';
 
 export const Pagination: FC<PaginationProps> = ({
   pagesCount,
-  fetchPageData,
+  currentPage,
 }) => {
-  const [page, setPage] = useState<number>(1);
-
-  useEffect(() => {
-    setPage(1);
-  }, [pagesCount]);
+  const navigate = useNavigate();
 
   const onClickPrevPageHandler = () => {
-    setPage(page - 1);
-    fetchPageData(page - 1);
+    if (currentPage > 1) {
+      navigate(`/page/${currentPage - 1}`);
+    }
   };
 
   const onClickNextPageHandler = () => {
-    setPage(page + 1);
-    fetchPageData(page + 1);
+    navigate(`/page/${currentPage + 1}`);
   };
 
   return (
     <div className={S.paginationBlock}>
-      <Button onClickCallBack={onClickPrevPageHandler} disabled={page <= 1}>
+      <Button
+        onClickCallBack={onClickPrevPageHandler}
+        disabled={currentPage <= 1}
+      >
         Prev
       </Button>
-      <span>{page}</span>
+      <span>{currentPage}</span>
       <Button
         onClickCallBack={onClickNextPageHandler}
-        disabled={page >= pagesCount}
+        disabled={currentPage >= pagesCount}
       >
         Next
       </Button>

@@ -8,4 +8,12 @@ export const vehiclesAPI = {
     }
     return response.json();
   },
+  getVehicleDetails: async (id: string) => {
+    try {
+      const response = await fetch(`https://swapi.dev/api/vehicles/${id}/`);
+      return await response.json();
+    } catch {
+      throw new Error('Network response was not ok');
+    }
+  },
 };

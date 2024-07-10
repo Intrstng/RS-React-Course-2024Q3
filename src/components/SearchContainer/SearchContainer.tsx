@@ -12,6 +12,7 @@ export const SearchContainer: FC<SearchContainerProps> = ({
   error,
   pagesCount,
   isLoading,
+  navigationPage,
   fetchVehicles,
   setAppError,
 }) => {
@@ -19,11 +20,11 @@ export const SearchContainer: FC<SearchContainerProps> = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    fetchVehicles(text);
+    fetchVehicles(text, navigationPage);
     if (inputRef.current !== null) {
       inputRef.current!.focus();
     }
-  }, []);
+  }, [navigationPage]); // or []
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,10 +41,6 @@ export const SearchContainer: FC<SearchContainerProps> = ({
     setAppError(
       "An error occurred when user clicked the 'Throw error on click' button",
     );
-  };
-
-  const fetchPageData = (page: number) => {
-    fetchVehicles(text, page);
   };
 
   if (error !== null) throw new Error(error);
@@ -71,7 +68,7 @@ export const SearchContainer: FC<SearchContainerProps> = ({
         </div>
       </form>
       {!isLoading && (
-        <Pagination pagesCount={pagesCount} fetchPageData={fetchPageData} />
+        <Pagination pagesCount={pagesCount} currentPage={navigationPage} />
       )}
     </section>
   );
