@@ -1,5 +1,5 @@
-import React, { FormEvent, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { FormEvent, useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import S from './DetailsPage.module.css';
 import { DetailsPageParams, VehicleDetails } from '../../types/types';
 import { getVehicleDetails } from '../bll/vehiclesThunks';
@@ -13,9 +13,10 @@ export const DetailsPage = () => {
   const [imgSrc, setImgSrc] = useState<string | null>(null);
   const { model, manufacturer, length, crew, passengers, consumables } =
     vehicleDetails;
+  const detailsRef = useRef<HTMLDivElement | null>(null);
 
-  // const navigate = useNavigate();
-  const { vehicleId } = useParams<DetailsPageParams>();
+  const navigate = useNavigate();
+  const { pageId, vehicleId } = useParams<DetailsPageParams>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,11 +31,24 @@ export const DetailsPage = () => {
     fetchData();
   }, [vehicleId]);
 
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        detailsRef.current &&
+        !detailsRef.current!.contains(e.target as Node)
+      ) {
+        navigate(`/page/${pageId}`);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [pageId]);
+
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
-    if (!confirm('Please confirm you want to close this record.')) {
-      e.preventDefault();
-      // navigate(`/page/${page}`);
-    }
+    e.preventDefault();
+    navigate(`/page/${pageId}`);
   };
 
   const handleImageError = () => {
@@ -44,7 +58,7 @@ export const DetailsPage = () => {
   if (error !== null) throw new Error(error);
 
   return (
-    <div className={S.details}>
+    <div className={S.details} ref={detailsRef}>
       {isLoading ? (
         <Loader />
       ) : (

@@ -46,6 +46,7 @@ export type ErrorBoundaryState = {
 
 export type ViewContainerProps = {
   vehicles: Vehicle[];
+  currentPage: number;
 };
 
 export type DetailsPageProps = {

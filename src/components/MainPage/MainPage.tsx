@@ -1,10 +1,9 @@
-import React, { FC } from 'react';
-import { ViewContainerProps } from '../../types/types';
+import React from 'react';
 import S from './MainPage.module.css';
 import { Vehicle } from '../Vehicle/Vehicle';
 import { Outlet, useOutletContext } from 'react-router-dom';
 
-export const MainPage: FC<ViewContainerProps> = () => {
+export const MainPage = () => {
   const { vehicles } = useOutletContext();
   return (
     <>
