@@ -1,5 +1,6 @@
 .details {
-  width: 400px;
+  margin-left: 20px;
+  width: 350px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
