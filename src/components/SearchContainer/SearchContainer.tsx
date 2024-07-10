@@ -59,7 +59,11 @@ export const SearchContainer: FC<SearchContainerProps> = ({
         />
 
         <div className={S.searchControls}>
-          <Button type={ButtonType.SUBMIT} className={S.searchButton}>
+          <Button
+            type={ButtonType.SUBMIT}
+            className={S.searchButton}
+            disabled={isLoading}
+          >
             Search
           </Button>
           <Button className={S.errorButton} onClickCallBack={onClickSetError}>

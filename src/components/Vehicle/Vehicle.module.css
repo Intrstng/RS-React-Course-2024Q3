@@ -1,14 +1,19 @@
 .vehicle {
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   color: #000000;
   background-color: rgba(255, 255, 255, 0.7);
   padding: 15px;
-  width: 200px;
+  width: 180px;
   font-family: Arial, serif;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.active {
+  background-color: rgba(225, 215, 24, 0.85);
 }
 
 .vehicle:hover {

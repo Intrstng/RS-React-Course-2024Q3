@@ -1,5 +1,5 @@
 import React from 'react';
-import loadSpinner from '../../assets/load-spinner.gif';
+import loadSpinner from '../../assets/load-spinner-red.gif';
 import S from './Loader.module.css';
 
 export const Loader = () => {

@@ -47,6 +47,11 @@
   background-color: #fedb49;
 }
 
+.searchButton:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 .errorButton:hover {
   background-color: #f80000;
   color: #fedb49;

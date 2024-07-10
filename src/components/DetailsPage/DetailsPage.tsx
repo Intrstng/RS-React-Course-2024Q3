@@ -44,11 +44,11 @@ export const DetailsPage = () => {
   if (error !== null) throw new Error(error);
 
   return (
-    <>
+    <div className={S.details}>
       {isLoading ? (
         <Loader />
       ) : (
-        <div className={S.details}>
+        <div className={S.detailsCard}>
           {imgSrc && (
             <img
               src={imgSrc}
@@ -76,10 +76,12 @@ export const DetailsPage = () => {
             Consumables: <span>{consumables}</span>
           </p>
           <form onSubmit={onSubmitHandler}>
-            <button type="submit">Close</button>
+            <button type="submit" disabled={isLoading}>
+              Close
+            </button>
           </form>
         </div>
       )}
-    </>
+    </div>
   );
 };

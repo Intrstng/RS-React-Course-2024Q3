@@ -35,8 +35,8 @@ export const getVehicleDetails = async (
   setAppError(null);
   try {
     const response = await vehiclesAPI.getVehicleDetails<VehicleDetails>(id);
-    setVehicleDetails(response);
     setImgSrc(`https://starwars-visualguide.com/assets/img/vehicles/${id}.jpg`);
+    setVehicleDetails(response);
   } catch (error) {
     handleError(setAppError, error);
   } finally {

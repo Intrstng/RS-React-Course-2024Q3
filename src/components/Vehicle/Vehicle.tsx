@@ -1,14 +1,17 @@
 import React, { FC } from 'react';
 import { VehicleProps } from '../../types/types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import S from './Vehicle.module.css';
 
 export const Vehicle: FC<VehicleProps> = ({ vehicle, id }) => {
   const { name } = vehicle;
-  console.log(id);
+
+  const linkStyles = ({ isActive }) =>
+    `${S.vehicle} ${isActive ? S.active : ''}`;
+
   return (
-    <Link className={S.vehicle} to={`vehicle/${id}`}>
+    <NavLink to={`vehicle/${id}`} className={linkStyles}>
       <h2>{name}</h2>
-    </Link>
+    </NavLink>
   );
 };

@@ -1,69 +1,3 @@
-// import React, { useState } from 'react';
-// import './App.css';
-// import { SearchContainer } from './components/SearchContainer/SearchContainer';
-// import { Vehicle } from './types/types';
-// import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
-// import { fetchVehiclesThunks } from './components/bll/vehiclesThunks';
-// import { Loader } from './components/Loader/Loader';
-// import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-// import { MainPage } from './components/MainPage/MainPage';
-//
-// export const App = () => {
-//   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-//   const [isLoading, setIsLoading] = useState<boolean>(false);
-//   const [error, setError] = useState<string | null>(null);
-//   const [recordsCount, setRecordsCount] = useState<number>(0);
-//   const maxPagesQuantity = Math.ceil(recordsCount / 10);
-//
-//   const setVehiclesData = (vehicles: Vehicle[]) => {
-//     setVehicles(vehicles);
-//   };
-//
-//   const setAppIsLoading = (isLoading: boolean) => {
-//     setIsLoading(isLoading);
-//   };
-//
-//   const setAppError = (error: string | null) => {
-//     setError(error);
-//   };
-//
-//   const setAppRecordsCount = (count: number) => {
-//     setRecordsCount(count);
-//   };
-//
-//   const fetchVehicles = async (value: string, page?: number) => {
-//     await fetchVehiclesThunks(
-//       setVehiclesData,
-//       setAppIsLoading,
-//       setAppError,
-//       setAppRecordsCount,
-//       value,
-//       page,
-//     );
-//   };
-//
-//   // const location = useLocation();
-//   // const navigate = useNavigate();
-//   //
-//   // const closeDetails = () => {
-//   //   navigate('/');
-//   // };
-//
-//   return (
-//     <ErrorBoundary>
-//       <SearchContainer
-//         error={error}
-//         pagesCount={maxPagesQuantity}
-//         isLoading={isLoading}
-//         fetchVehicles={fetchVehicles}
-//         setAppError={setAppError}
-//       />
-//       {/*{isLoading ? <Loader /> : <MainPage vehicles={vehicles} />}*/}
-//       {isLoading ? <Loader /> : <Outlet context={{ vehicles }} />}
-//     </ErrorBoundary>
-//   );
-// };
-
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { SearchContainer } from './components/SearchContainer/SearchContainer';
@@ -130,7 +64,6 @@ export const App = () => {
         setAppError={setAppError}
       />
       <div className={'content'}>
-        {/*{isLoading ? <Loader /> : <MainPage vehicles={vehicles} />}*/}
         {isLoading ? <Loader /> : <Outlet context={{ vehicles }} />}
       </div>
     </ErrorBoundary>
