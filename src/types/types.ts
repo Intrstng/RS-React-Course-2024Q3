@@ -29,12 +29,6 @@ export type VehiclesResponse<T> = {
   results: [T];
 };
 
-export type AppState = {
-  isLoading: boolean;
-  vehicles: Vehicle[];
-  error: string | null;
-};
-
 export type ErrorBoundaryProps = {
   children: ReactNode;
 };
@@ -42,16 +36,6 @@ export type ErrorBoundaryProps = {
 export type ErrorBoundaryState = {
   hasError: boolean;
   errorMessage: string | null;
-};
-
-export type ViewContainerProps = {
-  vehicles: Vehicle[];
-  currentPage: number;
-};
-
-export type DetailsPageProps = {
-  setIsLoading: (isLoading: boolean) => void;
-  setError: (error: string | null) => void;
 };
 
 export enum ButtonType {

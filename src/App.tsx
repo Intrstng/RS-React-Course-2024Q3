@@ -53,8 +53,6 @@ export const App = () => {
     );
   };
 
-  // if (error !== null) return null;
-
   return (
     <ErrorBoundary>
       <Search

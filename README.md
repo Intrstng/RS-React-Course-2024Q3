@@ -1,6 +1,6 @@
 # Rolling Scopes School React Course 2024Q3
 
-## [Task 1 - React project setup. Class components. Error boundary.](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/class-components.md)
+## [Task 2 - React Routing. Tests.](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/routing.md)
 
 ### How to start
 
@@ -10,7 +10,7 @@
 
 3. Install dependencies - run command in CLI `npm install`
 
-4. Switch to the branch **class-components** - run in CLI `git checkout class-components`
+4. Switch to the branch **class-components** - run in CLI `git checkout hooks-and-routing`
 
 5. Start the application - run command in CLI `npm run dev`
 
@@ -23,3 +23,9 @@
 2. Start **Prettier** to automatically format code - run command in CLI `npm run format:fix`
 
 3. **Husky** is configured to automatically start **esLint** and **Prettier** during `pre-commit` Git-operations
+
+4. **Husky** is configured to automatically run tests on the pre-push hook, ensuring that tests are automatically executed before any code is pushed.
+
+5. To start **testing** - run command in CLI `npm run test`
+
+6. To start **testing with coverage report** - run command in CLI `npm run test:coverage`

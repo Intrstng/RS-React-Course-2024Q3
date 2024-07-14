@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest';
-import { handleError } from '../utils/handleError';
+import { handleError } from './handleError';
 
 describe('handleError', () => {
   const setError = vi.fn();

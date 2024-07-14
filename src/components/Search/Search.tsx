@@ -17,7 +17,6 @@ export const Search: FC<SearchContainerProps> = ({
   setAppError,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  // const [text, setText] = useLocalStorage<string>(LOCAL_STORAGE_KEY, inputRef);
   const [text, setText] = useLocalStorageAdvanced<string>(
     LOCAL_STORAGE_KEY,
     inputRef,
@@ -28,7 +27,7 @@ export const Search: FC<SearchContainerProps> = ({
     if (inputRef.current !== null) {
       inputRef.current!.focus();
     }
-  }, [navigationPage]); // or []
+  }, [navigationPage]);
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
