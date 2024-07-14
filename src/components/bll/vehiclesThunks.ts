@@ -1,36 +1,46 @@
-import { SetStateApp } from '../../types/types';
+import { Vehicle, VehicleDetails, VehiclesResponse } from '../../types/types';
 import { vehiclesAPI } from '../dal/api/vehiclesAPI';
 import { handleError } from '../utils/handleError';
 
 export const fetchVehiclesThunks = async (
-  setState: SetStateApp,
+  setVehiclesData: (vehicles: Vehicle[]) => void,
+  setAppIsLoading: (isLoading: boolean) => void,
+  setAppError: (error: string | null) => void,
+  setAppRecordsCount: (count: number) => void,
+  value: string,
+  page?: number,
 ): Promise<void> => {
-  setState((prevState) => ({ ...prevState, isLoading: true, error: null }));
+  setAppIsLoading(true);
+  setAppError(null);
   try {
-    const { results } = await vehiclesAPI.getVehicles();
-    setState((prevState) => ({
-      ...prevState,
-      isLoading: false,
-      vehicles: results,
-    }));
+    const { results, count } = await vehiclesAPI.getVehicles<
+      VehiclesResponse<VehicleDetails>
+    >(value, page);
+    setVehiclesData(results);
+    setAppRecordsCount(count);
   } catch (error) {
-    handleError(setState, error);
+    handleError(setAppError, error);
+  } finally {
+    setAppIsLoading(false);
   }
 };
 
-export const searchVehiclesThunks = async (
-  setState: SetStateApp,
-  value: string,
-): Promise<void> => {
-  setState((prevState) => ({ ...prevState, isLoading: true, error: null }));
+export const getVehicleDetails = async (
+  setVehicleDetails: (vehicleDetails: VehicleDetails) => void,
+  setAppIsLoading: (isLoading: boolean) => void,
+  setAppError: (error: string | null) => void,
+  setImgSrc: (img: string | null) => void,
+  id: string,
+): Promise<VehicleDetails> => {
+  setAppIsLoading(true);
+  setAppError(null);
   try {
-    const { results } = await vehiclesAPI.searchVehicles(value);
-    setState((prevState) => ({
-      ...prevState,
-      isLoading: false,
-      vehicles: results,
-    }));
+    const response = await vehiclesAPI.getVehicleDetails<VehicleDetails>(id);
+    setImgSrc(`https://starwars-visualguide.com/assets/img/vehicles/${id}.jpg`);
+    setVehicleDetails(response);
   } catch (error) {
-    handleError(setState, error);
+    handleError(setAppError, error);
+  } finally {
+    setAppIsLoading(false);
   }
 };

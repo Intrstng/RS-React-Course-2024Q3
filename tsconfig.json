@@ -7,5 +7,10 @@
     {
       "path": "./tsconfig.node.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "types": ["@testing-library/jest-dom", "vitest/globals"]
+  },
+  "include": ["src", "**/*.test.tsx"],
+  "exclude": ["node_modules", "dist"]
 }

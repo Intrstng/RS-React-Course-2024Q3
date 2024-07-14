@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React, { FC } from 'react';
 import { ButtonProps } from '../types/types';
 
-export class Button extends Component<ButtonProps, unknown> {
-  onClickHandler = () => this.props.onClickCallBack();
-  render() {
-    return (
-      <button
-        className={this.props.className}
-        disabled={this.props.disabled}
-        onClick={this.onClickHandler}
-      >
-        {this.props.children}
-      </button>
-    );
-  }
-}
+export const Button: FC<ButtonProps> = ({
+  onClickCallBack,
+  children,
+  ...rest
+}) => {
+  const onClickHandler = () => {
+    onClickCallBack && onClickCallBack();
+  };
+  return (
+    <button onClick={onClickHandler} {...rest}>
+      {children}
+    </button>
+  );
+};

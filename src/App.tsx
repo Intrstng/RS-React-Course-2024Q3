@@ -1,52 +1,71 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import { SearchContainer } from './components/SearchContainer/SearchContainer';
-import { AppState } from './types/types';
+import { Search } from './components/Search/Search';
+import { Vehicle } from './types/types';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
-import { ViewContainer } from './components/ViewContainer/ViewContainer';
-import loadSpinner from './assets/load-spinner.gif';
-import {
-  fetchVehiclesThunks,
-  searchVehiclesThunks,
-} from './components/bll/vehiclesThunks';
+import { fetchVehiclesThunks } from './components/bll/vehiclesThunks';
+import { Loader } from './components/Loader/Loader';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { PATH } from './routes/Route';
 
-export class App extends Component<unknown, AppState> {
-  state: AppState = {
-    isLoading: false,
-    vehicles: [],
-    error: null,
-  };
+export const App = () => {
+  const [cards, setCards] = useState<Vehicle[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [recordsCount, setRecordsCount] = useState<number>(0);
+  const maxPagesQuantity = Math.ceil(recordsCount / 10);
 
-  private fetchVehicles = async (value: string) => {
-    if (value.length !== 0) {
-      await searchVehiclesThunks(this.setState.bind(this), value);
-    } else {
-      await fetchVehiclesThunks(this.setState.bind(this));
+  const { pageId } = useParams<{ pageId: string }>();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPage = parseInt(pageId ?? '1', 10);
+
+  useEffect(() => {
+    if (location.pathname === PATH.PAGE_ROOT) {
+      navigate(`/page/${currentPage}`, { replace: true });
     }
+  }, [location, currentPage]);
+
+  const setVehiclesData = (vehicles: Vehicle[]) => {
+    setCards(vehicles);
   };
 
-  setError = (error: string | null) => {
-    this.setState((prevState) => ({ ...prevState, error }));
+  const setAppIsLoading = (isLoading: boolean) => {
+    setIsLoading(isLoading);
   };
 
-  render() {
-    const { isLoading, vehicles } = this.state;
-    return (
-      <ErrorBoundary>
-        <SearchContainer
-          error={this.state.error}
-          fetchVehicles={this.fetchVehicles}
-          setError={this.setError}
-        />
-        {isLoading ? (
-          <>
-            <img src={loadSpinner} alt={'loading'} />
-            <p className={'loading'}>Loading...</p>
-          </>
-        ) : (
-          <ViewContainer vehicles={vehicles} />
-        )}
-      </ErrorBoundary>
+  const setAppError = (error: string | null) => {
+    setError(error);
+  };
+
+  const setAppRecordsCount = (count: number) => {
+    setRecordsCount(count);
+  };
+
+  const fetchVehicles = async (value: string, page?: number) => {
+    await fetchVehiclesThunks(
+      setVehiclesData,
+      setAppIsLoading,
+      setAppError,
+      setAppRecordsCount,
+      value,
+      page,
     );
-  }
-}
+  };
+
+  return (
+    <ErrorBoundary>
+      <Search
+        error={error}
+        pagesCount={maxPagesQuantity}
+        isLoading={isLoading}
+        navigationPage={currentPage}
+        fetchVehicles={fetchVehicles}
+        setAppError={setAppError}
+      />
+      <div className={'content'}>
+        {isLoading ? <Loader /> : <Outlet context={{ cards }} />}
+      </div>
+    </ErrorBoundary>
+  );
+};

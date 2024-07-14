@@ -1,6 +1,7 @@
 .*
 node_modules/
 dist/
+coverage/
 build/
 *.js
 *.jsx
@@ -8,7 +9,6 @@ build/
 *.log
 .eslintignore
 .eslintrc.cjs
-test/
 tests/
 .vscode/
 .idea/

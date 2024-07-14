@@ -1,0 +1,9 @@
+.loader {
+  margin: 0 auto;
+}
+
+.loader img {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+}

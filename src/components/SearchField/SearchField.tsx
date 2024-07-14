@@ -1,19 +1,12 @@
-import React, { ChangeEvent, Component, forwardRef, Ref } from 'react';
+import React, { forwardRef } from 'react';
 import S from './SearchField.module.css';
+import { SearchFieldProps } from '../../types/types';
 
-type SearchFieldProps = {
-  placeholder: string;
-  value: string;
-  forwardedRef: Ref<HTMLInputElement>;
-  onChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void;
-};
-
-class SearchField extends Component<SearchFieldProps, unknown> {
-  render() {
-    const { placeholder, value, onChangeHandler, forwardedRef } = this.props;
+export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(
+  ({ placeholder, value, onChangeHandler }, ref) => {
     return (
       <input
-        ref={forwardedRef}
+        ref={ref}
         type={'text'}
         placeholder={placeholder}
         value={value}
@@ -21,14 +14,7 @@ class SearchField extends Component<SearchFieldProps, unknown> {
         onChange={onChangeHandler}
       />
     );
-  }
-}
+  },
+);
 
-const ForwardedSearchField = forwardRef<
-  HTMLInputElement,
-  Omit<SearchFieldProps, 'forwardedRef'>
->((props, ref) => <SearchField {...props} forwardedRef={ref} />);
-
-ForwardedSearchField.displayName = 'SearchField';
-
-export { ForwardedSearchField as SearchField };
+SearchField.displayName = 'SearchField';

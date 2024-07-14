@@ -1,0 +1,36 @@
+.paginationBlock {
+  margin: 0 auto 40px;
+  width: 180px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.paginationBlock button {
+  padding: 8px 12px;
+  color: rgba(0, 0, 0, 0.75);
+  background-color: #8da65a;
+  border-radius: 5px;
+  border: none;
+  font-family: Arial, serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.paginationBlock button:hover {
+  background-color: rgb(49, 111, 123);
+  color: #a4b97d;
+}
+
+.paginationBlock button:disabled {
+  background-color: rgba(157, 157, 157, 0.6);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.paginationBlock span {
+  font-family: Arial, serif;
+  font-size: 20px;
+  color: #ffffff;
+}

@@ -1,5 +1,5 @@
 .searchContainer {
-  padding: 60px 0;
+  padding: 60px 0 40px;
   text-align: center;
   display: flex;
   flex-wrap: nowrap;
@@ -45,6 +45,11 @@
 .searchButton:hover {
   color: #000000;
   background-color: #fedb49;
+}
+
+.searchButton:disabled {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .errorButton:hover {

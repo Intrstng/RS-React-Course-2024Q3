@@ -1,0 +1,47 @@
+.card {
+  display: block;
+  font-size: 11px;
+  color: #000000;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 15px;
+  width: 180px;
+  font-family: Arial, serif;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.active {
+  background-color: rgba(225, 215, 24, 0.85);
+}
+
+.card:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.card:hover h2 {
+  color: #146279;
+}
+
+.card:active {
+  background-color: rgba(228, 241, 180, 0.85);
+}
+
+.card h2 {
+  color: rgb(117, 29, 29);
+}
+
+.card p {
+  text-align: left;
+  overflow-wrap: break-word;
+  font-size: 14px;
+  color: rgb(88, 95, 59);
+  font-weight: bold;
+}
+
+.card p > span {
+  font-size: 14px;
+  color: #146279;
+  font-weight: normal;
+}
