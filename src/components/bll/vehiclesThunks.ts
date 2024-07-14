@@ -17,10 +17,11 @@ export const fetchVehiclesThunks = async (
       VehiclesResponse<VehicleDetails>
     >(value, page);
     setVehiclesData(results);
-    setAppIsLoading(false);
     setAppRecordsCount(count);
   } catch (error) {
     handleError(setAppError, error);
+  } finally {
+    setAppIsLoading(false);
   }
 };
 

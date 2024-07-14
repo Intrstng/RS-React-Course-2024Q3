@@ -1,4 +1,4 @@
-import { VehicleDetails } from '../types/types';
+import { VehicleDetails, VehiclesResponse } from '../types/types';
 
 export const mockCards: VehicleDetails[] = [
   {
@@ -38,3 +38,19 @@ export const mockCards: VehicleDetails[] = [
     url: 'https://swapi.dev/api/vehicles/19/',
   },
 ];
+
+export const mockResponse: VehiclesResponse<VehicleDetails> = {
+  results: [
+    {
+      cost_in_credits: 'string',
+      pilots: ['string'],
+      films: ['string'],
+      created: new Date(),
+      edited: new Date(),
+      url: 'string',
+    } as VehicleDetails,
+  ],
+  count: 1,
+  next: 'string',
+  previous: 'string',
+};
