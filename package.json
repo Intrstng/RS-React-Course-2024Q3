@@ -12,8 +12,7 @@
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "preview": "vite preview",
-    "prepare": "husky",
-    "pre-push": "npm test -- --watchAll=false"
+    "prepare": "husky"
   },
   "dependencies": {
     "react": "^18.3.1",
