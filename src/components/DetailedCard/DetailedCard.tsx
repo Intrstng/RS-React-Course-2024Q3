@@ -1,12 +1,12 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import S from './DetailsPage.module.css';
+import S from './DetailedCard.module.css';
 import { DetailsPageParams, VehicleDetails } from '../../types/types';
 import { getVehicleDetails } from '../bll/vehiclesThunks';
 import { Loader } from '../Loader/Loader';
 import defaultImage from '../../assets/image_default.jpg';
 
-export const DetailsPage = () => {
+export const DetailedCard = () => {
   const [cardDetails, setCardDetails] = useState<VehicleDetails>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);

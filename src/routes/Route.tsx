@@ -3,12 +3,12 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { App } from '../App';
 import { Error404 } from '../components/Error404/Error404';
 import { CardList } from '../components/CardList/CardList';
-import { DetailsPage } from '../components/DetailsPage/DetailsPage';
+import { DetailedCard } from '../components/DetailedCard/DetailedCard';
 
 export const PATH = {
   PAGE_ROOT: '/',
   CARD_LIST: '/page/:pageId',
-  DETAILS_PAGE: '/page/:pageId/card/:cardId',
+  DETAILED_CARD: '/page/:pageId/card/:cardId',
   PAGE_ERROR: '/error',
 } as const;
 
@@ -27,8 +27,8 @@ export const router = createBrowserRouter([
         element: <CardList />,
         children: [
           {
-            path: PATH.DETAILS_PAGE,
-            element: <DetailsPage />,
+            path: PATH.DETAILED_CARD,
+            element: <DetailedCard />,
           },
         ],
       },

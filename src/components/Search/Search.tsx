@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FC, FormEvent, useEffect, useRef } from 'react';
-import S from './SearchContainer.module.css';
+import S from './Search.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
 import { ButtonType, SearchContainerProps } from '../../types/types';
@@ -8,7 +8,7 @@ import { Pagination } from '../Pagination/Pagination';
 
 const LOCAL_STORAGE_KEY = 'searchValue';
 
-export const SearchContainer: FC<SearchContainerProps> = ({
+export const Search: FC<SearchContainerProps> = ({
   error,
   pagesCount,
   isLoading,

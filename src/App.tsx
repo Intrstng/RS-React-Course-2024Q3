@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { SearchContainer } from './components/SearchContainer/SearchContainer';
+import { Search } from './components/Search/Search';
 import { Vehicle } from './types/types';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { fetchVehiclesThunks } from './components/bll/vehiclesThunks';
@@ -60,7 +60,7 @@ export const App = () => {
       <div className="App">
         <h1>Hello</h1>
       </div>
-      <SearchContainer
+      <Search
         error={error}
         pagesCount={maxPagesQuantity}
         isLoading={isLoading}

@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Card } from './Card';
 import '@testing-library/jest-dom';
 import { mockCards } from '../../test/mockData';
-import { DetailsPage } from '../DetailsPage/DetailsPage';
+import { DetailedCard } from '../DetailedCard/DetailedCard';
 import { getVehicleDetails } from '../bll/vehiclesThunks';
 
 const MOCK_ID = 1;
@@ -31,7 +31,7 @@ describe('Card Component', () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Card card={mockCards[0]} id={MOCK_ID} />} />
-          <Route path="card/:cardId" element={<DetailsPage />} />
+          <Route path="card/:cardId" element={<DetailedCard />} />
         </Routes>
       </BrowserRouter>,
     );
