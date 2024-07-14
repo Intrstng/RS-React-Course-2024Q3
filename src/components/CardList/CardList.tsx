@@ -2,9 +2,15 @@ import React from 'react';
 import S from './CardList.module.css';
 import { Card } from '../Card/Card';
 import { Outlet, useOutletContext } from 'react-router-dom';
+import { VehicleDetails } from '../../types/types';
+
+type CardsContextType = {
+  cards: VehicleDetails[];
+};
 
 export const CardList = () => {
-  const { cards } = useOutletContext();
+  const { cards } = useOutletContext<CardsContextType>();
+
   return (
     <>
       <section className={S.viewContainer}>
