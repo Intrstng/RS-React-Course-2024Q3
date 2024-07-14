@@ -97,3 +97,7 @@ export type DetailsPageParams = {
   pageId: string;
   vehicleId: string;
 };
+
+export type CardsContextType = {
+  cards: VehicleDetails[];
+};

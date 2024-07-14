@@ -1,8 +1,7 @@
 import React from 'react';
 import { expect, test, describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter, Outlet } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Outlet, Routes, Route } from 'react-router-dom';
 import { CardList } from './CardList';
 import '@testing-library/jest-dom';
 import { VehicleDetails } from '../../types/types';

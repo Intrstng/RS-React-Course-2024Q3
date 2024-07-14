@@ -2,11 +2,7 @@ import React from 'react';
 import S from './CardList.module.css';
 import { Card } from '../Card/Card';
 import { Outlet, useOutletContext } from 'react-router-dom';
-import { VehicleDetails } from '../../types/types';
-
-type CardsContextType = {
-  cards: VehicleDetails[];
-};
+import { CardsContextType } from '../../types/types';
 
 export const CardList = () => {
   const { cards } = useOutletContext<CardsContextType>();

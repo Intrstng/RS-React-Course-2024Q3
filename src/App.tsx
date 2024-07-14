@@ -57,9 +57,6 @@ export const App = () => {
 
   return (
     <ErrorBoundary>
-      <div className="App">
-        <h1>Hello</h1>
-      </div>
       <Search
         error={error}
         pagesCount={maxPagesQuantity}

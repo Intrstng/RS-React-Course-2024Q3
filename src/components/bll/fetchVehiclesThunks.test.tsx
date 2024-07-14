@@ -9,6 +9,7 @@ vi.mock('../utils/handleError');
 
 const TEST_VALUE = 'testValue';
 const VEHICLE_ID = '1';
+const PAGE = 1;
 
 describe('fetchVehiclesThunks', () => {
   const setVehiclesData = vi.fn();
@@ -29,7 +30,7 @@ describe('fetchVehiclesThunks', () => {
       setAppError,
       setAppRecordsCount,
       TEST_VALUE,
-      1,
+      PAGE,
     );
 
     expect(setAppIsLoading).toHaveBeenCalledWith(true);
@@ -49,7 +50,7 @@ describe('fetchVehiclesThunks', () => {
       setAppError,
       setAppRecordsCount,
       TEST_VALUE,
-      1,
+      PAGE,
     );
 
     expect(setAppIsLoading).toHaveBeenCalledWith(true);
