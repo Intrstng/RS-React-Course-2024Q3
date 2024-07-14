@@ -9,7 +9,7 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { PATH } from './routes/Route';
 
 export const App = () => {
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [cards, setCards] = useState<Vehicle[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [recordsCount, setRecordsCount] = useState<number>(0);
@@ -27,7 +27,7 @@ export const App = () => {
   }, [location, currentPage]);
 
   const setVehiclesData = (vehicles: Vehicle[]) => {
-    setVehicles(vehicles);
+    setCards(vehicles);
   };
 
   const setAppIsLoading = (isLoading: boolean) => {
@@ -53,8 +53,13 @@ export const App = () => {
     );
   };
 
+  // if (error !== null) return null;
+
   return (
     <ErrorBoundary>
+      <div className="App">
+        <h1>Hello</h1>
+      </div>
       <SearchContainer
         error={error}
         pagesCount={maxPagesQuantity}
@@ -64,7 +69,7 @@ export const App = () => {
         setAppError={setAppError}
       />
       <div className={'content'}>
-        {isLoading ? <Loader /> : <Outlet context={{ vehicles }} />}
+        {isLoading ? <Loader /> : <Outlet context={{ cards }} />}
       </div>
     </ErrorBoundary>
   );

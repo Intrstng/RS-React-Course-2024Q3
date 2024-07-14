@@ -3,7 +3,7 @@ import S from './SearchContainer.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
 import { ButtonType, SearchContainerProps } from '../../types/types';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import useLocalStorageAdvanced from '../hooks/useLocalStorageAdvanced';
 import { Pagination } from '../Pagination/Pagination';
 
 const LOCAL_STORAGE_KEY = 'searchValue';
@@ -16,8 +16,12 @@ export const SearchContainer: FC<SearchContainerProps> = ({
   fetchVehicles,
   setAppError,
 }) => {
-  const [text, setText] = useLocalStorage<string>(LOCAL_STORAGE_KEY);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  // const [text, setText] = useLocalStorage<string>(LOCAL_STORAGE_KEY, inputRef);
+  const [text, setText] = useLocalStorageAdvanced<string>(
+    LOCAL_STORAGE_KEY,
+    inputRef,
+  );
 
   useEffect(() => {
     fetchVehicles(text, navigationPage);

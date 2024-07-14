@@ -2,13 +2,13 @@ import React from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { App } from '../App';
 import { Error404 } from '../components/Error404/Error404';
-import { MainPage } from '../components/MainPage/MainPage';
+import { CardList } from '../components/CardList/CardList';
 import { DetailsPage } from '../components/DetailsPage/DetailsPage';
 
 export const PATH = {
   PAGE_ROOT: '/',
-  MAIN_PAGE: '/page/:pageId',
-  DETAILS_PAGE: '/page/:pageId/vehicle/:vehicleId',
+  CARD_LIST: '/page/:pageId',
+  DETAILS_PAGE: '/page/:pageId/card/:cardId',
   PAGE_ERROR: '/error',
 } as const;
 
@@ -20,11 +20,11 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to={PATH.MAIN_PAGE} />,
+        element: <Navigate to={PATH.CARD_LIST} />,
       },
       {
-        path: PATH.MAIN_PAGE,
-        element: <MainPage />,
+        path: PATH.CARD_LIST,
+        element: <CardList />,
         children: [
           {
             path: PATH.DETAILS_PAGE,

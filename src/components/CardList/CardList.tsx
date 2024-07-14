@@ -1,20 +1,20 @@
 import React from 'react';
-import S from './MainPage.module.css';
-import { Vehicle } from '../Vehicle/Vehicle';
+import S from './CardList.module.css';
+import { Card } from '../Card/Card';
 import { Outlet, useOutletContext } from 'react-router-dom';
 
-export const MainPage = () => {
-  const { vehicles } = useOutletContext();
+export const CardList = () => {
+  const { cards } = useOutletContext();
   return (
     <>
       <section className={S.viewContainer}>
-        {vehicles.length > 0 ? (
+        {cards.length > 0 ? (
           <ul className={S.vehiclesList}>
-            {vehicles.map((vehicle, idx) => {
-              const vehicleId = vehicle.url.split('/').slice(-2, -1)[0];
+            {cards.map((card, idx) => {
+              const cardId = card.url.split('/').slice(-2, -1)[0];
               return (
                 <li key={idx}>
-                  <Vehicle vehicle={vehicle} id={vehicleId} />
+                  <Card card={card} id={cardId} />
                 </li>
               );
             })}

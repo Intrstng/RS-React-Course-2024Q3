@@ -1,6 +1,10 @@
-import { useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
 
-export const useLocalStorage = (key: string, initialValue: string = '') => {
+const useLocalStorage = (
+  key: string,
+  inputRef: MutableRefObject<HTMLInputElement | null>,
+  initialValue: string = '',
+) => {
   const [localStorageData, setLocalStorageData] = useState(() => {
     try {
       const item = localStorage.getItem(key);
@@ -12,12 +16,14 @@ export const useLocalStorage = (key: string, initialValue: string = '') => {
   });
 
   useEffect(() => {
-    try {
-      localStorage.setItem(key, JSON.stringify(localStorageData.trim()));
-    } catch (error) {
-      console.error('Error saving to local storage', error);
-    }
-  }, [key, localStorageData]);
+    const textTrimmed = inputRef.current?.value.trim();
+    localStorage.setItem(key, JSON.stringify(inputRef.current?.value.trim()));
+    return () => {
+      localStorage.setItem(key, JSON.stringify(textTrimmed));
+    };
+  }, [key, inputRef.current?.value]);
 
   return [localStorageData, setLocalStorageData] as const;
 };
+
+export default useLocalStorage;

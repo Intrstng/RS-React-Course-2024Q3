@@ -1,4 +1,4 @@
-.vehicle {
+.card {
   display: block;
   font-size: 11px;
   color: #000000;
@@ -16,23 +16,23 @@
   background-color: rgba(225, 215, 24, 0.85);
 }
 
-.vehicle:hover {
+.card:hover {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
-.vehicle:hover h2 {
+.card:hover h2 {
   color: #146279;
 }
 
-.vehicle:active {
+.card:active {
   background-color: rgba(228, 241, 180, 0.85);
 }
 
-.vehicle h2 {
+.card h2 {
   color: rgb(117, 29, 29);
 }
 
-.vehicle p {
+.card p {
   text-align: left;
   overflow-wrap: break-word;
   font-size: 14px;
@@ -40,7 +40,7 @@
   font-weight: bold;
 }
 
-.vehicle p > span {
+.card p > span {
   font-size: 14px;
   color: #146279;
   font-weight: normal;

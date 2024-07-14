@@ -77,8 +77,8 @@ export type SearchContainerProps = {
   setAppError: (error: string | null) => void;
 };
 
-export type VehicleProps = {
-  vehicle: Vehicle;
+export type CardProps = {
+  card: Vehicle;
   id: number;
 };
 

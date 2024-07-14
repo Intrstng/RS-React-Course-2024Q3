@@ -7,29 +7,29 @@ import { Loader } from '../Loader/Loader';
 import defaultImage from '../../assets/image_default.jpg';
 
 export const DetailsPage = () => {
-  const [vehicleDetails, setVehicleDetails] = useState<VehicleDetails>({});
+  const [cardDetails, setCardDetails] = useState<VehicleDetails>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [imgSrc, setImgSrc] = useState<string | null>(null);
   const { model, manufacturer, length, crew, passengers, consumables } =
-    vehicleDetails;
+    cardDetails;
   const detailsRef = useRef<HTMLDivElement | null>(null);
 
   const navigate = useNavigate();
-  const { pageId, vehicleId } = useParams<DetailsPageParams>();
+  const { pageId, cardId } = useParams<DetailsPageParams>();
 
   useEffect(() => {
     const fetchData = async () => {
       await getVehicleDetails(
-        setVehicleDetails,
+        setCardDetails,
         setIsLoading,
         setError,
         setImgSrc,
-        vehicleId,
+        cardId,
       );
     };
     fetchData();
-  }, [vehicleId]);
+  }, [cardId]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -66,8 +66,8 @@ export const DetailsPage = () => {
           {imgSrc && (
             <img
               src={imgSrc}
-              alt="vehicle"
-              className={S.vehicleCard}
+              alt="card"
+              className={S.card}
               onError={handleImageError}
             />
           )}
