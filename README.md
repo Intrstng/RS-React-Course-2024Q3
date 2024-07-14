@@ -10,7 +10,7 @@
 
 3. Install dependencies - run command in CLI `npm install`
 
-4. Switch to the branch **class-components** - run in CLI `git checkout hooks-and-routing`
+4. Switch to the branch **hooks-and-routing** - run in CLI `git checkout hooks-and-routing`
 
 5. Start the application - run command in CLI `npm run dev`
 
@@ -29,3 +29,5 @@
 5. To start **testing** - run command in CLI `npm run test`
 
 6. To start **testing with coverage report** - run command in CLI `npm run test:coverage`
+
+7. To check how is data saved to Local Storage on unmount of the Search component, please click on the **Throw error on click** button to unmount Search component and control console in DevTools in your browser.
