@@ -58,7 +58,11 @@ export const App = () => {
 
   return (
     <ErrorBoundary>
-      <div className={'app'} style={{ ...(theme as CSSProperties) }}>
+      <div
+        className={'app'}
+        style={{ ...(theme as CSSProperties) }}
+        data-testid={'app'}
+      >
         <ThemeControl />
         <Search
           error={error}
