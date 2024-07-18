@@ -44,12 +44,15 @@ export enum ButtonType {
   SUBMIT = 'submit',
 }
 
+type ButtonColor = 'primary' | 'secondary';
+
 export type ButtonProps = {
   onClickCallBack?: () => void;
   className?: string;
   disabled?: boolean;
   type?: ButtonType;
   children: ReactNode;
+  color?: ButtonColor;
 };
 
 export type SearchContainerProps = {
@@ -79,7 +82,7 @@ export type PaginationProps = {
 
 export type DetailsPageParams = {
   pageId: string;
-  vehicleId: string;
+  cardId: string;
 };
 
 export type CardsContextType = {

@@ -14,7 +14,6 @@ export const DetailedCard = () => {
   const { model, manufacturer, length, crew, passengers, consumables } =
     cardDetails;
   const detailsRef = useRef<HTMLDivElement | null>(null);
-
   const navigate = useNavigate();
   const { pageId, cardId } = useParams<DetailsPageParams>();
 

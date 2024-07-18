@@ -1,17 +1,12 @@
 import {
   DependencyList,
   EffectCallback,
-  MutableRefObject,
   useEffect,
   useRef,
   useState,
 } from 'react';
 
-const useLocalStorageAdvanced = (
-  key: string,
-  inputRef: MutableRefObject<HTMLInputElement | null>,
-  initialValue: string = '',
-) => {
+const useLocalStorageAdvanced = (key: string, initialValue: string = '') => {
   const [localStorageData, setLocalStorageData] = useState(() => {
     try {
       const item = localStorage.getItem(key);

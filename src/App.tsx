@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { CSSProperties, useContext, useEffect, useState } from 'react';
 import './App.css';
 import { Search } from './components/Search/Search';
 import { Vehicle } from './types/types';
@@ -7,14 +7,16 @@ import { fetchVehiclesThunks } from './components/bll/vehiclesThunks';
 import { Loader } from './components/Loader/Loader';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { PATH } from './routes/Route';
+import { ThemeContext } from './contexts/Theme/Theme.context';
+import { ThemeControl } from './components/ThemeControl/ThemeControl';
 
 export const App = () => {
+  const { theme } = useContext(ThemeContext);
   const [cards, setCards] = useState<Vehicle[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [recordsCount, setRecordsCount] = useState<number>(0);
   const maxPagesQuantity = Math.ceil(recordsCount / 10);
-  console.log('error', error);
 
   const { pageId } = useParams<{ pageId: string }>();
   const navigate = useNavigate();
@@ -56,16 +58,19 @@ export const App = () => {
 
   return (
     <ErrorBoundary>
-      <Search
-        error={error}
-        pagesCount={maxPagesQuantity}
-        isLoading={isLoading}
-        navigationPage={currentPage}
-        fetchVehicles={fetchVehicles}
-        setAppError={setAppError}
-      />
-      <div className={'content'}>
-        {isLoading ? <Loader /> : <Outlet context={{ cards }} />}
+      <div className={'app'} style={{ ...(theme as CSSProperties) }}>
+        <ThemeControl />
+        <Search
+          error={error}
+          pagesCount={maxPagesQuantity}
+          isLoading={isLoading}
+          navigationPage={currentPage}
+          fetchVehicles={fetchVehicles}
+          setAppError={setAppError}
+        />
+        <div className={'content'}>
+          {isLoading ? <Loader /> : <Outlet context={{ cards }} />}
+        </div>
       </div>
     </ErrorBoundary>
   );

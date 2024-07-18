@@ -43,18 +43,20 @@
 
 .details button {
   padding: 8px 12px;
-  color: #000000;
+  color: #ffffff;
   background-color: #f80000;
   border-radius: 5px;
   border: none;
   font-family: Arial, serif;
   font-weight: 600;
   cursor: pointer;
-  transition: color 0.3s ease;
+  opacity: 0.7;
+  transition: all 0.3s ease;
 }
 
 .details button:hover {
   color: #fedb49;
+  opacity: 1;
 }
 
 .details button:disabled {

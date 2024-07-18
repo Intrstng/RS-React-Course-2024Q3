@@ -17,10 +17,7 @@ export const Search: FC<SearchContainerProps> = ({
   setAppError,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [text, setText] = useLocalStorageAdvanced<string>(
-    LOCAL_STORAGE_KEY,
-    inputRef,
-  );
+  const [text, setText] = useLocalStorageAdvanced<string>(LOCAL_STORAGE_KEY);
 
   useEffect(() => {
     fetchVehicles(text, navigationPage);
