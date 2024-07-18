@@ -2,7 +2,7 @@ import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { ErrorBoundary } from './ErrorBoundary';
-import errorImg from '../../assets/error.png';
+import errorImg from '../../assets/error-page.jpg';
 
 const MESSAGE_OK = 'No errors occurred';
 const MESSAGE_ERROR = 'Some error occurred...';
