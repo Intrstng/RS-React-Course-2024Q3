@@ -14,6 +14,7 @@ export const App = () => {
   const [error, setError] = useState<string | null>(null);
   const [recordsCount, setRecordsCount] = useState<number>(0);
   const maxPagesQuantity = Math.ceil(recordsCount / 10);
+  console.log('error', error);
 
   const { pageId } = useParams<{ pageId: string }>();
   const navigate = useNavigate();

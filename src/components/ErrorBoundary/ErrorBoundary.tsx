@@ -1,7 +1,9 @@
 import React, { Component, ErrorInfo } from 'react';
 import { ErrorBoundaryProps, ErrorBoundaryState } from '../../types/types';
 import S from './ErrorBoundary.module.css';
-import errorImg from '../../assets/error.png';
+import errorImg from '../../assets/error-page.jpg';
+import { Button } from '../Button';
+// import errorImg from '../../assets/error.png';
 
 export class ErrorBoundary extends Component<
   ErrorBoundaryProps,
@@ -13,6 +15,8 @@ export class ErrorBoundary extends Component<
       hasError: false,
       errorMessage: null,
     };
+    this.onClickRemoveError = this.onClickRemoveError.bind(this);
+    this.handleRefresh = this.handleRefresh.bind(this);
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
@@ -26,12 +30,30 @@ export class ErrorBoundary extends Component<
     console.log({ error, errorInfo });
   }
 
+  onClickRemoveError() {
+    this.setState({
+      hasError: false,
+      errorMessage: null,
+    });
+  }
+
+  handleRefresh() {
+    this.onClickRemoveError();
+    window.location.reload();
+  }
+
   render() {
     if (this.state.hasError) {
       return (
         <div className={S.errorContainer}>
           <img src={errorImg} alt={'error'} className={S.errorImg} />
           <h1 className={S.error}>{this.state.errorMessage}</h1>
+          <Button
+            className={S.refreshButton}
+            onClickCallBack={this.handleRefresh}
+          >
+            Refresh page
+          </Button>
         </div>
       );
     }
