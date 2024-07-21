@@ -44,7 +44,7 @@ export enum ButtonType {
   SUBMIT = 'submit',
 }
 
-type ButtonColor = 'primary' | 'secondary';
+type ColorScheme = 'primary' | 'secondary' | 'search' | 'error' | 'select';
 
 export type ButtonProps = {
   onClickCallBack?: () => void;
@@ -52,7 +52,7 @@ export type ButtonProps = {
   disabled?: boolean;
   type?: ButtonType;
   children: ReactNode;
-  color?: ButtonColor;
+  color?: ColorScheme;
 };
 
 export type SearchContainerProps = {
@@ -73,6 +73,7 @@ export type SearchFieldProps = {
   placeholder: string;
   value: string;
   onChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+  color?: ColorScheme;
 };
 
 export type PaginationProps = {

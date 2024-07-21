@@ -4,6 +4,9 @@ export enum Color {
   WHITE = '#FFF',
   DARK = 'rgba(0,0,0,0.8)',
   DARK_BLUE = 'rgba(4,44,118,0.9)',
+  YELLOW = 'rgb(254,219,73)',
+  RED = 'rgb(248,0,0)',
+  BLACK = 'rgb(0,0,0)',
 }
 
 export enum ThemeType {
@@ -17,6 +20,9 @@ export type ThemeModel = {
   '--background': Color;
   '--white': Color;
   '--backgroundBtn': Color;
+  '--error': Color;
+  '--search': Color;
+  '--outlined': Color;
 };
 
 export type ThemeContextProps = {

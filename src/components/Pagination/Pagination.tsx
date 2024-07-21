@@ -25,6 +25,7 @@ export const Pagination: FC<PaginationProps> = ({
       <Button
         onClickCallBack={onClickPrevPageHandler}
         disabled={currentPage <= 1}
+        color={'select'}
       >
         Prev
       </Button>
@@ -32,6 +33,7 @@ export const Pagination: FC<PaginationProps> = ({
       <Button
         onClickCallBack={onClickNextPageHandler}
         disabled={currentPage >= pagesCount}
+        color={'select'}
       >
         Next
       </Button>

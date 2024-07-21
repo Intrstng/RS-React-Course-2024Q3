@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import S from './CardList.module.css';
 import { Card } from '../Card/Card';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import { CardsContextType } from '../../types/types';
+import { ThemeType } from '../../contexts/Theme/Theme.model';
+import { ThemeContext } from '../../contexts/Theme/Theme.context';
 
 export const CardList = () => {
   const { cards } = useOutletContext<CardsContextType>();
+  const { themeType, theme } = useContext(ThemeContext);
+
+  const textStyle =
+    themeType === ThemeType.LIGHT
+      ? { color: theme['--search'] }
+      : { color: theme['--white'] };
 
   return (
     <>
@@ -22,7 +30,7 @@ export const CardList = () => {
             })}
           </ul>
         ) : (
-          <h2 className={S.notification}>
+          <h2 style={textStyle} className={S.notification}>
             No results were found for your request...
           </h2>
         )}

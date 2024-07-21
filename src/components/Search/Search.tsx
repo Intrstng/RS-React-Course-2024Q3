@@ -56,17 +56,18 @@ export const Search: FC<SearchContainerProps> = ({
           placeholder={'search'}
           value={text}
           onChangeHandler={onChangeSetInputValueHandler}
+          color={'primary'}
         />
 
         <div className={S.searchControls}>
           <Button
             type={ButtonType.SUBMIT}
-            className={S.searchButton}
             disabled={isLoading}
+            color={'search'}
           >
             Search
           </Button>
-          <Button className={S.errorButton} onClickCallBack={onClickSetError}>
+          <Button onClickCallBack={onClickSetError} color={'error'}>
             Throw error on click
           </Button>
         </div>

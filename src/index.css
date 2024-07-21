@@ -6,6 +6,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --primary: '#FFF';
+  --secondary: '#FFF';
+  --background: '#FFF';
+  --white: '#FFF';
+  --backgroundBtn: '#FFF';
+  --error: '#FFF';
+  --search: '#FFF';
+  --outlined: '#FFF';
 }
 
 body {
@@ -14,4 +22,5 @@ body {
   box-sizing: border-box;
   background: url('./assets/background.png') no-repeat center center fixed;
   background-size: cover;
+  box-sizing: border-box;
 }
