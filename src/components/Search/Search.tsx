@@ -5,6 +5,12 @@ import { SearchField } from '../SearchField/SearchField';
 import { ButtonType, SearchContainerProps } from '../../types/types';
 import useLocalStorageAdvanced from '../hooks/useLocalStorageAdvanced';
 import { Pagination } from '../Pagination/Pagination';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import {
+  currentPageSelector,
+  searchSelector,
+} from '../../redux/selectors/appSelectors';
+import { appActions } from '../../redux/slices/appSlice';
 
 const LOCAL_STORAGE_KEY = 'searchValue';
 
@@ -12,15 +18,17 @@ export const Search: FC<SearchContainerProps> = ({
   error,
   pagesCount,
   isLoading,
-  navigationPage,
   fetchVehicles,
   setAppError,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [text, setText] = useLocalStorageAdvanced<string>(LOCAL_STORAGE_KEY);
+  const [, setTextLS] = useLocalStorageAdvanced<string>(LOCAL_STORAGE_KEY);
+  const searchValue = useAppSelector<string>(searchSelector);
+  const navigationPage = useAppSelector<number>(currentPageSelector);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetchVehicles(text, navigationPage);
+    fetchVehicles(searchValue, navigationPage);
     if (inputRef.current !== null) {
       inputRef.current!.focus();
     }
@@ -28,13 +36,14 @@ export const Search: FC<SearchContainerProps> = ({
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const trimmedText = text.trim();
-    setText(trimmedText);
+    const trimmedText = searchValue.trim();
+    setTextLS(trimmedText);
     fetchVehicles(trimmedText);
   };
 
   const onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setText(e.currentTarget.value);
+    // setTextLS(e.currentTarget.value);
+    dispatch(appActions.setAppSearch({ search: e.currentTarget.value }));
   };
 
   const onClickSetError = () => {
@@ -54,7 +63,7 @@ export const Search: FC<SearchContainerProps> = ({
         <SearchField
           ref={inputRef}
           placeholder={'search'}
-          value={text}
+          value={searchValue}
           onChangeHandler={onChangeSetInputValueHandler}
           color={'primary'}
         />
@@ -72,9 +81,7 @@ export const Search: FC<SearchContainerProps> = ({
           </Button>
         </div>
       </form>
-      {!isLoading && (
-        <Pagination pagesCount={pagesCount} currentPage={navigationPage} />
-      )}
+      {!isLoading && <Pagination pagesCount={pagesCount} />}
     </section>
   );
 };

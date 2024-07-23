@@ -59,7 +59,6 @@ export type SearchContainerProps = {
   error: string | null;
   pagesCount: number;
   isLoading: boolean;
-  navigationPage: number;
   fetchVehicles: (value: string, page?: number) => void;
   setAppError: (error: string | null) => void;
 };
@@ -78,7 +77,6 @@ export type SearchFieldProps = {
 
 export type PaginationProps = {
   pagesCount: number;
-  currentPage: number;
 };
 
 export type DetailsPageParams = {

@@ -1,14 +1,26 @@
 .card {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   font-size: 11px;
   color: #000000;
   background-color: rgba(255, 255, 255, 0.7);
-  padding: 15px;
+  padding: 10px;
   width: 180px;
-  font-family: Arial, serif;
+  font-family: 'Arial', serif;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.25s ease;
+}
+
+.card a {
+  width: 140px;
+  margin-bottom: 10px;
+  padding: 20px;
+  display: inline-block;
+  border: 1px solid grey;
+  border-radius: 5px;
   text-decoration: none;
 }
 
@@ -22,6 +34,11 @@
 
 .card:hover h2 {
   color: #146279;
+}
+
+.card h2 {
+  padding: 0;
+  margin: 0;
 }
 
 .card p {

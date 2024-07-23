@@ -8,13 +8,8 @@ import {
 
 const useLocalStorageAdvanced = (key: string, initialValue: string = '') => {
   const [localStorageData, setLocalStorageData] = useState(() => {
-    try {
-      const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      console.error('Error reading from local storage', error);
-      return initialValue;
-    }
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : initialValue;
   });
 
   function useMount(initRun: () => void) {

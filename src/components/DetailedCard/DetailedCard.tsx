@@ -1,30 +1,24 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import S from './DetailedCard.module.css';
-import { DetailsPageParams, VehicleDetails } from '../../types/types';
-import { getVehicleDetails } from '../bll/vehiclesThunks';
+import { DetailsPageParams } from '../../types/types';
 import { Loader } from '../Loader/Loader';
 import defaultImage from '../../assets/image_default.jpg';
+import { useGetCardDetailsQuery } from '../../redux/api/cardsApi';
 
 export const DetailedCard = () => {
-  const [cardDetails, setCardDetails] = useState<VehicleDetails>({});
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
   const [imgSrc, setImgSrc] = useState<string | null>(null);
-  const { model, manufacturer, length, crew, passengers, consumables } =
-    cardDetails;
+  const [detailedCardId, setDetailedCardId] = useState('');
+  const { data, isFetching, error } = useGetCardDetailsQuery(detailedCardId);
   const detailsRef = useRef<HTMLDivElement | null>(null);
-  const navigate = useNavigate();
   const { pageId, cardId } = useParams<DetailsPageParams>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
-      await getVehicleDetails(
-        setCardDetails,
-        setIsLoading,
-        setError,
-        setImgSrc,
-        cardId,
+      await setDetailedCardId(cardId);
+      await setImgSrc(
+        `https://starwars-visualguide.com/assets/img/vehicles/${cardId}.jpg`,
       );
     };
     fetchData();
@@ -54,11 +48,17 @@ export const DetailedCard = () => {
     setImgSrc(defaultImage);
   };
 
-  if (error !== null) throw new Error(error);
+  if (error) {
+    return (
+      <div className={S.details} ref={detailsRef}>
+        <p className={S.error}>Error loading detailed cards</p>
+      </div>
+    );
+  }
 
   return (
     <div className={S.details} ref={detailsRef}>
-      {isLoading ? (
+      {isFetching ? (
         <Loader />
       ) : (
         <div className={S.detailsCard}>
@@ -71,25 +71,25 @@ export const DetailedCard = () => {
             />
           )}
           <p>
-            Model: <span>{model}</span>
+            Model: <span>{data.model}</span>
           </p>
           <p>
-            Manufacturer: <span>{manufacturer}</span>
+            Manufacturer: <span>{data.manufacturer}</span>
           </p>
           <p>
-            Length: <span>{length}</span>
+            Length: <span>{data.length}</span>
           </p>
           <p>
-            Crew: <span>{crew}</span>
+            Crew: <span>{data.crew}</span>
           </p>
           <p>
-            Passengers: <span>{passengers}</span>
+            Passengers: <span>{data.passengers}</span>
           </p>
           <p>
-            Consumables: <span>{consumables}</span>
+            Consumables: <span>{data.consumables}</span>
           </p>
           <form onSubmit={onSubmitHandler}>
-            <button type="submit" disabled={isLoading}>
+            <button type="submit" disabled={isFetching}>
               Close
             </button>
           </form>

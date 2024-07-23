@@ -4,9 +4,13 @@ import './index.css';
 import { router } from './routes/Route';
 import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from './contexts/Theme/Theme.context';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ThemeProvider>
-    <RouterProvider router={router} />,
+    <Provider store={store}>
+      <RouterProvider router={router} />,
+    </Provider>
   </ThemeProvider>,
 );
