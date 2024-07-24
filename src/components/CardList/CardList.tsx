@@ -7,12 +7,17 @@ import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import { useAppSelector } from '../../redux/store';
 import { domainCardsSelector } from '../../redux/selectors/domainCardsSelectors';
+import { CustomToastify } from '../CustomToastify/CustomToastify';
+import { favoritesSelector } from '../../redux/selectors/favoritesSelectors';
+import { FavoritesItems } from '../../redux/slices/favoritesSlice';
 
 export const CardList = () => {
   const { themeType, theme } = useContext(ThemeContext);
-
   const domainCards =
     useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
+  const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
+  console.log('favoritesItems', favoritesItems);
+
   console.log(domainCards.results);
   const textStyle =
     themeType === ThemeType.LIGHT
@@ -27,7 +32,11 @@ export const CardList = () => {
             {domainCards?.results.map((card) => {
               return (
                 <li key={card.id}>
-                  <Card card={card} id={card.id} isChecked={card.isChecked} />
+                  <Card
+                    card={card}
+                    cardId={card.id}
+                    isChecked={card.isChecked}
+                  />
                 </li>
               );
             })}
@@ -41,6 +50,7 @@ export const CardList = () => {
       <aside>
         <Outlet />
       </aside>
+      {Object.keys(favoritesItems)?.length > 0 && <CustomToastify />}
     </>
   );
 };

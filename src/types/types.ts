@@ -49,7 +49,14 @@ export enum ButtonType {
   SUBMIT = 'submit',
 }
 
-type ColorScheme = 'primary' | 'secondary' | 'search' | 'error' | 'select';
+type ColorScheme =
+  | 'primary'
+  | 'secondary'
+  | 'search'
+  | 'error'
+  | 'select'
+  | 'alert'
+  | 'delete';
 
 export type ButtonProps = {
   onClickCallBack?: () => void;
@@ -67,7 +74,7 @@ export type SearchContainerProps = {
 
 export type CardProps = {
   card: Vehicle;
-  id: string;
+  cardId: string;
   isChecked: boolean;
 };
 

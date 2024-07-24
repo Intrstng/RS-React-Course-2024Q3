@@ -4,6 +4,7 @@ import {
   VehicleDetailsDomain,
   VehiclesResponse,
 } from '../../types/types';
+import { FavoritesItems } from './favoritesSlice';
 
 const cardsSlice = createSlice({
   name: 'cards',
@@ -34,6 +35,18 @@ const cardsSlice = createSlice({
       if (idx !== -1) {
         state.domainCards.results[idx].isChecked = action.payload.isChecked;
       }
+    },
+    clearAllFromFavorites(state) {
+      state.domainCards.results.forEach((card) => (card.isChecked = false));
+    },
+    restoreToFavorites(
+      state,
+      action: PayloadAction<{ favorites: FavoritesItems }>,
+    ) {
+      state.domainCards?.results?.forEach((card) => {
+        Object.keys(action.payload.favorites).includes(card.id) &&
+          (card.isChecked = true);
+      });
     },
   },
 });

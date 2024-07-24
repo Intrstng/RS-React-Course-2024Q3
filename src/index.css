@@ -14,6 +14,8 @@
   --error: '#FFF';
   --search: '#FFF';
   --outlined: '#FFF';
+  --alert: '#FFF';
+  --delete: '#FFF';
   --form-control-color: #652f9b;
   --form-control-disabled: #8e8e8e;
 }

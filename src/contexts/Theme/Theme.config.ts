@@ -10,6 +10,8 @@ export const THEMES: Record<ThemeType, ThemeModel> = {
     '--error': Color.RED,
     '--search': Color.YELLOW,
     '--outlined': Color.LIGHT,
+    '--alert': Color.GREEN,
+    '--delete': Color.ORANGE,
   },
   [ThemeType.DARK]: {
     '--primary': Color.WHITE,
@@ -20,5 +22,7 @@ export const THEMES: Record<ThemeType, ThemeModel> = {
     '--error': Color.RED,
     '--search': Color.YELLOW,
     '--outlined': Color.WHITE,
+    '--alert': Color.GREEN,
+    '--delete': Color.ORANGE,
   },
 };

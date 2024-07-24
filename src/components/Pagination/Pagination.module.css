@@ -1,5 +1,5 @@
 .paginationBlock {
-  margin: 0 auto 40px;
+  margin: 0 auto 50px;
   width: 180px;
   display: flex;
   flex-wrap: nowrap;
@@ -26,6 +26,10 @@
 .paginationBlock button:disabled {
   background-color: rgba(157, 157, 157, 0.6);
   color: rgba(0, 0, 0, 0.6);
+}
+
+.paginationBlock button:disabled:hover {
+  cursor: not-allowed;
 }
 
 .paginationBlock span {

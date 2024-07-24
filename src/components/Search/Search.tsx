@@ -18,6 +18,8 @@ import {
 import { cardsActions } from '../../redux/slices/cardsSlice';
 import { useGetCardsQuery } from '../../redux/api/cardsApi';
 import { useNavigate } from 'react-router-dom';
+import { favoritesSelector } from '../../redux/selectors';
+import { FavoritesInitialState } from '../../redux/slices/favoritesSlice';
 
 export const Search = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -33,12 +35,13 @@ export const Search = () => {
   });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  console.log(data);
+  const favoritesItems =
+    useAppSelector<FavoritesInitialState>(favoritesSelector);
 
   useEffect(() => {
     dispatch(appActions.setAppStatus({ isLoading: isFetching }));
     dispatch(cardsActions.setDomainCards({ cards: data }));
+    dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
     dispatch(
       appActions.setAppError({ error: isError === false ? null : error.error }),
     );

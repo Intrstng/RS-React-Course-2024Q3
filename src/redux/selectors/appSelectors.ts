@@ -7,3 +7,5 @@ export const errorSelector = (state: AppRootState): string | null =>
   state.app.error;
 export const currentPageSelector = (state: AppRootState): number =>
   state.app.currentPage;
+export const isToastifyOpenSelector = (state: AppRootState): boolean =>
+  state.app.isToastifyOpen;

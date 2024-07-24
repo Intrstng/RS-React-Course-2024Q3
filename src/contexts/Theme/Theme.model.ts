@@ -6,7 +6,10 @@ export enum Color {
   DARK_BLUE = 'rgba(4,44,118,0.9)',
   YELLOW = 'rgb(254,219,73)',
   RED = 'rgb(248,0,0)',
+  ORANGE = 'rgb(248,128,0)',
+  // ORANGE = 'rgb(248,91,0)',
   BLACK = 'rgb(0,0,0)',
+  GREEN = 'rgb(0,252,17)',
 }
 
 export enum ThemeType {
@@ -23,6 +26,8 @@ export type ThemeModel = {
   '--error': Color;
   '--search': Color;
   '--outlined': Color;
+  '--alert': Color;
+  '--delete': Color;
 };
 
 export type ThemeContextProps = {

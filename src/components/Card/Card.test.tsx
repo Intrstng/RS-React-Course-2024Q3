@@ -8,7 +8,7 @@ import { mockCards } from '../../test/mockData';
 import { DetailedCard } from '../DetailedCard/DetailedCard';
 import { getVehicleDetails } from '../bll/vehiclesThunks';
 
-const MOCK_ID = 1;
+const MOCK_ID = '1';
 
 vi.mock('../bll/vehiclesThunks', () => ({
   getVehicleDetails: vi.fn(),

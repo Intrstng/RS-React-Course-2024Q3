@@ -3,8 +3,8 @@ import S from './SuperCheckBox.module.css';
 
 export const SuperCheckBox: FC<SuperCheckBoxProps> = ({
   isChecked,
-  children,
   onChangeHandler,
+  children,
 }) => {
   const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     onChangeHandler(e);
@@ -27,6 +27,6 @@ export const SuperCheckBox: FC<SuperCheckBoxProps> = ({
 
 export type SuperCheckBoxProps = {
   isChecked: boolean;
-  children: ReactNode;
   onChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+  children: ReactNode;
 };

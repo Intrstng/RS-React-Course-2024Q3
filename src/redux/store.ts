@@ -5,10 +5,8 @@ import {
   UnknownAction,
 } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { appReducer } from './slices/appSlice';
 import { cardsApi } from './api/cardsApi';
-import { cardsReducer } from './slices/cardsSlice';
-import { favoritesReducer } from './slices/favoritesSlice';
+import { appReducer, cardsReducer, favoritesReducer } from './slices';
 
 export const store = configureStore({
   reducer: {

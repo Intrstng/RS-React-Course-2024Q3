@@ -11,6 +11,7 @@ const appSlice = createSlice({
     isLoading: false,
     error: null,
     currentPage: 1,
+    isToastifyOpen: true,
   } as AppInitialState,
   reducers: {
     setAppSearch(state, action: PayloadAction<{ search: string }>) {
@@ -25,14 +26,21 @@ const appSlice = createSlice({
     setAppCurrentPage(state, action: PayloadAction<{ currentPage: number }>) {
       state.currentPage = action.payload.currentPage;
     },
+    toggleIsToastifyOpen(state) {
+      state.isToastifyOpen = !state.isToastifyOpen;
+    },
+    showIsToastify(state) {
+      state.isToastifyOpen = true;
+    },
   },
 });
 
-export type AppInitialState = {
+type AppInitialState = {
   search: string;
   isLoading: boolean;
   error: string | null;
   currentPage: number;
+  isToastifyOpen: boolean;
 };
 
 export const appReducer = appSlice.reducer;
