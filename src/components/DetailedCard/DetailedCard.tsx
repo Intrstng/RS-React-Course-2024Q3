@@ -9,7 +9,7 @@ import { useGetCardDetailsQuery } from '../../redux/api/cardsApi';
 export const DetailedCard = () => {
   const [imgSrc, setImgSrc] = useState<string | null>(null);
   const [detailedCardId, setDetailedCardId] = useState('');
-  const { data, isFetching, error } = useGetCardDetailsQuery(detailedCardId);
+  const { data, isFetching, isError } = useGetCardDetailsQuery(detailedCardId);
   const detailsRef = useRef<HTMLDivElement | null>(null);
   const { pageId, cardId } = useParams<DetailsPageParams>();
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ export const DetailedCard = () => {
     setImgSrc(defaultImage);
   };
 
-  if (error) {
+  if (isError) {
     return (
       <div className={S.details} ref={detailsRef}>
         <p className={S.error}>Error loading detailed cards</p>

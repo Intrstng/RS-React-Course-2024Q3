@@ -1,4 +1,11 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect, useRef } from 'react';
+import React, {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import S from './Search.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
@@ -10,40 +17,52 @@ import {
   currentPageSelector,
   searchSelector,
 } from '../../redux/selectors/appSelectors';
-import { appActions } from '../../redux/slices/appSlice';
-
-const LOCAL_STORAGE_KEY = 'searchValue';
+import {
+  appActions,
+  LOCAL_STORAGE_SEARCH_KEY,
+} from '../../redux/slices/appSlice';
+import { cardsActions } from '../../redux/slices/cardsSlice';
+import { useGetCardsQuery } from '../../redux/api/cardsApi';
 
 export const Search: FC<SearchContainerProps> = ({
   error,
-  pagesCount,
-  isLoading,
-  fetchVehicles,
+  // pagesCount,
+  // isLoading,
   setAppError,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [, setTextLS] = useLocalStorageAdvanced<string>(LOCAL_STORAGE_KEY);
+  const [text, setText] = useLocalStorageAdvanced<string>(
+    LOCAL_STORAGE_SEARCH_KEY,
+  );
   const searchValue = useAppSelector<string>(searchSelector);
   const navigationPage = useAppSelector<number>(currentPageSelector);
   const dispatch = useAppDispatch();
 
+  const [search, setSearch] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+
+  const { data } = useGetCardsQuery({ search: search, page: page });
+  console.log(data);
   useEffect(() => {
-    fetchVehicles(searchValue, navigationPage);
+    setSearch(searchValue);
+    setPage(navigationPage);
+    dispatch(cardsActions.setDomainCards({ cards: data }));
+
     if (inputRef.current !== null) {
       inputRef.current!.focus();
     }
-  }, [navigationPage]);
+  }, [searchValue, navigationPage, data]);
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const trimmedText = searchValue.trim();
-    setTextLS(trimmedText);
-    fetchVehicles(trimmedText);
+    const trimmedText = text.trim();
+    setText(trimmedText);
+    setSearch(trimmedText);
+    dispatch(appActions.setAppSearch({ search: trimmedText }));
   };
 
   const onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    // setTextLS(e.currentTarget.value);
-    dispatch(appActions.setAppSearch({ search: e.currentTarget.value }));
+    setText(e.currentTarget.value);
   };
 
   const onClickSetError = () => {
@@ -63,7 +82,7 @@ export const Search: FC<SearchContainerProps> = ({
         <SearchField
           ref={inputRef}
           placeholder={'search'}
-          value={searchValue}
+          value={text}
           onChangeHandler={onChangeSetInputValueHandler}
           color={'primary'}
         />
@@ -71,7 +90,7 @@ export const Search: FC<SearchContainerProps> = ({
         <div className={S.searchControls}>
           <Button
             type={ButtonType.SUBMIT}
-            disabled={isLoading}
+            // disabled={isLoading}
             color={'search'}
           >
             Search
@@ -81,7 +100,8 @@ export const Search: FC<SearchContainerProps> = ({
           </Button>
         </div>
       </form>
-      {!isLoading && <Pagination pagesCount={pagesCount} />}
+      {/*{!isLoading && <Pagination pagesCount={pagesCount} />}*/}
+      {<Pagination />}
     </section>
   );
 };

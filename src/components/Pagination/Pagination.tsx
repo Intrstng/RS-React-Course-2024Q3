@@ -1,16 +1,18 @@
-import React, { FC } from 'react';
+import React from 'react';
 import S from './Pagination.module.css';
-import { PaginationProps } from '../../types/types';
 import { Button } from '../Button';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { currentPageSelector } from '../../redux/selectors/appSelectors';
 import { appActions } from '../../redux/slices/appSlice';
+import { domainCardsSelector } from '../../redux/selectors/domainCardsSelectors';
 
-export const Pagination: FC<PaginationProps> = ({ pagesCount }) => {
+export const Pagination = () => {
   const navigate = useNavigate();
   const currentPage = useAppSelector(currentPageSelector);
   const dispatch = useAppDispatch();
+  const domainCards = useAppSelector(domainCardsSelector);
+  const pagesCount = Math.ceil(domainCards?.count / 10);
 
   const onClickPrevPageHandler = () => {
     if (currentPage > 1) {

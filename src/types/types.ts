@@ -22,6 +22,11 @@ export type VehicleDetails = Vehicle & {
   url: string;
 };
 
+export type VehicleDetailsDomain = VehicleDetails & {
+  id: string;
+  isChecked: boolean;
+};
+
 export type VehiclesResponse<T> = {
   count: number;
   next: string;
@@ -57,15 +62,15 @@ export type ButtonProps = {
 
 export type SearchContainerProps = {
   error: string | null;
-  pagesCount: number;
-  isLoading: boolean;
-  fetchVehicles: (value: string, page?: number) => void;
+  // pagesCount: number;
+  // isLoading: boolean;
   setAppError: (error: string | null) => void;
 };
 
 export type CardProps = {
   card: Vehicle;
-  id: number;
+  id: string;
+  isChecked: boolean;
 };
 
 export type SearchFieldProps = {
@@ -73,10 +78,6 @@ export type SearchFieldProps = {
   value: string;
   onChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void;
   color?: ColorScheme;
-};
-
-export type PaginationProps = {
-  pagesCount: number;
 };
 
 export type DetailsPageParams = {
