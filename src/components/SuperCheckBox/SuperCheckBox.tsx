@@ -1,21 +1,13 @@
-import React, { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent, FC, ReactNode } from 'react';
 import S from './SuperCheckBox.module.css';
-import { cardsActions } from '../../redux/slices/cardsSlice';
-import { useAppDispatch } from '../../redux/store';
 
 export const SuperCheckBox: FC<SuperCheckBoxProps> = ({
-  cardId,
   isChecked,
+  children,
+  onChangeHandler,
 }) => {
-  const dispatch = useAppDispatch();
-
-  const onChangeInputStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      cardsActions.toggleDomainCardToFavorites({
-        cardId,
-        isChecked: e.currentTarget.checked,
-      }),
-    );
+  const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    onChangeHandler(e);
   };
 
   return (
@@ -25,15 +17,16 @@ export const SuperCheckBox: FC<SuperCheckBoxProps> = ({
           type="checkbox"
           name="checkbox"
           checked={isChecked}
-          onChange={onChangeInputStatusHandler}
+          onChange={onChangeInputHandler}
         />
-        Save to favorites
+        {children}
       </label>
     </div>
   );
 };
 
 export type SuperCheckBoxProps = {
-  cardId: string;
   isChecked: boolean;
+  children: ReactNode;
+  onChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void;
 };

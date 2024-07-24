@@ -1,20 +1,14 @@
-import React, {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useRef } from 'react';
 import S from './Search.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
-import { ButtonType, SearchContainerProps } from '../../types/types';
+import { ButtonType } from '../../types/types';
 import useLocalStorageAdvanced from '../hooks/useLocalStorageAdvanced';
 import { Pagination } from '../Pagination/Pagination';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import {
   currentPageSelector,
+  errorSelector,
   searchSelector,
 } from '../../redux/selectors/appSelectors';
 import {
@@ -23,41 +17,43 @@ import {
 } from '../../redux/slices/appSlice';
 import { cardsActions } from '../../redux/slices/cardsSlice';
 import { useGetCardsQuery } from '../../redux/api/cardsApi';
+import { useNavigate } from 'react-router-dom';
 
-export const Search: FC<SearchContainerProps> = ({
-  error,
-  // pagesCount,
-  // isLoading,
-  setAppError,
-}) => {
+export const Search = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [text, setText] = useLocalStorageAdvanced<string>(
     LOCAL_STORAGE_SEARCH_KEY,
   );
   const searchValue = useAppSelector<string>(searchSelector);
   const navigationPage = useAppSelector<number>(currentPageSelector);
+  const appError = useAppSelector<string | null>(errorSelector);
+  const { data, isFetching, isError, error } = useGetCardsQuery({
+    search: searchValue,
+    page: navigationPage,
+  });
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const [search, setSearch] = useState<string>('');
-  const [page, setPage] = useState<number>(1);
-
-  const { data } = useGetCardsQuery({ search: search, page: page });
   console.log(data);
+
   useEffect(() => {
-    setSearch(searchValue);
-    setPage(navigationPage);
+    dispatch(appActions.setAppStatus({ isLoading: isFetching }));
     dispatch(cardsActions.setDomainCards({ cards: data }));
+    dispatch(
+      appActions.setAppError({ error: isError === false ? null : error.error }),
+    );
 
     if (inputRef.current !== null) {
       inputRef.current!.focus();
     }
-  }, [searchValue, navigationPage, data]);
+  }, [searchValue, navigationPage, data, isFetching, isError, error]);
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    navigate(`/page/1`);
+    dispatch(appActions.setAppCurrentPage({ currentPage: 1 }));
     const trimmedText = text.trim();
     setText(trimmedText);
-    setSearch(trimmedText);
     dispatch(appActions.setAppSearch({ search: trimmedText }));
   };
 
@@ -66,12 +62,15 @@ export const Search: FC<SearchContainerProps> = ({
   };
 
   const onClickSetError = () => {
-    setAppError(
-      "An error occurred when user clicked the 'Throw error on click' button",
+    dispatch(
+      appActions.setAppError({
+        error:
+          "An error occurred when user clicked the 'Throw error on click' button",
+      }),
     );
   };
 
-  if (error !== null) throw new Error(error);
+  if (appError !== null) throw new Error(appError);
 
   return (
     <section>
@@ -90,7 +89,7 @@ export const Search: FC<SearchContainerProps> = ({
         <div className={S.searchControls}>
           <Button
             type={ButtonType.SUBMIT}
-            // disabled={isLoading}
+            disabled={isFetching}
             color={'search'}
           >
             Search
@@ -100,8 +99,7 @@ export const Search: FC<SearchContainerProps> = ({
           </Button>
         </div>
       </form>
-      {/*{!isLoading && <Pagination pagesCount={pagesCount} />}*/}
-      {<Pagination />}
+      {!isFetching && <Pagination />}
     </section>
   );
 };

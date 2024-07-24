@@ -62,8 +62,6 @@ export type ButtonProps = {
 
 export type SearchContainerProps = {
   error: string | null;
-  // pagesCount: number;
-  // isLoading: boolean;
   setAppError: (error: string | null) => void;
 };
 

@@ -8,13 +8,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { appReducer } from './slices/appSlice';
 import { cardsApi } from './api/cardsApi';
 import { cardsReducer } from './slices/cardsSlice';
+import { favoritesReducer } from './slices/favoritesSlice';
 
 export const store = configureStore({
   reducer: {
     [cardsApi.reducerPath]: cardsApi.reducer,
     app: appReducer,
     cards: cardsReducer,
-    // favorites: favoritesReducer
+    favorites: favoritesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(cardsApi.middleware),

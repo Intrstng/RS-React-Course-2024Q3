@@ -8,7 +8,7 @@ const appSlice = createSlice({
     search: localStorage.getItem(LOCAL_STORAGE_SEARCH_KEY)
       ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_SEARCH_KEY))
       : '',
-    status: 'idle',
+    isLoading: false,
     error: null,
     currentPage: 1,
   } as AppInitialState,
@@ -16,8 +16,8 @@ const appSlice = createSlice({
     setAppSearch(state, action: PayloadAction<{ search: string }>) {
       state.search = action.payload.search;
     },
-    setAppStatus(state, action: PayloadAction<{ status: Status }>) {
-      state.status = action.payload.status;
+    setAppStatus(state, action: PayloadAction<{ isLoading: boolean }>) {
+      state.isLoading = action.payload.isLoading;
     },
     setAppError(state, action: PayloadAction<{ error: string | null }>) {
       state.error = action.payload.error;
@@ -28,11 +28,9 @@ const appSlice = createSlice({
   },
 });
 
-export type Status = 'idle' | 'loading' | 'succeeded' | 'failed';
-
 export type AppInitialState = {
   search: string;
-  status: Status;
+  isLoading: boolean;
   error: string | null;
   currentPage: number;
 };
