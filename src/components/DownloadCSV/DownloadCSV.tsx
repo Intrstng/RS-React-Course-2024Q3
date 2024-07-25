@@ -6,15 +6,13 @@ export const DownloadCSV: FC<DownloadCSVProps> = ({
   fileName = 'download',
   color,
 }) => {
-  const selectedCardIdArray = Object.keys(data);
-  const selectedCards = selectedCardIdArray.map((cardId) => data[cardId]);
   const csvData = [];
-  let csvResult = '';
-  const titleNames = Object.keys(selectedCards[0]);
-  const fullFileName = `${selectedCards.length}_${fileName}.csv`;
+  let csvResult: string = '';
+  const titleNames = Object.keys(data[0]);
+  const fullFileName = `${data.length}_${fileName}.csv`;
 
   csvData.push(titleNames);
-  selectedCards.forEach((item) => {
+  data.forEach((item) => {
     csvData.push(Object.values(item));
   });
 

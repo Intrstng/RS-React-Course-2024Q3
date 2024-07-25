@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactNode } from 'react';
-import { FavoritesItems } from '../../redux/slices/favoritesSlice';
+import { RefineFavoritesItemsStructureToCSV } from '../uitils/refineFavoritesItemsStructureToCSV';
 
 export type Vehicle = {
   name: string;
@@ -92,7 +92,7 @@ export type DetailsPageParams = {
 };
 
 export type DownloadCSVProps = {
-  data: FavoritesItems;
+  data: RefineFavoritesItemsStructureToCSV;
   fileName?: string;
   color?: ColorScheme;
 };

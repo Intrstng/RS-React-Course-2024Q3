@@ -21,7 +21,6 @@ export const CardList = () => {
   const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
   console.log('favoritesItems', favoritesItems);
 
-  console.log(domainCards.results);
   const textStyle =
     themeType === ThemeType.LIGHT
       ? { color: theme['--search'] }

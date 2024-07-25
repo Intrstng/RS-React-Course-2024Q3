@@ -12,6 +12,7 @@ import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import { isToastifyOpenSelector } from '../../redux/selectors/appSelectors';
 import { appActions } from '../../redux/slices/appSlice';
 import { DownloadCSV } from '../DownloadCSV/DownloadCSV';
+import { refineFavoritesItemsStructureToCSV } from '../../shared/uitils/refineFavoritesItemsStructureToCSV';
 
 export const CustomToastify = () => {
   const isToastifyOpen = useAppSelector<boolean>(isToastifyOpenSelector);
@@ -63,7 +64,7 @@ export const CustomToastify = () => {
               Unselect all
             </Button>
             <DownloadCSV
-              data={favoritesItems}
+              data={refineFavoritesItemsStructureToCSV(favoritesItems)}
               fileName={'vehicles'}
               color={'alert'}
             />

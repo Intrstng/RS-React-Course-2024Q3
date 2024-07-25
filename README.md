@@ -31,3 +31,6 @@
 6. To start **testing with coverage report** - run command in CLI `npm run test:coverage`
 
 7. To check how is data saved to Local Storage on unmount of the Search component, please click on the **Throw error on click** button to unmount Search component and control console in DevTools in your browser.
+
+`https://www.convertcsv.com/csv-viewer-editor.htm`
+`https://csv-viewer-online.github.io/`
