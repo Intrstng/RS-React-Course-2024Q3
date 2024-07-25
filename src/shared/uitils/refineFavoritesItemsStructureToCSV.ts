@@ -6,8 +6,9 @@ export const refineFavoritesItemsStructureToCSV = (data: FavoritesItems) => {
   return selectedCards.map((card) => {
     return {
       ...card,
-      films: card.films.join('; '),
-      pilots: card.pilots.join('; '),
+      manufacturer: card.manufacturer.replace(/,/g, ' -'),
+      films: card.films.join('  '),
+      pilots: card.pilots.join('  '),
     };
   });
 };

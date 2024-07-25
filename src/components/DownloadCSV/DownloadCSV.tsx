@@ -12,6 +12,7 @@ export const DownloadCSV: FC<DownloadCSVProps> = ({
   const fullFileName = `${data.length}_${fileName}.csv`;
 
   csvData.push(titleNames);
+
   data.forEach((item) => {
     csvData.push(Object.values(item));
   });
