@@ -1,4 +1,4 @@
-import { VehicleDetails, VehiclesResponse } from '../types/types';
+import { VehicleDetails, VehiclesResponse } from '../shared/types/types';
 
 export const mockCards: VehicleDetails[] = [
   {

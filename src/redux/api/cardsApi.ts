@@ -8,7 +8,7 @@ import type {
   FetchArgs,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { VehicleDetails, VehiclesResponse } from '../../types/types';
+import { VehicleDetails, VehiclesResponse } from '../../shared/types/types';
 
 export const cardsApi = createApi({
   reducerPath: 'cardsApi',

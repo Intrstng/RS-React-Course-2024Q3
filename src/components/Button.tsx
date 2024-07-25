@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ButtonProps } from '../types/types';
+import { ButtonProps } from '../shared/types/types';
 
 export const Button: FC<ButtonProps> = ({
   onClickCallBack,

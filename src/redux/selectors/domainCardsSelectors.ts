@@ -1,5 +1,8 @@
 import { AppRootState } from '../store';
-import { VehicleDetailsDomain, VehiclesResponse } from '../../types/types';
+import {
+  VehicleDetailsDomain,
+  VehiclesResponse,
+} from '../../shared/types/types';
 
 export const domainCardsSelector = (
   state: AppRootState,

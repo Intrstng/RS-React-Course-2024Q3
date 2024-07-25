@@ -10,6 +10,7 @@
 }
 
 .toastifyHeader {
+  margin-bottom: 10px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -58,7 +59,7 @@ p {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
-  max-height: 160px;
+  max-height: 115px;
   overflow-y: auto;
 }
 
@@ -72,6 +73,7 @@ p {
 
 .toastifyControls {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  gap: 15px;
 }

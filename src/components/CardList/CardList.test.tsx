@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter, Outlet, Routes, Route } from 'react-router-dom';
 import { CardList } from './CardList';
 import '@testing-library/jest-dom';
-import { VehicleDetails } from '../../types/types';
+import { VehicleDetails } from '../../shared/types/types';
 import { ReactNode } from 'react';
 import { mockCards } from '../../test/mockData';
 

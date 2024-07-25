@@ -1,9 +1,11 @@
 import React, { Component, ErrorInfo } from 'react';
-import { ErrorBoundaryProps, ErrorBoundaryState } from '../../types/types';
+import {
+  ErrorBoundaryProps,
+  ErrorBoundaryState,
+} from '../../shared/types/types';
 import S from './ErrorBoundary.module.css';
 import errorImg from '../../assets/error-page.jpg';
 import { Button } from '../Button';
-// import errorImg from '../../assets/error.png';
 
 export class ErrorBoundary extends Component<
   ErrorBoundaryProps,

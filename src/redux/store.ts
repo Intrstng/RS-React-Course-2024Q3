@@ -30,8 +30,3 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<AppRootState> = useSelector;
-
-Object.defineProperty(window, 'store', {
-  value: store,
-  writable: true,
-});

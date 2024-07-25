@@ -1,4 +1,5 @@
 import { ChangeEvent, ReactNode } from 'react';
+import { FavoritesItems } from '../../redux/slices/favoritesSlice';
 
 export type Vehicle = {
   name: string;
@@ -49,7 +50,7 @@ export enum ButtonType {
   SUBMIT = 'submit',
 }
 
-type ColorScheme =
+export type ColorScheme =
   | 'primary'
   | 'secondary'
   | 'search'
@@ -90,6 +91,8 @@ export type DetailsPageParams = {
   cardId: string;
 };
 
-export type CardsContextType = {
-  cards: VehicleDetails[];
+export type DownloadCSVProps = {
+  data: FavoritesItems;
+  fileName?: string;
+  color?: ColorScheme;
 };

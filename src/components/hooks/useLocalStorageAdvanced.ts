@@ -51,17 +51,11 @@ const useLocalStorageAdvanced = (key: string, initialValue: string = '') => {
   };
 
   useMount(() => {
-    console.log(
-      'Component mounted with data from localStorage: ',
-      localStorageData,
-    );
+    console.log('Component mounted with data from localStorage');
   });
 
   useUnMount(() => {
-    console.log(
-      'Component unmounted with data saved to localStorage: ',
-      localStorageData,
-    );
+    console.log('Component unmounted with data saved to localStorage');
     localStorage.setItem(key, JSON.stringify(localStorageData));
   }, [localStorageData]);
 

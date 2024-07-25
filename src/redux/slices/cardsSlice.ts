@@ -3,7 +3,7 @@ import {
   VehicleDetails,
   VehicleDetailsDomain,
   VehiclesResponse,
-} from '../../types/types';
+} from '../../shared/types/types';
 import { FavoritesItems } from './favoritesSlice';
 
 const cardsSlice = createSlice({

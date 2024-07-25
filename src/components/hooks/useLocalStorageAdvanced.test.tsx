@@ -4,7 +4,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Search } from '../Search/Search';
 import '@testing-library/jest-dom';
-import { SearchContainerProps } from '../../types/types';
+import { SearchContainerProps } from '../../shared/types/types';
 
 const mockFetchVehicles = vi.fn();
 const mockSetAppError = vi.fn();

@@ -3,7 +3,7 @@ import {
   CardProps,
   VehicleDetailsDomain,
   VehiclesResponse,
-} from '../../types/types';
+} from '../../shared/types/types';
 import { NavLink } from 'react-router-dom';
 import S from './Card.module.css';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
@@ -35,16 +35,13 @@ export const Card: FC<CardProps> = ({ card, cardId, isChecked }) => {
         isChecked: e.currentTarget.checked,
       }),
     );
-    // dispatch(favoritesActions.toggleToFavorites({ cardId }));
-    dispatch(appActions.showIsToastify());
-
-    //////////////////////////////////////////////////////////////////
     dispatch(
       favoritesActions.toggleToFavorites({
         cardId,
         cards: domainCards.results,
       }),
     );
+    dispatch(appActions.showIsToastify());
   };
 
   return (

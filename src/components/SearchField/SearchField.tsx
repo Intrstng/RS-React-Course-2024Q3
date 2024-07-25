@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { SearchFieldProps } from '../../types/types';
+import { SearchFieldProps } from '../../shared/types/types';
 
 export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(
   ({ placeholder, value, onChangeHandler, color }, ref) => {

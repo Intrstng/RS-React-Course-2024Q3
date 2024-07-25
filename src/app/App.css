@@ -120,32 +120,34 @@ li {
   color: var(--primary);
 }
 
-.button--alert {
-  padding: 10px 14px;
+.link--alert {
+  display: inline-block;
+  padding: 8px 12px;
   border-radius: 5px;
   border: none;
   color: var(--secondary);
   background-color: var(--backgroundBtn);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   letter-spacing: 1px;
   font-family: system-ui, sans-serif;
   font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
   transition: all 0.3s ease;
 }
 
-.button--alert:hover {
+.link--alert:hover {
   color: var(--backgroundBtn);
   background-color: var(--secondary);
 }
 
 .button--delete {
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-radius: 5px;
   border: none;
   color: var(--backgroundBtn);
   background-color: var(--delete);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   letter-spacing: 1px;
   font-family: system-ui, sans-serif;
   font-weight: 600;

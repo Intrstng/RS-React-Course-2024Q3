@@ -1,7 +1,7 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import S from './DetailedCard.module.css';
-import { DetailsPageParams } from '../../types/types';
+import { DetailsPageParams } from '../../shared/types/types';
 import { Loader } from '../Loader/Loader';
 import defaultImage from '../../assets/image_default.jpg';
 import { useGetCardDetailsQuery } from '../../redux/api/cardsApi';

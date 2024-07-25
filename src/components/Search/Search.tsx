@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useRef } from 'react';
 import S from './Search.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
-import { ButtonType } from '../../types/types';
+import { ButtonType } from '../../shared/types/types';
 import useLocalStorageAdvanced from '../hooks/useLocalStorageAdvanced';
 import { Pagination } from '../Pagination/Pagination';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
@@ -19,7 +19,7 @@ import { cardsActions } from '../../redux/slices/cardsSlice';
 import { useGetCardsQuery } from '../../redux/api/cardsApi';
 import { useNavigate } from 'react-router-dom';
 import { favoritesSelector } from '../../redux/selectors';
-import { FavoritesInitialState } from '../../redux/slices/favoritesSlice';
+import { FavoritesItems } from '../../redux/slices/favoritesSlice';
 
 export const Search = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -35,8 +35,7 @@ export const Search = () => {
   });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const favoritesItems =
-    useAppSelector<FavoritesInitialState>(favoritesSelector);
+  const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
 
   useEffect(() => {
     dispatch(appActions.setAppStatus({ isLoading: isFetching }));
