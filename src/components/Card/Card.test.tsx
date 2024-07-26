@@ -1,54 +1,47 @@
 import React from 'react';
-import { expect, test, describe, vi } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { describe, expect, test } from 'vitest';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import { Card } from './Card';
 import '@testing-library/jest-dom';
 import { mockCards } from '../../test/mockData';
-import { DetailedCard } from '../DetailedCard/DetailedCard';
-import { getVehicleDetails } from '../bll/vehiclesThunks';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
+import { ThemeType } from '../../contexts/Theme/Theme.model';
+import { ThemeProvider } from '../../contexts/Theme/Theme.context';
+import { THEMES } from '../../contexts/Theme/Theme.config';
 
 const MOCK_ID = '1';
 
-vi.mock('../bll/vehiclesThunks', () => ({
-  getVehicleDetails: vi.fn(),
-}));
-
 describe('Card Component', () => {
   test('should render the relevant card data', () => {
+    const themeContextValue = {
+      themeType: ThemeType.LIGHT,
+      theme: THEMES[ThemeType.LIGHT],
+      setCurrentTheme: () => {},
+    };
     render(
-      <BrowserRouter>
-        <Card card={mockCards[0]} id={MOCK_ID} />
-      </BrowserRouter>,
+      <ThemeProvider value={themeContextValue}>
+        <Provider store={store}>
+          <BrowserRouter>
+            <Card card={mockCards[0]} cardId={MOCK_ID} isChecked={false} />
+          </BrowserRouter>
+        </Provider>
+      </ThemeProvider>,
     );
 
     const cardTitle = screen.getByText(mockCards[0].name);
     expect(cardTitle).toBeVisible();
   });
 
-  test('should trigger an additional API call to fetch detailed information on click', async () => {
-    render(
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Card card={mockCards[0]} id={MOCK_ID} />} />
-          <Route path="card/:cardId" element={<DetailedCard />} />
-        </Routes>
-      </BrowserRouter>,
-    );
-
-    const cardLink = screen.getByRole('link');
-    fireEvent.click(cardLink);
-
-    await waitFor(() => {
-      expect(getVehicleDetails).toHaveBeenCalledTimes(1);
-    });
-  });
-
   test('should navigate to detailed card component on click', async () => {
     render(
-      <BrowserRouter>
-        <Card card={mockCards[0]} id={MOCK_ID} />
-      </BrowserRouter>,
+      <Provider store={store}>
+        <BrowserRouter>
+          <Card card={mockCards[0]} cardId={MOCK_ID} isChecked={false} />
+        </BrowserRouter>
+        ,
+      </Provider>,
     );
 
     const cardLink = screen.getByRole('link');

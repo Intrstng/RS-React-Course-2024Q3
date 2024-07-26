@@ -7,14 +7,6 @@ const favoritesSlice = createSlice({
     favorites: {} as FavoritesItems | object,
   },
   reducers: {
-    setFavoritesFromLS(
-      state,
-      action: PayloadAction<{ favoriteItems: FavoritesItems }>,
-    ) {
-      if (Object.keys(state.favorites)?.length === 0) {
-        state.favorites = action.payload.favoriteItems;
-      }
-    },
     toggleToFavorites(
       state,
       action: PayloadAction<{ cardId: string; cards: VehicleDetailsDomain[] }>,
