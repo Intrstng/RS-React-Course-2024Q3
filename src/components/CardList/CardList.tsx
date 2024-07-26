@@ -19,7 +19,6 @@ export const CardList = () => {
   const domainCards =
     useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
   const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
-  console.log('favoritesItems', favoritesItems);
 
   const textStyle =
     themeType === ThemeType.LIGHT
