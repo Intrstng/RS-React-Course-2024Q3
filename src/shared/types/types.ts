@@ -68,11 +68,6 @@ export type ButtonProps = {
   color?: ColorScheme;
 };
 
-export type SearchContainerProps = {
-  error: string | null;
-  setAppError: (error: string | null) => void;
-};
-
 export type CardProps = {
   card: Vehicle;
   cardId: string;

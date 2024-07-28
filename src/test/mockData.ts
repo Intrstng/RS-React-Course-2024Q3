@@ -1,8 +1,4 @@
-import {
-  VehicleDetails,
-  VehicleDetailsDomain,
-  VehiclesResponse,
-} from '../shared/types/types';
+import { VehicleDetails, VehicleDetailsDomain } from '../shared/types/types';
 import { FavoritesItems } from '../redux/slices/favoritesSlice';
 import { RefineFavoritesItemsStructureToCSV } from '../shared/uitils/refineFavoritesItemsStructureToCSV';
 
@@ -173,19 +169,3 @@ export const mockFavoritesCarsForCSV: RefineFavoritesItemsStructureToCSV = [
     isChecked: false,
   },
 ];
-
-export const mockResponse: VehiclesResponse<VehicleDetails> = {
-  results: [
-    {
-      cost_in_credits: 'string',
-      pilots: ['string'],
-      films: ['string'],
-      created: new Date(),
-      edited: new Date(),
-      url: 'string',
-    } as VehicleDetails,
-  ],
-  count: 1,
-  next: 'string',
-  previous: 'string',
-};
