@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { App } from '../App';
+import { App } from '../app/App';
 import { Error404 } from '../components/Error404/Error404';
 import { CardList } from '../components/CardList/CardList';
 import { DetailedCard } from '../components/DetailedCard/DetailedCard';

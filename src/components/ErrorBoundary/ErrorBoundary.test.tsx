@@ -1,14 +1,14 @@
 import React from 'react';
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { vi, describe, test, expect } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { ErrorBoundary } from './ErrorBoundary';
-import errorImg from '../../assets/error.png';
+import errorImg from '../../assets/error-page.jpg';
 
 const MESSAGE_OK = 'No errors occurred';
 const MESSAGE_ERROR = 'Some error occurred...';
 
 describe('ErrorBoundary', () => {
-  it('should render the error message when an error occurs', () => {
+  test('should render the error message when an error occurs', () => {
     const FaultyComponent = () => {
       throw new Error(MESSAGE_ERROR);
     };
@@ -28,7 +28,7 @@ describe('ErrorBoundary', () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
-  it('should render the children when no error occurs', () => {
+  test('should render the children when no error occurs', () => {
     const TestComponent = () => <div>{MESSAGE_OK}</div>;
     render(
       <ErrorBoundary>
@@ -44,5 +44,32 @@ describe('ErrorBoundary', () => {
 
     const errorMessage = screen.queryByText(MESSAGE_ERROR);
     expect(errorMessage).not.toBeInTheDocument();
+  });
+
+  test('should refresh the page when the refresh button is clicked', () => {
+    const reloadMock = vi.fn();
+    Object.defineProperty(window, 'location', {
+      configurable: true,
+      value: { reload: reloadMock },
+    });
+
+    const FaultyComponent = () => {
+      throw new Error(MESSAGE_ERROR);
+    };
+
+    render(
+      <ErrorBoundary>
+        <FaultyComponent />
+      </ErrorBoundary>,
+    );
+
+    expect(screen.getByText(MESSAGE_ERROR)).toBeInTheDocument();
+
+    const refreshButton = screen.getByText('Refresh page');
+    expect(refreshButton).toBeInTheDocument();
+
+    fireEvent.click(refreshButton);
+
+    expect(reloadMock).toHaveBeenCalled();
   });
 });

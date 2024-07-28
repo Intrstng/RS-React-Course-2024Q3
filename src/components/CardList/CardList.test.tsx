@@ -1,35 +1,49 @@
 import React from 'react';
-import { expect, test, describe } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter, Outlet, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 import { CardList } from './CardList';
 import '@testing-library/jest-dom';
-import { VehicleDetails } from '../../types/types';
-import { ReactNode } from 'react';
-import { mockCards } from '../../test/mockData';
+import { mockCards, mockFavoritesCars } from '../../test/mockData';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { appReducer, cardsReducer, favoritesReducer } from '../../redux/slices';
 
-const MockOutletContext = ({
-  children,
-  cards,
-}: {
-  children: ReactNode;
-  cards: VehicleDetails[];
-}) => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Outlet context={{ cards }} />}>
-        <Route index element={children} />
-      </Route>
-    </Routes>
-  </BrowserRouter>
-);
+URL['createObjectURL'] = vi.fn();
 
 describe('CardList Component', () => {
   test('should render the specified number of cards', () => {
+    const initialState = {
+      app: {
+        isToastifyOpen: true,
+      },
+      cards: {
+        domainCards: mockCards,
+      },
+      favorites: {
+        favorites: mockFavoritesCars,
+      },
+    };
+
+    const store = configureStore({
+      reducer: {
+        app: appReducer,
+        cards: cardsReducer,
+        favorites: favoritesReducer,
+      },
+      preloadedState: initialState,
+    });
+
     render(
-      <MockOutletContext cards={mockCards}>
-        <CardList />
-      </MockOutletContext>,
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Outlet />}>
+              <Route index element={<CardList />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Provider>,
     );
 
     const cards = screen.getAllByRole('listitem');
@@ -37,10 +51,37 @@ describe('CardList Component', () => {
   });
 
   test('should display no results message if no cards are present', () => {
+    const initialState = {
+      app: {
+        isToastifyOpen: true,
+      },
+      cards: {
+        domainCards: mockCards,
+      },
+      favorites: {
+        favorites: mockFavoritesCars,
+      },
+    };
+
+    const store = configureStore({
+      reducer: {
+        app: appReducer,
+        cards: cardsReducer,
+        favorites: favoritesReducer,
+      },
+      preloadedState: initialState,
+    });
+
     render(
-      <MockOutletContext cards={[]}>
-        <CardList />
-      </MockOutletContext>,
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Outlet />}>
+              <Route index element={<CardList />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Provider>,
     );
 
     const message = screen.getByText(

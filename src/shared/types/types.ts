@@ -1,4 +1,5 @@
 import { ChangeEvent, ReactNode } from 'react';
+import { RefineFavoritesItemsStructureToCSV } from '../uitils/refineFavoritesItemsStructureToCSV';
 
 export type Vehicle = {
   name: string;
@@ -20,6 +21,11 @@ export type VehicleDetails = Vehicle & {
   created: Date;
   edited: Date;
   url: string;
+};
+
+export type VehicleDetailsDomain = VehicleDetails & {
+  id: string;
+  isChecked: boolean;
 };
 
 export type VehiclesResponse<T> = {
@@ -44,44 +50,44 @@ export enum ButtonType {
   SUBMIT = 'submit',
 }
 
+export type ColorScheme =
+  | 'primary'
+  | 'secondary'
+  | 'search'
+  | 'error'
+  | 'select'
+  | 'alert'
+  | 'delete';
+
 export type ButtonProps = {
   onClickCallBack?: () => void;
   className?: string;
   disabled?: boolean;
   type?: ButtonType;
   children: ReactNode;
-};
-
-export type SearchContainerProps = {
-  error: string | null;
-  pagesCount: number;
-  isLoading: boolean;
-  navigationPage: number;
-  fetchVehicles: (value: string, page?: number) => void;
-  setAppError: (error: string | null) => void;
+  color?: ColorScheme;
 };
 
 export type CardProps = {
   card: Vehicle;
-  id: number;
+  cardId: string;
+  isChecked: boolean;
 };
 
 export type SearchFieldProps = {
   placeholder: string;
   value: string;
   onChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void;
-};
-
-export type PaginationProps = {
-  pagesCount: number;
-  currentPage: number;
+  color?: ColorScheme;
 };
 
 export type DetailsPageParams = {
   pageId: string;
-  vehicleId: string;
+  cardId: string;
 };
 
-export type CardsContextType = {
-  cards: VehicleDetails[];
+export type DownloadCSVProps = {
+  data: RefineFavoritesItemsStructureToCSV;
+  fileName?: string;
+  color?: ColorScheme;
 };

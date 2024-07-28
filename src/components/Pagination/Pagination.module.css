@@ -1,5 +1,5 @@
 .paginationBlock {
-  margin: 0 auto 40px;
+  margin: 0 auto 50px;
   width: 180px;
   display: flex;
   flex-wrap: nowrap;
@@ -9,10 +9,9 @@
 
 .paginationBlock button {
   padding: 8px 12px;
-  color: rgba(0, 0, 0, 0.75);
-  background-color: #8da65a;
   border-radius: 5px;
   border: none;
+  background-color: rgb(141, 166, 90);
   font-family: Arial, serif;
   font-weight: 600;
   cursor: pointer;
@@ -29,8 +28,12 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
+.paginationBlock button:disabled:hover {
+  cursor: not-allowed;
+}
+
 .paginationBlock span {
   font-family: Arial, serif;
   font-size: 20px;
-  color: #ffffff;
+  color: var(--secondary);
 }

@@ -1,20 +1,28 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import { Error404 } from './Error404';
 import errorNotFound from '../../assets/error_404.png';
-import { useRouteError } from 'react-router-dom';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { useRouteError, BrowserRouter, useNavigate } from 'react-router-dom';
+import { describe, test, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
 
-vi.mock('react-router-dom', () => ({
-  useRouteError: vi.fn(),
-}));
+vi.mock('react-router-dom', async () => {
+  const original =
+    await vi.importActual<typeof import('react-router-dom')>(
+      'react-router-dom',
+    );
+  return {
+    ...original,
+    useNavigate: vi.fn(),
+    useRouteError: vi.fn(),
+  };
+});
 
 describe('Error404', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('should render the error image', () => {
+  test('should render the error image', () => {
     (useRouteError as vi.Mock).mockReturnValue(new Error('Test Error'));
     const { getByAltText } = render(<Error404 />);
 
@@ -23,7 +31,7 @@ describe('Error404', () => {
     expect(imgElement).toHaveAttribute('src', errorNotFound);
   });
 
-  it('should log the error to the console', () => {
+  test('should log the error to the console', () => {
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const mockError = new Error('Test Error');
     (useRouteError as vi.Mock).mockReturnValue(mockError);
@@ -31,5 +39,24 @@ describe('Error404', () => {
 
     expect(consoleSpy).toHaveBeenCalledWith(mockError);
     consoleSpy.mockRestore();
+  });
+
+  test('renders and handles the redirect to home correctly', () => {
+    const navigate = vi.fn();
+
+    vi.mocked(useNavigate).mockReturnValue(navigate);
+
+    render(
+      <BrowserRouter>
+        <Error404 />
+      </BrowserRouter>,
+    );
+
+    const homeButton = screen.getByText('Home');
+    expect(homeButton).toBeInTheDocument();
+
+    fireEvent.click(homeButton);
+
+    expect(navigate).toHaveBeenCalledWith('/');
   });
 });
