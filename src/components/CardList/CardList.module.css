@@ -1,7 +1,6 @@
 .viewContainer {
   width: 100%;
   text-align: center;
-  /*min-height: calc(100vh - 245px);*/
   flex: 0 0 69%;
   border-right: 1px solid #ddd;
   overflow-y: auto;
