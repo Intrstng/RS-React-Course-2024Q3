@@ -1,5 +1,5 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import S from './DetailedCard.module.css';
 import { DetailsPageParams } from '../../shared/types/types';
 import { Loader } from '../Loader/Loader';
@@ -11,8 +11,8 @@ export const DetailedCard = () => {
   const [detailedCardId, setDetailedCardId] = useState('');
   const { data, isFetching, isError } = useGetCardDetailsQuery(detailedCardId);
   const detailsRef = useRef<HTMLDivElement | null>(null);
-  const { pageId, cardId } = useParams<DetailsPageParams>();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const { pageId, cardId } = router.query;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +30,7 @@ export const DetailedCard = () => {
         detailsRef.current &&
         !detailsRef.current!.contains(e.target as Node)
       ) {
-        navigate(`/page/${pageId}`);
+        router.push(`/page/${pageId}`);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -41,7 +41,7 @@ export const DetailedCard = () => {
 
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate(`/page/${pageId}`);
+    router.push(`/page/${pageId}`);
   };
 
   const handleImageError = () => {

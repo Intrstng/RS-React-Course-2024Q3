@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { DetailedCard } from './DetailedCard';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
+import { setupStore } from '../../redux/store';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import * as reactRouterDom from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -40,7 +40,7 @@ vi.mock('react-router-dom', async () => {
 const renderWithProviders = (
   ui: React.ReactElement,
   {
-    reduxStore = store,
+    reduxStore = setupStore(),
     themeType = ThemeType.LIGHT,
     theme = THEMES[ThemeType.LIGHT],
     setCurrentTheme = () => {},

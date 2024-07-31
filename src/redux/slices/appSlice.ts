@@ -2,12 +2,20 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const LOCAL_STORAGE_SEARCH_KEY = 'searchValue';
 
+let initialSearchValue: string;
+
+if (typeof window !== 'undefined') {
+  initialSearchValue = localStorage.getItem(LOCAL_STORAGE_SEARCH_KEY)
+      ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_SEARCH_KEY))
+      : '';
+} else {
+  initialSearchValue = '';
+}
+
 const appSlice = createSlice({
   name: 'app',
   initialState: {
-    search: localStorage.getItem(LOCAL_STORAGE_SEARCH_KEY)
-      ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_SEARCH_KEY))
-      : '',
+    search: initialSearchValue,
     isLoading: false,
     error: null,
     currentPage: 1,

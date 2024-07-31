@@ -3,28 +3,34 @@ import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import S from './ThemeControl.module.css';
 import { Button } from '../Button';
-import useLocalStorageAdvanced from '../hooks/useLocalStorageAdvanced';
 
 const LOCAL_STORAGE_THEME_KEY = 'themeValue';
 
+export const getInitThemeFromLS = (key: string) => {
+  return typeof window !== 'undefined'
+      ? JSON.parse(localStorage.getItem(key)) || 'light'
+      : 'light';
+};
+
 export const ThemeControl = () => {
   const { setCurrentTheme } = useContext(ThemeContext);
-  const [themeLS, setThemeLS] = useLocalStorageAdvanced<string>(
-    LOCAL_STORAGE_THEME_KEY,
-    ThemeType.LIGHT,
-  );
+  const themeLS = getInitThemeFromLS(LOCAL_STORAGE_THEME_KEY);
 
   useEffect(() => {
     setCurrentTheme(themeLS);
   }, []);
 
   const onClickSetLightHandler = () => {
-    setThemeLS(ThemeType.LIGHT);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(LOCAL_STORAGE_THEME_KEY, JSON.stringify(ThemeType.LIGHT));
+    }
     setCurrentTheme(ThemeType.LIGHT);
   };
 
   const onClickSetDarkHandler = () => {
-    setThemeLS(ThemeType.DARK);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(LOCAL_STORAGE_THEME_KEY, JSON.stringify(ThemeType.DARK));
+    }
     setCurrentTheme(ThemeType.DARK);
   };
 

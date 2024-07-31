@@ -30,18 +30,16 @@
   color: var(--secondary);
 }
 
-.toastify h2,
-p {
+.toastify h2 {
   margin: 0;
   padding: 0;
-}
-
-.toastify h2 {
   font-size: 1.2rem;
   color: var(--secondary);
 }
 
 .toastify p {
+  margin: 0;
+  padding: 0;
   font-size: 0.8rem;
   color: var(--secondary);
 }

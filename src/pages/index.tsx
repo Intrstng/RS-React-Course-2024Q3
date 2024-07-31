@@ -1,0 +1,52 @@
+/* eslint-disable @next/next/no-img-element */
+import React from "react";
+import Head from "next/head";
+import styles from "../../styles/Home.module.css";
+import Link from 'next/link';
+import App from '../app/App';
+import { Provider } from 'react-redux';
+import { setupStore, store, wrapper } from '../redux/store';
+import { ThemeProvider } from '../contexts/Theme/Theme.context';
+import { cardsApi, getCards, getRunningQueriesThunk } from '../redux/api/cardsApi';
+
+
+
+
+export const getServerSideProps = wrapper.getServerSideProps(
+    (store) => async (context) => {
+                      // const searchText = cardsApi.app.search || '';
+                      const searchText = '';
+
+      const page = context.query.page || '1';
+
+      store.dispatch(getCards.initiate({ search: searchText, page }));
+      if (typeof searchText === 'string') {
+        store.dispatch(getCards.initiate({ search: searchText, page }));
+      }
+
+      if (typeof searchText === 'undefined') {
+        store.dispatch(getCards.initiate({ search: 's', page }));
+      }
+
+      await Promise.all(store.dispatch(getRunningQueriesThunk()));
+
+      return {
+        props: {},
+      };
+    }
+);
+
+
+export default function Home({ pokemon }) {
+    return (
+        <div>
+            <Head>
+                <title>RS School Next.js</title>
+                <meta name='description' content='RS School Next.js Page Routing app' />
+            </Head>
+          <main>
+                <App/>
+          </main>
+        </div>
+    );
+}

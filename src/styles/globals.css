@@ -37,7 +37,7 @@ body {
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
-  background: url('./assets/background.png') no-repeat center center fixed;
+  background: url('../assets/background.png') no-repeat center center fixed;
   background-size: cover;
   box-sizing: border-box;
   overflow: hidden;

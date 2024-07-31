@@ -14,8 +14,9 @@ export const SuperCheckBox: FC<SuperCheckBoxProps> = ({
     <div className={S.checkbox}>
       <label className={S.formControl}>
         <input
-          type="checkbox"
-          name="checkbox"
+          className={S.inputCheckbox}
+          type={"checkbox"}
+          name={"checkbox"}
           checked={isChecked}
           onChange={onChangeInputHandler}
         />

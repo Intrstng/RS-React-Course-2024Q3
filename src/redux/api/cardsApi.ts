@@ -31,4 +31,5 @@ type BaseQuery = BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>;
 type TagTypes = never;
 type ReducerPath = 'cardsApi';
 
-export const { useGetCardsQuery, useGetCardDetailsQuery } = cardsApi;
+export const { useGetCardsQuery, useGetCardDetailsQuery, util: { getRunningQueriesThunk }, } = cardsApi;
+export const { getCards, getCardDetails } = cardsApi.endpoints;

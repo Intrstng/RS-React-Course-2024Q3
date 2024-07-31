@@ -1,9 +1,9 @@
-import React, { ChangeEvent, FormEvent, useEffect, useRef } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import S from './Search.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
 import { ButtonType } from '../../shared/types/types';
-import useLocalStorageAdvanced from '../hooks/useLocalStorageAdvanced';
+
 import { Pagination } from '../Pagination/Pagination';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import {
@@ -17,15 +17,23 @@ import {
 } from '../../redux/slices/appSlice';
 import { cardsActions } from '../../redux/slices/cardsSlice';
 import { useGetCardsQuery } from '../../redux/api/cardsApi';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { favoritesSelector } from '../../redux/selectors';
 import { FavoritesItems } from '../../redux/slices/favoritesSlice';
 
+
+export const getInitValueFromLS = (key: string) => {
+  return typeof window !== 'undefined'
+      ? JSON.parse(localStorage.getItem(key)) || ''
+      : '';
+};
+
 export const Search = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [text, setText] = useLocalStorageAdvanced<string>(
-    LOCAL_STORAGE_SEARCH_KEY,
-  );
+
+  const [text, setText] = useState<string>(getInitValueFromLS(LOCAL_STORAGE_SEARCH_KEY));
+
+
   const searchValue = useAppSelector<string>(searchSelector);
   const navigationPage = useAppSelector<number>(currentPageSelector);
   const appError = useAppSelector<string | null>(errorSelector);
@@ -34,7 +42,7 @@ export const Search = () => {
     page: navigationPage,
   });
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
   const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
 
   useEffect(() => {
@@ -52,7 +60,8 @@ export const Search = () => {
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate(`/page/1`);
+    router.push('/page/1');
+
     dispatch(appActions.setAppCurrentPage({ currentPage: 1 }));
     const trimmedText = text.trim();
     setText(trimmedText);
@@ -61,6 +70,9 @@ export const Search = () => {
 
   const onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(LOCAL_STORAGE_SEARCH_KEY, JSON.stringify(e.currentTarget.value));
+    }
   };
 
   const onClickSetError = () => {

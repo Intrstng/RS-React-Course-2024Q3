@@ -6,7 +6,7 @@ import { Card } from './Card';
 import '@testing-library/jest-dom';
 import { mockCards } from '../../test/mockData';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
+import { setupStore } from '../../redux/store';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { ThemeProvider } from '../../contexts/Theme/Theme.context';
 import { THEMES } from '../../contexts/Theme/Theme.config';
@@ -22,7 +22,7 @@ describe('Card Component', () => {
     };
     render(
       <ThemeProvider value={themeContextValue}>
-        <Provider store={store}>
+        <Provider store={setupStore()}>
           <BrowserRouter>
             <Card card={mockCards[0]} cardId={MOCK_ID} isChecked={false} />
           </BrowserRouter>
@@ -36,7 +36,7 @@ describe('Card Component', () => {
 
   test('should navigate to detailed card component on click', async () => {
     render(
-      <Provider store={store}>
+      <Provider store={setupStore()}>
         <BrowserRouter>
           <Card card={mockCards[0]} cardId={MOCK_ID} isChecked={false} />
         </BrowserRouter>

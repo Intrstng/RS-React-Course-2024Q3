@@ -48,8 +48,14 @@ export const CardList = () => {
           </h2>
         )}
       </section>
+
       <aside>
-        <Outlet />
+
+
+      {/*  /!*<Outlet />*!/*/}
+
+
+
       </aside>
       {Object.keys(favoritesItems)?.length > 0 && <CustomToastify />}
     </>

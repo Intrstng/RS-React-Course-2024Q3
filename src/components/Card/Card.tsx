@@ -4,7 +4,6 @@ import {
   VehicleDetailsDomain,
   VehiclesResponse,
 } from '../../shared/types/types';
-import { NavLink } from 'react-router-dom';
 import S from './Card.module.css';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
@@ -14,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { favoritesActions } from '../../redux/slices/favoritesSlice';
 import { appActions } from '../../redux/slices/appSlice';
 import { domainCardsSelector } from '../../redux/selectors';
+import Link from 'next/link';
 
 export const Card: FC<CardProps> = ({ card, cardId, isChecked }) => {
   const { themeType, theme } = useContext(ThemeContext);
@@ -46,9 +46,9 @@ export const Card: FC<CardProps> = ({ card, cardId, isChecked }) => {
 
   return (
     <div className={S.card}>
-      <NavLink to={`card/${cardId}`} className={linkStyles}>
+      <Link href={`card/${cardId}`} className={linkStyles}>
         <h2 style={textStyle}>{name}</h2>
-      </NavLink>
+      </Link>
 
       <SuperCheckBox
         isChecked={isChecked}
