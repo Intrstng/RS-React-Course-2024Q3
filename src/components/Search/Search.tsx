@@ -47,12 +47,13 @@ export const Search = () => {
     search: searchValue,
     page: navigationPage,
   });
+
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { id, search } = router.query;
 
   useEffect(() => {
-          dispatch(appActions.setAppCurrentPage({ currentPage: Number(id) || 1 }));
+          dispatch(appActions.setAppCurrentPage({ currentPage: Number(id) || navigationPage }));
           // dispatch(appActions.setAppSearch({ search: search || '' }));
           // setText(search)
 

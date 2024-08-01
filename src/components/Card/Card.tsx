@@ -12,7 +12,7 @@ import { cardsActions } from '../../redux/slices/cardsSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { favoritesActions } from '../../redux/slices/favoritesSlice';
 import { appActions } from '../../redux/slices/appSlice';
-import { domainCardsSelector } from '../../redux/selectors';
+import { currentPageSelector, domainCardsSelector } from '../../redux/selectors';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -22,6 +22,7 @@ export const Card: FC<CardProps> = ({ card, cardId, isChecked }) => {
   const dispatch = useAppDispatch();
   const domainCards =
     useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
+  const currentPage = useAppSelector<number>(currentPageSelector);
 
   const router = useRouter();
   const { id } = router.query;

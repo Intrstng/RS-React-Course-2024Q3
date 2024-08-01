@@ -17,7 +17,7 @@ import Layout from '../layout';
 import { VehicleDetails, VehiclesResponse } from '../../shared/types/types';
 
 type PageProps = {
-  cardsData: VehiclesResponse<VehicleDetails>;
+  cardsData?: VehiclesResponse<VehicleDetails>;
 };
 
 type PageParamsProps = {
@@ -31,9 +31,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
       let search = query.search || '';
       const pageId = params?.id || '1';
 
+      store.dispatch(appActions.setAppStatus({ isLoading: true }))
+
+
       let result = await store.dispatch(
         getCards.initiate({ search, page: pageId }),
       );
+
+      await store. dispatch(cardsActions.setDomainCards({ cards: result.data }))
+
 
       await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
@@ -55,12 +61,10 @@ const Page: FC<PageProps> = ({ cardsData }) => {
   const isLoading = useAppSelector<boolean>(statusSelector);
   const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   dispatch(appActions.setAppStatus({ isLoading: false }));
-  //   dispatch(cardsActions.setDomainCards({ cards: cardsData }));
-  //   dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
-  //   dispatch(appActions.setAppError({ error: null }));
-  // }, [searchValue, cardsData, favoritesItems]);
+  useEffect(() => {
+    dispatch(cardsActions.setDomainCards({ cards: cardsData }));
+    dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
+  }, [searchValue, cardsData, favoritesItems]);
 
   return (
     <div>

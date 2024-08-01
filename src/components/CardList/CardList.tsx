@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import S from './CardList.module.css';
 import { Card } from '../Card/Card';
-import { VehicleDetailsDomain, VehiclesResponse, } from '../../shared/types/types';
+import { VehicleDetails, VehicleDetailsDomain, VehiclesResponse, } from '../../shared/types/types';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import { useAppSelector } from '../../redux/store';
@@ -12,7 +12,11 @@ import { FavoritesItems } from '../../redux/slices/favoritesSlice';
 import { useRouter } from 'next/router';
 import { DetailedCard } from '../DetailedCard/DetailedCard';
 
-export const CardList = () => {
+export type CardListProps = {
+  detailsData?: VehicleDetails | undefined
+}
+
+export const CardList:FC<CardListProps> = ({detailsData}) => {
   const { themeType, theme } = useContext(ThemeContext);
   const domainCards =
     useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
@@ -51,7 +55,7 @@ export const CardList = () => {
         )}
       </section>
       {cardId && (<aside>
-        <DetailedCard />
+        <DetailedCard detailsData={detailsData}/>
       </aside>)}
 
       {/*<aside>/!*  /!*<Outlet />*!/*!/</aside>*/}
