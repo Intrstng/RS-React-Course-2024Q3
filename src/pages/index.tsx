@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { setupStore, store, wrapper } from '../redux/store';
 import { ThemeContext, ThemeProvider } from '../contexts/Theme/Theme.context';
 import { cardsApi, getCards, getRunningQueriesThunk } from '../redux/api/cardsApi';
-import Layout from '../components/Layout/Layout';
+import Layout from './layout';
 
 
 export const getServerSideProps = wrapper.getServerSideProps(

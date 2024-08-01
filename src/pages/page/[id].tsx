@@ -1,61 +1,65 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { FC, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../../../styles/Details.module.css";
+import { useGetCardDetailsQuery, useGetCardsQuery } from '../../redux/api/cardsApi';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { favoritesSelector, searchSelector, statusSelector } from '../../redux/selectors';
+import { appActions } from '../../redux/slices/appSlice';
+import { cardsActions } from '../../redux/slices/cardsSlice';
+import { FavoritesItems } from '../../redux/slices/favoritesSlice';
+import { CardList } from '../../components/CardList/CardList';
+import { Loader } from '../../components/Loader/Loader';
+import Layout from '../layout';
+import App from '../../myApp/App';
 
-export async function getServerSideProps({ params }) {
-  const resp = await fetch(
-      `https://jherr-pokemon.s3.us-west-1.amazonaws.com/pokemon/${params.id}.json`
-  );
+type PageProps = {
+  pageId: string;
+}
 
+type PageParamsProps = {
+  params: { id: string }
+}
+
+export async function getServerSideProps({ params }: PageParamsProps) {
   return {
     props: {
-      pokemon: await resp.json(),
+      pageId: params.id,
     },
   };
 }
 
-export default function Page({ pokemon }) {
+const Page: FC<PageProps> = ({ pageId }) => {
+  const searchValue = useAppSelector<string>(searchSelector);
+  const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
+  const isLoading = useAppSelector<boolean>(statusSelector);
+  const { data, isFetching, isError, error } = useGetCardsQuery({
+    search: searchValue,
+    page: pageId,
+  });
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(appActions.setAppStatus({ isLoading: isFetching }));
+    dispatch(cardsActions.setDomainCards({ cards: data }));
+    dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
+    dispatch(
+        appActions.setAppError({ error: isError === false ? null : error.error }),
+    );
+
+  }, [searchValue, pageId, data, isFetching, isError, error]);
+
   return (
       <div>
         <Head>
-          <title>{pokemon.name}</title>
+          <title>RS School Next.js Task</title>
         </Head>
-        <div>
-          <Link href="/">
-            Back to Home
-          </Link>
-        </div>
-        <div className={styles.layout}>
-          <div>
-            <img
-                className={styles.picture}
-                src={`https://jherr-pokemon.s3.us-west-1.amazonaws.com/${pokemon.image}`}
-                alt={pokemon.name.english}
-            />
-          </div>
-          <div>
-            <div className={styles.name}>{pokemon.name}</div>
-            <div className={styles.type}>{pokemon.type.join(", ")}</div>
-            <table>
-              <thead className={styles.header}>
-              <tr>
-                <th>Name</th>
-                <th>Value</th>
-              </tr>
-              </thead>
-              <tbody>
-              {pokemon.stats.map(({ name, value }) => (
-                  <tr key={name}>
-                    <td className={styles.attribute}>{name}</td>
-                    <td>{value}</td>
-                  </tr>
-              ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <Layout>
+          <div className={'content'}>{isLoading ? <Loader /> : <CardList />}</div>
+        </Layout>
       </div>
   );
 }
+
+export default Page;

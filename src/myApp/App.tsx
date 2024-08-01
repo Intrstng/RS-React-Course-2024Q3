@@ -39,8 +39,7 @@ const App = () => {
 
 
   }, [router, pageFromParams]);
-                                          console.log('domainCards', domainCards)
-                                          console.log('favoritesItems', favoritesItems)
+
   return (
         // <div className={'content'}>{isLoading ? <Loader /> : <Outlet />}</div>
 
