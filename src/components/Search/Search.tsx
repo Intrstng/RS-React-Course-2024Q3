@@ -39,7 +39,7 @@ export const Search = () => {
   const [text, setText] = useState<string>(
     getInitValueFromLS(LOCAL_STORAGE_SEARCH_KEY),
   );
-
+  const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
   const searchValue = useAppSelector<string>(searchSelector);
   const navigationPage = useAppSelector<number>(currentPageSelector);
   const appError = useAppSelector<string | null>(errorSelector);
@@ -49,9 +49,13 @@ export const Search = () => {
   });
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
+  const { id, search } = router.query;
 
   useEffect(() => {
+          dispatch(appActions.setAppCurrentPage({ currentPage: Number(id) || 1 }));
+          // dispatch(appActions.setAppSearch({ search: search || '' }));
+          // setText(search)
+
     dispatch(appActions.setAppStatus({ isLoading: isFetching }));
     dispatch(cardsActions.setDomainCards({ cards: data }));
     dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
@@ -62,7 +66,7 @@ export const Search = () => {
     if (inputRef.current !== null) {
       inputRef.current!.focus();
     }
-  }, [searchValue, navigationPage, data, isFetching, isError, error]);
+  }, [searchValue, navigationPage, data, isFetching, isError, error, id]);
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

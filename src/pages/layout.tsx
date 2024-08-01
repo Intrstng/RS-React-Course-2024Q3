@@ -13,7 +13,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { theme } = useContext(ThemeContext);
   return (
     <div
-      className={S.app}
+      className={'app'}
       style={{ ...(theme as CSSProperties) }}
       data-testid={'app'}
     >

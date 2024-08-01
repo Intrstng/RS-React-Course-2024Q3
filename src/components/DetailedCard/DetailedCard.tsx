@@ -5,6 +5,8 @@ import { DetailsPageParams } from '../../shared/types/types';
 import { Loader } from '../Loader/Loader';
 import defaultImage from '../../assets/image_default.jpg';
 import { useGetCardDetailsQuery } from '../../redux/api/cardsApi';
+import { useAppSelector } from '../../redux/store';
+import { currentPageSelector, searchSelector } from '../../redux/selectors';
 
 export const DetailedCard = () => {
   const [imgSrc, setImgSrc] = useState<string | null>(null);
@@ -12,9 +14,11 @@ export const DetailedCard = () => {
   const { data, isFetching, isError } = useGetCardDetailsQuery(detailedCardId);
   const detailsRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
-  const { pageId, cardId } = router.query;
+  const { cardId } = router.query;
+  const pageId = useAppSelector(currentPageSelector);
+  const searchValue = useAppSelector(searchSelector);
 
-  useEffect(() => {
+      useEffect(() => {
     const fetchData = async () => {
       await setDetailedCardId(cardId);
       await setImgSrc(
@@ -30,7 +34,7 @@ export const DetailedCard = () => {
         detailsRef.current &&
         !detailsRef.current!.contains(e.target as Node)
       ) {
-        router.push(`/page/${pageId}`);
+        router.push(`/page/${pageId}?search=${searchValue}`);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -41,7 +45,7 @@ export const DetailedCard = () => {
 
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/page/${pageId}`);
+    router.push(`/page/${pageId}?search=${searchValue}`);
   };
 
   const handleImageError = () => {

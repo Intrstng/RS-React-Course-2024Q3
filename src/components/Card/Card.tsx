@@ -22,8 +22,10 @@ export const Card: FC<CardProps> = ({ card, cardId, isChecked }) => {
   const dispatch = useAppDispatch();
   const domainCards =
     useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
+
   const router = useRouter();
-  const isActive = router.asPath === `/card/${cardId}`;
+  const { id } = router.query;
+  const isActive = router.asPath === `/page/card/${cardId}`;
 
   const textStyle =
     themeType === ThemeType.LIGHT
@@ -48,7 +50,7 @@ export const Card: FC<CardProps> = ({ card, cardId, isChecked }) => {
 
   return (
     <div className={S.card}>
-      <Link href={`card/${cardId}`} className={isActive ? S.active : ''}>
+      <Link href={`/page/card/${cardId}`} className={isActive ? S.active : ''}>
         <h2 style={textStyle}>{name}</h2>
       </Link>
 

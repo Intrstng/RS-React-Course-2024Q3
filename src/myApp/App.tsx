@@ -15,13 +15,12 @@ import { FavoritesItems } from '../redux/slices/favoritesSlice';
 const App = () => {
   const { theme } = useContext(ThemeContext);
   const router = useRouter();
-  const { pageId } = router.query;
-  const pageFromParams = parseInt(pageId ?? '1', 10);
+  const { id } = router.query;
+  const pageFromParams = parseInt(id ?? '1', 10);
   const currentPage = useAppSelector<number>(currentPageSelector);
   const isLoading = useAppSelector<boolean>(statusSelector);
   const dispatch = useAppDispatch();
   const searchValue = useAppSelector<string>(searchSelector);
-
   const domainCards =
     useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
   const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);

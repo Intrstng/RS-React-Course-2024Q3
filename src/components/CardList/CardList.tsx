@@ -9,12 +9,18 @@ import { domainCardsSelector } from '../../redux/selectors/domainCardsSelectors'
 import { CustomToastify } from '../CustomToastify/CustomToastify';
 import { favoritesSelector } from '../../redux/selectors/favoritesSelectors';
 import { FavoritesItems } from '../../redux/slices/favoritesSlice';
+import { useRouter } from 'next/router';
+import { DetailedCard } from '../DetailedCard/DetailedCard';
 
 export const CardList = () => {
   const { themeType, theme } = useContext(ThemeContext);
   const domainCards =
     useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
   const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
+
+
+  const router = useRouter();
+  const { cardId } = router.query;
 
   const textStyle =
     themeType === ThemeType.LIGHT
@@ -44,8 +50,11 @@ export const CardList = () => {
           </h2>
         )}
       </section>
+      {cardId && (<aside>
+        <DetailedCard />
+      </aside>)}
 
-      <aside>{/*  /!*<Outlet />*!/*/}</aside>
+      {/*<aside>/!*  /!*<Outlet />*!/*!/</aside>*/}
       {Object.keys(favoritesItems)?.length > 0 && <CustomToastify />}
     </>
   );

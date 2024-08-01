@@ -31,17 +31,21 @@ export const getServerSideProps = wrapper.getServerSideProps(
       let search = query.search || '';
       const pageId = params?.id || '1';
 
-      const result = await store.dispatch(
+      let result = await store.dispatch(
         getCards.initiate({ search, page: pageId }),
       );
 
       await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
-      return {
-        props: {
-          cardsData: result.data,
-        },
-      };
+      if (result.data) {
+        return {
+          props: {
+            cardsData: result.data,
+          },
+        };
+      } else {
+        return null
+      }
     },
 );
 
@@ -51,12 +55,12 @@ const Page: FC<PageProps> = ({ cardsData }) => {
   const isLoading = useAppSelector<boolean>(statusSelector);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(appActions.setAppStatus({ isLoading: false }));
-    dispatch(cardsActions.setDomainCards({ cards: cardsData }));
-    dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
-    dispatch(appActions.setAppError({ error: null }));
-  }, [searchValue, cardsData, favoritesItems]);
+  // useEffect(() => {
+  //   dispatch(appActions.setAppStatus({ isLoading: false }));
+  //   dispatch(cardsActions.setDomainCards({ cards: cardsData }));
+  //   dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
+  //   dispatch(appActions.setAppError({ error: null }));
+  // }, [searchValue, cardsData, favoritesItems]);
 
   return (
     <div>
