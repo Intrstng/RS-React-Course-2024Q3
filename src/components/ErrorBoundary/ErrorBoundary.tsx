@@ -48,7 +48,7 @@ export class ErrorBoundary extends Component<
     if (this.state.hasError) {
       return (
         <div className={S.errorContainer}>
-          <img src={errorImg} alt={'error'} className={S.errorImg} />
+          <img src={errorImg.src} alt={'error'} className={S.errorImg} />
           <h1 className={S.error}>{this.state.errorMessage}</h1>
           <Button
             className={S.refreshButton}

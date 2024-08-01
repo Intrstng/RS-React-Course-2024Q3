@@ -13,7 +13,7 @@ import { createWrapper } from 'next-redux-wrapper';
 // export const store = configureStore({
 //   reducer: {
 //     [cardsApi.reducerPath]: cardsApi.reducer,
-//     app: appReducer,
+//     myApp: appReducer,
 //     cards: cardsReducer,
 //     favorites: favoritesReducer,
 //   },

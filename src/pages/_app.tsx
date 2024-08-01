@@ -4,6 +4,7 @@ import { wrapper } from '../redux/store';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from '../contexts/Theme/Theme.context';
+import { ErrorBoundary } from '../components/ErrorBoundary/ErrorBoundary';
 
 
 export default function App({Component, pageProps}: AppProps) {
@@ -15,7 +16,9 @@ export default function App({Component, pageProps}: AppProps) {
         </Head>
         <ThemeProvider>
           <Provider store={store}>
-            <Component {...pageProps} />
+            <ErrorBoundary>
+              <Component {...pageProps} />
+            </ErrorBoundary>
           </Provider>
         </ThemeProvider>
       </>

@@ -42,24 +42,9 @@ const App = () => {
                                           console.log('domainCards', domainCards)
                                           console.log('favoritesItems', favoritesItems)
   return (
-    <ErrorBoundary>
-      <div
-        className={'app'}
-        style={{ ...(theme as CSSProperties) }}
-        data-testid={'app'}
-      >
-        <ThemeControl />
-        <Search />
-
-
-
-
-        {/*<div className={'content'}>{isLoading ? <Loader /> : <Outlet />}</div>*/}
+        // <div className={'content'}>{isLoading ? <Loader /> : <Outlet />}</div>
 
         <div className={'content'}>{isLoading ? <Loader /> : <CardList />}</div>
-
-      </div>
-    </ErrorBoundary>
   );
 };
 

@@ -16,7 +16,7 @@ export async function getServerSideProps({ params }) {
   };
 }
 
-export default function Details({ pokemon }) {
+export default function Page({ pokemon }) {
   return (
       <div>
         <Head>
