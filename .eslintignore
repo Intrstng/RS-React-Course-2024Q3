@@ -3,6 +3,7 @@ node_modules/
 dist/
 coverage/
 build/
+.next/
 *.js
 *.jsx
 *.map

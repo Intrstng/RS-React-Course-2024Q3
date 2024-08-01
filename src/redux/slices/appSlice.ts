@@ -6,8 +6,8 @@ let initialSearchValue: string;
 
 if (typeof window !== 'undefined') {
   initialSearchValue = localStorage.getItem(LOCAL_STORAGE_SEARCH_KEY)
-      ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_SEARCH_KEY))
-      : '';
+    ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_SEARCH_KEY))
+    : '';
 } else {
   initialSearchValue = '';
 }

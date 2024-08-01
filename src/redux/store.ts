@@ -9,7 +9,6 @@ import { cardsApi } from './api/cardsApi';
 import { appReducer, cardsReducer, favoritesReducer } from './slices';
 import { createWrapper } from 'next-redux-wrapper';
 
-
 // export const store = configureStore({
 //   reducer: {
 //     [cardsApi.reducerPath]: cardsApi.reducer,
@@ -30,9 +29,9 @@ export const setupStore = () => {
       favorites: favoritesReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(cardsApi.middleware),
-  })
-}
+      getDefaultMiddleware().concat(cardsApi.middleware),
+  });
+};
 
 // export type AppRootState = ReturnType<typeof store.getState>;
 export type AppRootState = ReturnType<typeof setupStore>;
@@ -46,6 +45,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<AppRootState> = useSelector;
-
 
 export const wrapper = createWrapper<AppRootState>(setupStore, { debug: true });

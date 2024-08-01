@@ -8,8 +8,8 @@ const LOCAL_STORAGE_THEME_KEY = 'themeValue';
 
 export const getInitThemeFromLS = (key: string) => {
   return typeof window !== 'undefined'
-      ? JSON.parse(localStorage.getItem(key)) || 'light'
-      : 'light';
+    ? JSON.parse(localStorage.getItem(key)) || 'light'
+    : 'light';
 };
 
 export const ThemeControl = () => {
@@ -22,14 +22,20 @@ export const ThemeControl = () => {
 
   const onClickSetLightHandler = () => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem(LOCAL_STORAGE_THEME_KEY, JSON.stringify(ThemeType.LIGHT));
+      localStorage.setItem(
+        LOCAL_STORAGE_THEME_KEY,
+        JSON.stringify(ThemeType.LIGHT),
+      );
     }
     setCurrentTheme(ThemeType.LIGHT);
   };
 
   const onClickSetDarkHandler = () => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem(LOCAL_STORAGE_THEME_KEY, JSON.stringify(ThemeType.DARK));
+      localStorage.setItem(
+        LOCAL_STORAGE_THEME_KEY,
+        JSON.stringify(ThemeType.DARK),
+      );
     }
     setCurrentTheme(ThemeType.DARK);
   };

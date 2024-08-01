@@ -14,6 +14,7 @@ import { favoritesActions } from '../../redux/slices/favoritesSlice';
 import { appActions } from '../../redux/slices/appSlice';
 import { domainCardsSelector } from '../../redux/selectors';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export const Card: FC<CardProps> = ({ card, cardId, isChecked }) => {
   const { themeType, theme } = useContext(ThemeContext);
@@ -21,7 +22,8 @@ export const Card: FC<CardProps> = ({ card, cardId, isChecked }) => {
   const dispatch = useAppDispatch();
   const domainCards =
     useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
-  const linkStyles = ({ isActive }) => `${isActive ? S.active : ''}`;
+  const router = useRouter();
+  const isActive = router.asPath === `/card/${cardId}`;
 
   const textStyle =
     themeType === ThemeType.LIGHT
@@ -46,7 +48,7 @@ export const Card: FC<CardProps> = ({ card, cardId, isChecked }) => {
 
   return (
     <div className={S.card}>
-      <Link href={`card/${cardId}`} className={linkStyles}>
+      <Link href={`card/${cardId}`} className={isActive ? S.active : ''}>
         <h2 style={textStyle}>{name}</h2>
       </Link>
 

@@ -1,9 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { App } from '../myApp/App';
-import { Error404 } from '../components/Error404/Error404';
-import { CardList } from '../components/CardList/CardList';
-import { DetailedCard } from '../components/DetailedCard/DetailedCard';
 
 export const PATH = {
   PAGE_ROOT: '/',

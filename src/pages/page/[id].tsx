@@ -1,65 +1,73 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { FC, useEffect } from "react";
-import Head from "next/head";
-import Link from "next/link";
-import styles from "../../../styles/Details.module.css";
-import { useGetCardDetailsQuery, useGetCardsQuery } from '../../redux/api/cardsApi';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { favoritesSelector, searchSelector, statusSelector } from '../../redux/selectors';
+import React, { FC, useEffect } from 'react';
+import Head from 'next/head';
+import { getCards, getRunningQueriesThunk } from '../../redux/api/cardsApi';
+import { useAppDispatch, useAppSelector, wrapper } from '../../redux/store';
+import {
+  favoritesSelector,
+  searchSelector,
+  statusSelector,
+} from '../../redux/selectors';
 import { appActions } from '../../redux/slices/appSlice';
 import { cardsActions } from '../../redux/slices/cardsSlice';
 import { FavoritesItems } from '../../redux/slices/favoritesSlice';
 import { CardList } from '../../components/CardList/CardList';
 import { Loader } from '../../components/Loader/Loader';
 import Layout from '../layout';
-import App from '../../myApp/App';
+import { VehicleDetails, VehiclesResponse } from '../../shared/types/types';
 
 type PageProps = {
-  pageId: string;
-}
+  cardsData: VehiclesResponse<VehicleDetails>;
+};
 
 type PageParamsProps = {
-  params: { id: string }
-}
+  params: { id: string };
+  query: { search?: string };
+};
 
-export async function getServerSideProps({ params }: PageParamsProps) {
-  return {
-    props: {
-      pageId: params.id,
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ params, query }: PageParamsProps) => {
+      let search = query.search || '';
+      const pageId = params?.id || '1';
+
+      const result = await store.dispatch(
+        getCards.initiate({ search, page: pageId }),
+      );
+
+      await Promise.all(store.dispatch(getRunningQueriesThunk()));
+
+      return {
+        props: {
+          cardsData: result.data,
+        },
+      };
     },
-  };
-}
+);
 
-const Page: FC<PageProps> = ({ pageId }) => {
+const Page: FC<PageProps> = ({ cardsData }) => {
   const searchValue = useAppSelector<string>(searchSelector);
   const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
   const isLoading = useAppSelector<boolean>(statusSelector);
-  const { data, isFetching, isError, error } = useGetCardsQuery({
-    search: searchValue,
-    page: pageId,
-  });
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(appActions.setAppStatus({ isLoading: isFetching }));
-    dispatch(cardsActions.setDomainCards({ cards: data }));
+    dispatch(appActions.setAppStatus({ isLoading: false }));
+    dispatch(cardsActions.setDomainCards({ cards: cardsData }));
     dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
-    dispatch(
-        appActions.setAppError({ error: isError === false ? null : error.error }),
-    );
-
-  }, [searchValue, pageId, data, isFetching, isError, error]);
+    dispatch(appActions.setAppError({ error: null }));
+  }, [searchValue, cardsData, favoritesItems]);
 
   return (
-      <div>
-        <Head>
-          <title>RS School Next.js Task</title>
-        </Head>
-        <Layout>
-          <div className={'content'}>{isLoading ? <Loader /> : <CardList />}</div>
-        </Layout>
-      </div>
+    <div>
+      <Head>
+        <title>RS School Next.js Task</title>
+      </Head>
+      <Layout>
+        <div className={'content'}>{isLoading ? <Loader /> : <CardList />}</div>
+      </Layout>
+    </div>
   );
-}
+};
 
 export default Page;

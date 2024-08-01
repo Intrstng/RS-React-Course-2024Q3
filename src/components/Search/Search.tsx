@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import S from './Search.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
@@ -21,18 +27,18 @@ import { useRouter } from 'next/router';
 import { favoritesSelector } from '../../redux/selectors';
 import { FavoritesItems } from '../../redux/slices/favoritesSlice';
 
-
 export const getInitValueFromLS = (key: string) => {
   return typeof window !== 'undefined'
-      ? JSON.parse(localStorage.getItem(key)) || ''
-      : '';
+    ? JSON.parse(localStorage.getItem(key)) || ''
+    : '';
 };
 
 export const Search = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const [text, setText] = useState<string>(getInitValueFromLS(LOCAL_STORAGE_SEARCH_KEY));
-
+  const [text, setText] = useState<string>(
+    getInitValueFromLS(LOCAL_STORAGE_SEARCH_KEY),
+  );
 
   const searchValue = useAppSelector<string>(searchSelector);
   const navigationPage = useAppSelector<number>(currentPageSelector);
@@ -60,18 +66,25 @@ export const Search = () => {
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push('/page/1');
 
-    dispatch(appActions.setAppCurrentPage({ currentPage: 1 }));
     const trimmedText = text.trim();
     setText(trimmedText);
+    dispatch(appActions.setAppCurrentPage({ currentPage: 1 }));
     dispatch(appActions.setAppSearch({ search: trimmedText }));
+    // router.push('/page/1');
+    router.push({
+      pathname: '/page/1',
+      query: { search: trimmedText },
+    });
   };
 
   const onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value);
     if (typeof window !== 'undefined') {
-      localStorage.setItem(LOCAL_STORAGE_SEARCH_KEY, JSON.stringify(e.currentTarget.value));
+      localStorage.setItem(
+        LOCAL_STORAGE_SEARCH_KEY,
+        JSON.stringify(e.currentTarget.value),
+      );
     }
   };
 

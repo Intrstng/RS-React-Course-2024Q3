@@ -31,4 +31,7 @@ export default [
       prettier: prettierPlugin,
     },
   },
+  {
+    ignores: [".next", "dist"],
+  },
 ];

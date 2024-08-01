@@ -5,7 +5,7 @@ import S from './Loader.module.css';
 export const Loader = () => {
   return (
     <div className={S.loader}>
-      <img src={loadSpinner} alt={'loading'} />
+      <img src={loadSpinner.src} alt={'loading'} />
       <p className={'loading'}>Loading...</p>
     </div>
   );

@@ -12,16 +12,20 @@ const Custom404 = () => {
   };
 
   return (
-      <>
-        <img className={S.error} src={errorNotFound.src} alt={'error not found'} />
-        <Button
-            className={S.homeButton}
-            onClickCallBack={onClickRedirectHomeHandler}
-        >
-          Home
-        </Button>
-      </>
+    <>
+      <img
+        className={S.error}
+        src={errorNotFound.src}
+        alt={'error not found'}
+      />
+      <Button
+        className={S.homeButton}
+        onClickCallBack={onClickRedirectHomeHandler}
+      >
+        Home
+      </Button>
+    </>
   );
 };
 
-export default Custom404
+export default Custom404;

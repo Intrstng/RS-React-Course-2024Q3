@@ -1,11 +1,7 @@
 import React, { useContext } from 'react';
 import S from './CardList.module.css';
 import { Card } from '../Card/Card';
-import { Outlet } from 'react-router-dom';
-import {
-  VehicleDetailsDomain,
-  VehiclesResponse,
-} from '../../shared/types/types';
+import { VehicleDetailsDomain, VehiclesResponse, } from '../../shared/types/types';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import { useAppSelector } from '../../redux/store';
@@ -49,14 +45,7 @@ export const CardList = () => {
         )}
       </section>
 
-      <aside>
-
-
-      {/*  /!*<Outlet />*!/*/}
-
-
-
-      </aside>
+      <aside>{/*  /!*<Outlet />*!/*/}</aside>
       {Object.keys(favoritesItems)?.length > 0 && <CustomToastify />}
     </>
   );

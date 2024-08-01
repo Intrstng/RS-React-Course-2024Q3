@@ -3,7 +3,10 @@ import S from './Pagination.module.css';
 import { Button } from '../Button';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { currentPageSelector } from '../../redux/selectors/appSelectors';
+import {
+  currentPageSelector,
+  searchSelector,
+} from '../../redux/selectors/appSelectors';
 import { appActions } from '../../redux/slices/appSlice';
 import { domainCardsSelector } from '../../redux/selectors/domainCardsSelectors';
 
@@ -13,17 +16,24 @@ export const Pagination = () => {
   const dispatch = useAppDispatch();
   const domainCards = useAppSelector(domainCardsSelector);
   const pagesCount = Math.ceil(domainCards?.count / 10);
+  const searchValue = useAppSelector<string>(searchSelector);
 
   const onClickPrevPageHandler = () => {
     if (currentPage > 1) {
       dispatch(appActions.setAppCurrentPage({ currentPage: currentPage - 1 }));
-      router.push(`/page/${currentPage - 1}`);
+      router.push({
+        pathname: `/page/${currentPage - 1}`,
+        query: { search: searchValue },
+      });
     }
   };
 
   const onClickNextPageHandler = () => {
     dispatch(appActions.setAppCurrentPage({ currentPage: currentPage + 1 }));
-    router.push(`/page/${currentPage + 1}`);
+    router.push({
+      pathname: `/page/${currentPage + 1}`,
+      query: { search: searchValue },
+    });
   };
 
   return (
