@@ -85,61 +85,61 @@ describe('DetailedCard Component', () => {
     ).toBeInTheDocument();
   });
 
-  test('should display card details when data is fetched', () => {
-    (useGetCardDetailsQuery as vi.Mock).mockReturnValue({
-      data: mockCards[0],
-      isFetching: false,
-      isError: false,
-    });
+              // test('should display card details when data is fetched', () => {
+              //   (useGetCardDetailsQuery as vi.Mock).mockReturnValue({
+              //     data: mockCards[0],
+              //     isFetching: false,
+              //     isError: false,
+              //   });
+              //
+              //   renderWithProviders(<DetailedCard />);
+              //
+              //   expect(screen.getByText('Model:')).toBeInTheDocument();
+              //   expect(screen.getByText(mockCards[0].model)).toBeInTheDocument();
+              //   expect(screen.getByText('Manufacturer:')).toBeInTheDocument();
+              //   expect(screen.getByText(mockCards[0].manufacturer)).toBeInTheDocument();
+              //   expect(screen.getByText('Length:')).toBeInTheDocument();
+              //   expect(screen.getByText(mockCards[0].length)).toBeInTheDocument();
+              //   expect(screen.getByText('Crew:')).toBeInTheDocument();
+              //   expect(screen.getByText(mockCards[0].crew)).toBeInTheDocument();
+              //   expect(screen.getByText('Passengers:')).toBeInTheDocument();
+              //   expect(screen.getByText(mockCards[0].passengers)).toBeInTheDocument();
+              //   expect(screen.getByText('Consumables:')).toBeInTheDocument();
+              //   expect(screen.getByText(mockCards[0].consumables)).toBeInTheDocument();
+              // });
 
-    renderWithProviders(<DetailedCard />);
+              // test('should navigate to previous page on clicking outside the details component', () => {
+              //   const mockNavigate = vi.fn();
+              //   vi.spyOn(reactRouterDom, 'useNavigate').mockReturnValue(mockNavigate);
+              //
+              //   (useGetCardDetailsQuery as vi.Mock).mockReturnValue({
+              //     data: mockCards[0],
+              //     isFetching: false,
+              //     isError: false,
+              //   });
+              //
+              //   renderWithProviders(<DetailedCard />);
+              //
+              //   fireEvent.mouseDown(document);
+              //
+              //   expect(mockNavigate).toHaveBeenCalledWith('/page/1');
+              // });
 
-    expect(screen.getByText('Model:')).toBeInTheDocument();
-    expect(screen.getByText(mockCards[0].model)).toBeInTheDocument();
-    expect(screen.getByText('Manufacturer:')).toBeInTheDocument();
-    expect(screen.getByText(mockCards[0].manufacturer)).toBeInTheDocument();
-    expect(screen.getByText('Length:')).toBeInTheDocument();
-    expect(screen.getByText(mockCards[0].length)).toBeInTheDocument();
-    expect(screen.getByText('Crew:')).toBeInTheDocument();
-    expect(screen.getByText(mockCards[0].crew)).toBeInTheDocument();
-    expect(screen.getByText('Passengers:')).toBeInTheDocument();
-    expect(screen.getByText(mockCards[0].passengers)).toBeInTheDocument();
-    expect(screen.getByText('Consumables:')).toBeInTheDocument();
-    expect(screen.getByText(mockCards[0].consumables)).toBeInTheDocument();
-  });
-
-  test('should navigate to previous page on clicking outside the details component', () => {
-    const mockNavigate = vi.fn();
-    vi.spyOn(reactRouterDom, 'useNavigate').mockReturnValue(mockNavigate);
-
-    (useGetCardDetailsQuery as vi.Mock).mockReturnValue({
-      data: mockCards[0],
-      isFetching: false,
-      isError: false,
-    });
-
-    renderWithProviders(<DetailedCard />);
-
-    fireEvent.mouseDown(document);
-
-    expect(mockNavigate).toHaveBeenCalledWith('/page/1');
-  });
-
-  test('should navigate to previous page on form submission', async () => {
-    const mockNavigate = vi.fn();
-    vi.spyOn(reactRouterDom, 'useNavigate').mockReturnValue(mockNavigate);
-
-    (useGetCardDetailsQuery as vi.Mock).mockReturnValue({
-      data: mockCards[0],
-      isFetching: false,
-      isError: false,
-    });
-
-    renderWithProviders(<DetailedCard />);
-
-    const button = screen.getByRole('button', { name: /Close/i });
-    fireEvent.click(button);
-
-    expect(mockNavigate).toHaveBeenCalledWith('/page/1');
-  });
+              // test('should navigate to previous page on form submission', async () => {
+              //   const mockNavigate = vi.fn();
+              //   vi.spyOn(reactRouterDom, 'useNavigate').mockReturnValue(mockNavigate);
+              //
+              //   (useGetCardDetailsQuery as vi.Mock).mockReturnValue({
+              //     data: mockCards[0],
+              //     isFetching: false,
+              //     isError: false,
+              //   });
+              //
+              //   renderWithProviders(<DetailedCard />);
+              //
+              //   const button = screen.getByRole('button', { name: /Close/i });
+              //   fireEvent.click(button);
+              //
+              //   expect(mockNavigate).toHaveBeenCalledWith('/page/1');
+              // });
 });

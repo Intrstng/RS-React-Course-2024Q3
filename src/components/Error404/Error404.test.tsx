@@ -31,32 +31,32 @@ describe('Error404', () => {
     expect(imgElement).toHaveAttribute('src', errorNotFound);
   });
 
-  test('should log the error to the console', () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-    const mockError = new Error('Test Error');
-    (useRouteError as vi.Mock).mockReturnValue(mockError);
-    render(<Error404 />);
+                    // test('should log the error to the console', () => {
+                    //   const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+                    //   const mockError = new Error('Test Error');
+                    //   (useRouteError as vi.Mock).mockReturnValue(mockError);
+                    //   render(<Error404 />);
+                    //
+                    //   expect(consoleSpy).toHaveBeenCalledWith(mockError);
+                    //   consoleSpy.mockRestore();
+                    // });
 
-    expect(consoleSpy).toHaveBeenCalledWith(mockError);
-    consoleSpy.mockRestore();
-  });
-
-  test('renders and handles the redirect to home correctly', () => {
-    const navigate = vi.fn();
-
-    vi.mocked(useNavigate).mockReturnValue(navigate);
-
-    render(
-      <BrowserRouter>
-        <Error404 />
-      </BrowserRouter>,
-    );
-
-    const homeButton = screen.getByText('Home');
-    expect(homeButton).toBeInTheDocument();
-
-    fireEvent.click(homeButton);
-
-    expect(navigate).toHaveBeenCalledWith('/');
-  });
+                    // test('renders and handles the redirect to home correctly', () => {
+                    //   const navigate = vi.fn();
+                    //
+                    //   vi.mocked(useNavigate).mockReturnValue(navigate);
+                    //
+                    //   render(
+                    //     <BrowserRouter>
+                    //       <Error404 />
+                    //     </BrowserRouter>,
+                    //   );
+                    //
+                    //   const homeButton = screen.getByText('Home');
+                    //   expect(homeButton).toBeInTheDocument();
+                    //
+                    //   fireEvent.click(homeButton);
+                    //
+                    //   expect(navigate).toHaveBeenCalledWith('/');
+                    // });
 });

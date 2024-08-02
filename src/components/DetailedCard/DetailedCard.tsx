@@ -85,7 +85,7 @@ export const DetailedCard: FC<DetaileCardProps> = ({detailsData}) => {
                   Consumables: <span>{detailsData.consumables}</span>
                 </p>
               </>
-          ) : <p className={S.error}>Error loading detailed cards</p>
+              ) : <p className={S.error}>Error loading detailed cards</p>
           }
           <form onSubmit={onSubmitHandler}>
             <button type="submit">
@@ -93,7 +93,6 @@ export const DetailedCard: FC<DetaileCardProps> = ({detailsData}) => {
             </button>
           </form>
         </div>
-        }
       </div>
   );
 };

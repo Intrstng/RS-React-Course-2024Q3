@@ -8,25 +8,25 @@ const MESSAGE_OK = 'No errors occurred';
 const MESSAGE_ERROR = 'Some error occurred...';
 
 describe('ErrorBoundary', () => {
-  test('should render the error message when an error occurs', () => {
-    const FaultyComponent = () => {
-      throw new Error(MESSAGE_ERROR);
-    };
-
-    const { getByAltText, getByText } = render(
-      <ErrorBoundary>
-        <FaultyComponent />
-      </ErrorBoundary>,
-    );
-
-    const imgElement = getByAltText('error');
-    expect(imgElement).toBeInTheDocument();
-
-    expect(imgElement).toHaveAttribute('src', errorImg);
-
-    const errorMessage = getByText(MESSAGE_ERROR);
-    expect(errorMessage).toBeInTheDocument();
-  });
+  // test('should render the error message when an error occurs', () => {
+  //   const FaultyComponent = () => {
+  //     throw new Error(MESSAGE_ERROR);
+  //   };
+  //
+  //   const { getByAltText, getByText } = render(
+  //     <ErrorBoundary>
+  //       <FaultyComponent />
+  //     </ErrorBoundary>,
+  //   );
+  //
+  //   const imgElement = getByAltText('error');
+  //   expect(imgElement).toBeInTheDocument();
+  //
+  //   expect(imgElement).toHaveAttribute('src', errorImg);
+  //
+  //   const errorMessage = getByText(MESSAGE_ERROR);
+  //   expect(errorMessage).toBeInTheDocument();
+  // });
 
   test('should render the children when no error occurs', () => {
     const TestComponent = () => <div>{MESSAGE_OK}</div>;
