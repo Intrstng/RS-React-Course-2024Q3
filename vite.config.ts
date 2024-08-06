@@ -3,7 +3,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  // base: '/RS-React-Course-2024Q3/',
   plugins: [react()],
   test: {
     globals: true,
@@ -15,11 +14,11 @@ export default defineConfig({
       enabled: true,
       all: true,
       reporter: ['text'],
-      include: ["src/**/*.tsx", "src/**/*.ts"],
+      include: ['src/**/*.tsx', 'src/**/*.ts'],
       exclude: [
-        "src/vite-env.d.ts",
-        "src/pages/_document.tsx",
-        "src/pages/api/hello.ts",
+        'src/vite-env.d.ts',
+        'src/pages/_document.tsx',
+        'src/pages/api/hello.ts',
       ],
     },
   },

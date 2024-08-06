@@ -1,7 +1,11 @@
 import React, { FC, useContext } from 'react';
-import S from './CardList.module.css';
+import S from '../../styles/CardList.module.css';
 import { Card } from '../Card/Card';
-import { VehicleDetails, VehicleDetailsDomain, VehiclesResponse, } from '../../shared/types/types';
+import {
+  VehicleDetails,
+  VehicleDetailsDomain,
+  VehiclesResponse,
+} from '../../shared/types/types';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import { useAppSelector } from '../../redux/store';
@@ -13,15 +17,14 @@ import { useRouter } from 'next/router';
 import { DetailedCard } from '../DetailedCard/DetailedCard';
 
 export type CardListProps = {
-  detailsData?: VehicleDetails | undefined
-}
+  detailsData?: VehicleDetails | undefined;
+};
 
-export const CardList:FC<CardListProps> = ({detailsData}) => {
+const CardList: FC<CardListProps> = ({ detailsData }) => {
   const { themeType, theme } = useContext(ThemeContext);
   const domainCards =
     useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
   const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
-
 
   const router = useRouter();
   const { cardId } = router.query;
@@ -54,12 +57,14 @@ export const CardList:FC<CardListProps> = ({detailsData}) => {
           </h2>
         )}
       </section>
-      {cardId && (<aside>
-        <DetailedCard detailsData={detailsData}/>
-      </aside>)}
-
-      {/*<aside>/!*  /!*<Outlet />*!/*!/</aside>*/}
+      {cardId && (
+        <aside>
+          <DetailedCard detailsData={detailsData} />
+        </aside>
+      )}
       {Object.keys(favoritesItems)?.length > 0 && <CustomToastify />}
     </>
   );
 };
+
+export default CardList;

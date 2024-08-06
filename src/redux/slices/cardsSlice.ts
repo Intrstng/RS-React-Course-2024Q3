@@ -14,7 +14,9 @@ const cardsSlice = createSlice({
   reducers: {
     setDomainCards(
       state,
-      action: PayloadAction<{ cards: VehiclesResponse<VehicleDetails> | undefined }>,
+      action: PayloadAction<{
+        cards: VehiclesResponse<VehicleDetails> | undefined;
+      }>,
     ) {
       state.domainCards = {
         ...action.payload.cards,

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import S from './CustomToastify.module.css';
+import S from '../../styles/CustomToastify.module.css';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { favoritesSelector } from '../../redux/selectors';
 import { Button } from '../Button';

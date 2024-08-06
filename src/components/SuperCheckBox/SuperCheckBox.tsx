@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FC, ReactNode } from 'react';
-import S from './SuperCheckBox.module.css';
+import S from '../../styles/SuperCheckBox.module.css';
 
 export const SuperCheckBox: FC<SuperCheckBoxProps> = ({
   isChecked,

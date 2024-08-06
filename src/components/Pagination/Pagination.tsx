@@ -1,5 +1,5 @@
 import React from 'react';
-import S from './Pagination.module.css';
+import S from '../../styles/Pagination.module.css';
 import { Button } from '../Button';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../../redux/store';

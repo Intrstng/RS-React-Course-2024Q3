@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
@@ -37,7 +37,13 @@ describe('CustomToastify Component', () => {
       favorites: {
         favorites: mockFavoritesCars,
       },
-      [cardsApi.reducerPath]: cardsApi.reducer,
+      [cardsApi.reducerPath]: {
+        queries: {},
+        mutations: {},
+        provided: {},
+        subscriptions: {},
+        config: {},
+      },
     };
 
     const store = configureStore({
@@ -94,7 +100,13 @@ describe('CustomToastify Component', () => {
       favorites: {
         favorites: { 19: mockFavoritesCars[19] },
       },
-      [cardsApi.reducerPath]: cardsApi.reducer,
+      [cardsApi.reducerPath]: {
+        queries: {},
+        mutations: {},
+        provided: {},
+        subscriptions: {},
+        config: {},
+      },
     };
 
     const store = configureStore({

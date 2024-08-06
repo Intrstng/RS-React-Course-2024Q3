@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, expect, test } from 'vitest';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Card } from './Card';
 import '@testing-library/jest-dom';
@@ -33,22 +33,4 @@ describe('Card Component', () => {
     const cardTitle = screen.getByText(mockCards[0].name);
     expect(cardTitle).toBeVisible();
   });
-
-          // test('should navigate to detailed card component on click', async () => {
-          //   render(
-          //     <Provider store={setupStore()}>
-          //       <BrowserRouter>
-          //         <Card card={mockCards[0]} cardId={MOCK_ID} isChecked={false} />
-          //       </BrowserRouter>
-          //       ,
-          //     </Provider>,
-          //   );
-          //
-          //   const cardLink = screen.getByRole('link');
-          //   fireEvent.click(cardLink);
-          //
-          //   await waitFor(() => {
-          //     expect(window.location.pathname).toBe(`/card/${MOCK_ID}`);
-          //   });
-          // });
 });

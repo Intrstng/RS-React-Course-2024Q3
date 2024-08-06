@@ -32,6 +32,6 @@ export default [
     },
   },
   {
-    ignores: [".next", "dist"],
+    ignores: [".next", "dist", "vitest.setup.ts", "next-env.d.ts"],
   },
 ];

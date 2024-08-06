@@ -3,7 +3,7 @@ import {
   ErrorBoundaryProps,
   ErrorBoundaryState,
 } from '../../shared/types/types';
-import S from './ErrorBoundary.module.css';
+import S from '../../styles/ErrorBoundary.module.css';
 import errorImg from '../../assets/error-page.jpg';
 import { Button } from '../Button';
 

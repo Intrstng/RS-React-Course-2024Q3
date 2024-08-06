@@ -1,15 +1,14 @@
-/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Head from 'next/head';
 import App from '../myApp/App';
 import { wrapper } from '../redux/store';
-import { getCards, getRunningQueriesThunk, } from '../redux/api/cardsApi';
-import Layout from './layout';
+import { getCards, getRunningQueriesThunk } from '../redux/api/cardsApi';
+import RootLayout from '../components/RootLayout/RootLayout';
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
     const searchText = '';
-    const page = context.query.page || 1;
+    const page = context.query?.page || 1;
 
     store.dispatch(getCards.initiate({ search: searchText, page }));
 
@@ -21,16 +20,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
   },
 );
 
-export default function Home() {
+const Home = () => {
   return (
     <div>
       <Head>
         <title>RS School Next.js</title>
         <meta name="description" content="RS School Next.js Page Routing app" />
       </Head>
-      <Layout>
-        <App />
-      </Layout>
+      <App />
     </div>
   );
-}
+};
+
+Home.Layout = RootLayout;
+
+export default Home;

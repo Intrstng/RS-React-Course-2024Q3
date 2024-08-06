@@ -38,6 +38,7 @@ describe('appSlice', () => {
       appActions.setAppStatus({ isLoading }),
     );
     expect(newState.isLoading).toBe(isLoading);
+    expect();
   });
 
   test('setAppError should set the error message', () => {

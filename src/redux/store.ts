@@ -9,17 +9,6 @@ import { cardsApi } from './api/cardsApi';
 import { appReducer, cardsReducer, favoritesReducer } from './slices';
 import { createWrapper } from 'next-redux-wrapper';
 
-// export const store = configureStore({
-//   reducer: {
-//     [cardsApi.reducerPath]: cardsApi.reducer,
-//     myApp: appReducer,
-//     cards: cardsReducer,
-//     favorites: favoritesReducer,
-//   },
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware().concat(cardsApi.middleware),
-// });
-
 export const setupStore = () => {
   return configureStore({
     reducer: {
@@ -33,7 +22,6 @@ export const setupStore = () => {
   });
 };
 
-// export type AppRootState = ReturnType<typeof store.getState>;
 export type AppRootState = ReturnType<typeof setupStore>;
 export type AppDispatch = ThunkDispatch<AppRootState, unknown, UnknownAction>;
 export type AppThunk<ReturnType = void> = ThunkAction<

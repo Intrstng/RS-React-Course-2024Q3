@@ -1,15 +1,17 @@
 import React, { useContext, useEffect } from 'react';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
-import S from './ThemeControl.module.css';
+import S from '../../styles/ThemeControl.module.css';
 import { Button } from '../Button';
 
-const LOCAL_STORAGE_THEME_KEY = 'themeValue';
+export const LOCAL_STORAGE_THEME_KEY = 'themeValue';
 
 export const getInitThemeFromLS = (key: string) => {
-  return typeof window !== 'undefined'
-    ? JSON.parse(localStorage.getItem(key)) || 'light'
-    : 'light';
+  if (typeof window !== 'undefined') {
+    const storedTheme = localStorage.getItem(key);
+    return storedTheme ? JSON.parse(storedTheme) : 'light';
+  }
+  return 'light';
 };
 
 export const ThemeControl = () => {

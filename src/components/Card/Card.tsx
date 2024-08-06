@@ -4,7 +4,7 @@ import {
   VehicleDetailsDomain,
   VehiclesResponse,
 } from '../../shared/types/types';
-import S from './Card.module.css';
+import S from '../../styles/Card.module.css';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { SuperCheckBox } from '../SuperCheckBox/SuperCheckBox';
@@ -12,7 +12,7 @@ import { cardsActions } from '../../redux/slices/cardsSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { favoritesActions } from '../../redux/slices/favoritesSlice';
 import { appActions } from '../../redux/slices/appSlice';
-import { currentPageSelector, domainCardsSelector } from '../../redux/selectors';
+import { domainCardsSelector } from '../../redux/selectors';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -22,10 +22,8 @@ export const Card: FC<CardProps> = ({ card, cardId, isChecked }) => {
   const dispatch = useAppDispatch();
   const domainCards =
     useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
-  const currentPage = useAppSelector<number>(currentPageSelector);
 
   const router = useRouter();
-  const { id } = router.query;
   const isActive = router.asPath === `/page/card/${cardId}`;
 
   const textStyle =

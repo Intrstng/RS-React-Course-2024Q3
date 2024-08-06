@@ -1,92 +1,90 @@
 import React from 'react';
+import { describe, expect, test, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { router } from '../routes/Route';
-import { BrowserRouter, RouterProvider } from 'react-router-dom';
-import { beforeEach, describe, expect, test } from 'vitest';
-import { ThemeProvider } from '../contexts/Theme/Theme.context';
-import { App } from './App';
-import { Provider } from 'react-redux';
-import { ThemeType } from '../contexts/Theme/Theme.model';
-import { THEMES } from '../contexts/Theme/Theme.config';
-import { mockCards, mockFavoritesCars } from '../test/mockData';
-import { configureStore } from '@reduxjs/toolkit';
-import { appReducer, cardsReducer, favoritesReducer } from '../redux/slices';
-import { cardsApi } from '../redux/api/cardsApi';
-import { AppRootState } from '../redux/store';
+import { useRouter } from 'next/router';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import {
+  currentPageSelector,
+  searchSelector,
+  statusSelector,
+} from '../redux/selectors/appSelectors';
+import { appActions } from '../redux/slices/appSlice';
+import App from './App';
 
-let store: AppRootState;
+vi.mock('../redux/store', () => ({
+  useAppDispatch: vi.fn(),
+  useAppSelector: vi.fn(),
+}));
 
-beforeEach(() => {
-  const initialState = {
-    app: {
-      isLoading: false,
-      error: null,
-      currentPage: 1,
-      isToastifyOpen: true,
-    },
-    cards: {
-      domainCards: mockCards,
-    },
-    favorites: {
-      favorites: mockFavoritesCars,
-    },
-    [cardsApi.reducerPath]: cardsApi.reducer,
+vi.mock('next/router', () => ({
+  useRouter: vi.fn(),
+}));
+
+vi.mock('../components/Loader/Loader', () => ({
+  Loader: () => <div>Loading...</div>,
+}));
+
+vi.mock('../components/CardList/CardList', async () => {
+  const originalModule = await vi.importActual(
+    '../components/CardList/CardList',
+  );
+  return {
+    ...originalModule,
+    default: () => <div>Card List</div>,
   };
-
-  store = configureStore({
-    reducer: {
-      app: appReducer,
-      cards: cardsReducer,
-      favorites: favoritesReducer,
-      [cardsApi.reducerPath]: cardsApi.reducer,
-    },
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(cardsApi.middleware),
-    preloadedState: initialState,
-  });
 });
 
 describe('App', () => {
-                  test('should render the search component with the router provider by root path', async () => {
-                    // const themeContextValue = {
-                    //   themeType: ThemeType.LIGHT,
-                    //   theme: THEMES[ThemeType.LIGHT],
-                    //   setCurrentTheme: () => {},
-                    // };
-                    //
-                    // render(
-                    //   <ThemeProvider value={themeContextValue}>
-                    //     <Provider store={store}>
-                    //       <RouterProvider router={router} />
-                    //     </Provider>
-                    //   </ThemeProvider>,
-                    // );
-                    // const input = await screen.findByPlaceholderText('search');
-                    // const searchButton = await screen.findByText('Search');
-                    //
-                    // expect(input).toBeInTheDocument();
-                    // expect(searchButton).toBeInTheDocument();
-                    const bool = true
-                    expect(bool).toBe(true);
-                  });
+  const mockDispatch = vi.fn();
+  const mockRouter = {
+    query: { id: '1' },
+    pathname: '/',
+    replace: vi.fn(),
+  };
 
-              // test('should render App', () => {
-              //   const themeContextValue = {
-              //     themeType: ThemeType.DARK,
-              //     theme: THEMES[ThemeType.DARK],
-              //     setCurrentTheme: () => {},
-              //   };
-              //
-              //   render(
-              //     <ThemeProvider value={themeContextValue}>
-              //       <Provider store={store}>
-              //         <BrowserRouter>
-              //           <App />
-              //         </BrowserRouter>
-              //       </Provider>
-              //     </ThemeProvider>,
-              //   );
-              //   const appDiv = screen.getByTestId('app');
-              //   expect(appDiv).toBeInTheDocument();
-              // });
+  beforeEach(() => {
+    vi.clearAllMocks();
+    (useAppDispatch as vi.Mock).mockReturnValue(mockDispatch);
+    (useAppSelector as vi.Mock).mockImplementation((selector) => {
+      if (selector === currentPageSelector) return 1;
+      if (selector === statusSelector) return false;
+      if (selector === searchSelector) return '';
+      return null;
+    });
+    (useRouter as vi.Mock).mockReturnValue(mockRouter);
+  });
+
+  test('should render Loader when isLoading is true', () => {
+    (useAppSelector as vi.Mock).mockImplementation((selector) => {
+      if (selector === statusSelector) return true;
+      return null;
+    });
+
+    render(<App />);
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+  });
+
+  test('should render CardList when isLoading is false', () => {
+    render(<App />);
+    expect(screen.getByText('Card List')).toBeInTheDocument();
+  });
+
+  test('should dispatch setAppCurrentPage action on mount', () => {
+    render(<App />);
+    expect(mockDispatch).toHaveBeenCalledWith(
+      appActions.setAppCurrentPage({ currentPage: 1 }),
+    );
+  });
+
+  test('should replace the router path when pathname is "/"', () => {
+    render(<App />);
+    expect(mockRouter.replace).toHaveBeenCalledWith(
+      {
+        pathname: `/page/1`,
+        query: { search: '' },
+      },
+      undefined,
+      { shallow: true },
+    );
+  });
 });

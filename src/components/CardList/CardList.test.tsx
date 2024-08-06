@@ -2,7 +2,7 @@ import React from 'react';
 import { describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
-import { CardList } from './CardList';
+import CardList from './CardList';
 import '@testing-library/jest-dom';
 import { mockCards, mockFavoritesCars } from '../../test/mockData';
 import { Provider } from 'react-redux';

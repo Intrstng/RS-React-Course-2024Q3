@@ -5,11 +5,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import S from './Search.module.css';
+import S from '../../styles/Search.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
 import { ButtonType } from '../../shared/types/types';
-
 import { Pagination } from '../Pagination/Pagination';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import {
@@ -53,10 +52,11 @@ export const Search = () => {
   const { id, search } = router.query;
 
   useEffect(() => {
-          dispatch(appActions.setAppCurrentPage({ currentPage: Number(id) || navigationPage }));
-          // dispatch(appActions.setAppSearch({ search: search || '' }));
-          // setText(search)
-
+    dispatch(
+      appActions.setAppCurrentPage({
+        currentPage: Number(id) || navigationPage,
+      }),
+    );
     dispatch(appActions.setAppStatus({ isLoading: isFetching }));
     dispatch(cardsActions.setDomainCards({ cards: data }));
     dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
@@ -69,6 +69,17 @@ export const Search = () => {
     }
   }, [searchValue, navigationPage, data, isFetching, isError, error, id]);
 
+  useEffect(() => {
+    if (search) {
+      setText(search.trim());
+      dispatch(appActions.setAppSearch({ search }));
+      dispatch(appActions.setAppCurrentPage({ currentPage: id }));
+    }
+    if (search && typeof window !== 'undefined') {
+      localStorage.setItem(LOCAL_STORAGE_SEARCH_KEY, JSON.stringify(search));
+    }
+  }, [search]);
+
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -76,7 +87,6 @@ export const Search = () => {
     setText(trimmedText);
     dispatch(appActions.setAppCurrentPage({ currentPage: 1 }));
     dispatch(appActions.setAppSearch({ search: trimmedText }));
-    // router.push('/page/1');
     router.push({
       pathname: '/page/1',
       query: { search: trimmedText },
