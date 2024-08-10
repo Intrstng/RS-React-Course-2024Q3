@@ -96,6 +96,25 @@ export const Search = () => {
   //   });
   // };
 
+
+
+  const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const trimmedText = text.trim();
+    setText(trimmedText);
+    // dispatch(appActions.setAppCurrentPage({ currentPage: 1 }));
+    // dispatch(appActions.setAppSearch({ search: trimmedText }));
+    // router.push({
+    //   pathname: '/page/1',
+    //   query: { search: trimmedText },
+    // });
+
+    let href = `/page/1?search=${trimmedText}`
+    router.push(href);
+  };
+
+
   const onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value);
     if (typeof window !== 'undefined') {
@@ -121,7 +140,7 @@ export const Search = () => {
   return (
     <section>
       <form
-        // onSubmit={onClickFetchVehiclesHandler}
+        onSubmit={onClickFetchVehiclesHandler}
         className={S.searchContainer}
       >
         <SearchField

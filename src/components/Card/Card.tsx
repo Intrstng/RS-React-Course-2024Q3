@@ -16,6 +16,7 @@ import { appActions } from '../../redux/slices/appSlice';
 import { domainCardsSelector } from '../../redux/selectors';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { isToastifyOpenSelector } from '../../redux/selectors/appSelectors';
 // import { useRouter } from 'next/router';
 
 export const Card: FC<CardProps> = ({ card, pageId,  cardId, isChecked }) => {
@@ -32,6 +33,9 @@ export const Card: FC<CardProps> = ({ card, pageId,  cardId, isChecked }) => {
   const isActive = pathname === `/page/${pageId}` && searchParams.get('card') === cardId.toString();
 
 
+  const isToastifyOpen = useAppSelector<boolean>(isToastifyOpenSelector)
+  console.log('isToastifyOpen', isToastifyOpen)
+
   // const onChangeInputStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
   //   dispatch(
   //     cardsActions.toggleDomainCardToFavorites({
@@ -47,6 +51,7 @@ export const Card: FC<CardProps> = ({ card, pageId,  cardId, isChecked }) => {
   //   );
   //   dispatch(appActions.showIsToastify());
   // };
+
 
   let href = querySearch ? `/page/${pageId}?search=${querySearch}&card=${cardId}` : `/page/${pageId}?card=${cardId}`
 

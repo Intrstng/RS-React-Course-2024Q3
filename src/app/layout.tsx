@@ -6,6 +6,7 @@ import { ErrorBoundary } from '../components/ErrorBoundary/ErrorBoundary';
 import { CSSProperties, ReactNode, useContext } from 'react';
 import { ThemeControl } from '../components/ThemeControl/ThemeControl';
 import { Search } from '../components/Search/Search';
+import StoreProvider from './StoreProvider';
 
 
 
@@ -24,11 +25,13 @@ export default function RootLayout({
       <html lang="en">
       <ThemeProvider>
         {/*<Provider store={store}>*/}
+                                            <StoreProvider>
         {/*  <ErrorBoundary>*/}
             <body>
               <main>{children}</main>
             </body>
           {/*</ErrorBoundary>*/}
+                                            </StoreProvider>
         {/*</Provider>*/}
       </ThemeProvider>
       </html>

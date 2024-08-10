@@ -12,21 +12,21 @@ const cardsSlice = createSlice({
     domainCards: {} as VehiclesResponse<VehicleDetailsDomain>,
   },
   reducers: {
-    setDomainCards(
-      state,
-      action: PayloadAction<{
-        cards: VehiclesResponse<VehicleDetails> | undefined;
-      }>,
-    ) {
-      state.domainCards = {
-        ...action.payload.cards,
-        results: action.payload.cards?.results.map((card) => ({
-          ...card,
-          isChecked: false,
-          id: card.url.split('/').slice(-2, -1)[0],
-        })),
-      };
-    },
+    // setDomainCards(
+    //   state,
+    //   action: PayloadAction<{
+    //     cards: VehiclesResponse<VehicleDetails> | undefined;
+    //   }>,
+    // ) {
+    //   state.domainCards = {
+    //     ...action.payload.cards,
+    //     results: action.payload.cards?.results.map((card) => ({
+    //       ...card,
+    //       isChecked: false,
+    //       id: card.url.split('/').slice(-2, -1)[0],
+    //     })),
+    //   };
+    // },
     toggleDomainCardToFavorites(
       state,
       action: PayloadAction<{ cardId: string; isChecked: boolean }>,
