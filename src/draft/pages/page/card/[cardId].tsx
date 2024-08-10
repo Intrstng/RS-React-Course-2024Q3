@@ -1,14 +1,14 @@
 import React from 'react';
 import Head from 'next/head';
-import { VehicleDetails, VehiclesResponse } from '../../../shared/types/types';
-import { wrapper } from '../../../redux/store';
+import { VehicleDetails, VehiclesResponse } from '../../../../shared/types/types';
+import { wrapper } from '../../../../redux/store';
 import {
   getCardDetails,
   getRunningQueriesThunk,
-} from '../../../redux/api/cardsApi';
-import CardList from '../../../components/CardList/CardList';
+} from '../../../../redux/api/cardsApi';
+import CardList from '../../../../components/CardList/CardList';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import RootLayout from '../../../components/RootLayout/RootLayout';
+import RootLayout from '../../../../components/RootLayout/RootLayout';
 
 type PageProps = {
   cardsData?: VehiclesResponse<VehicleDetails>;

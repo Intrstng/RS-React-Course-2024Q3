@@ -1,9 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
-import App from '../myApp/App';
-import { wrapper } from '../redux/store';
-import { getCards, getRunningQueriesThunk } from '../redux/api/cardsApi';
-import RootLayout from '../components/RootLayout/RootLayout';
+import App from '../../myApp/App';
+import { wrapper } from '../../redux/store';
+import { getCards, getRunningQueriesThunk } from '../../redux/api/cardsApi';
+import RootLayout from '../../components/RootLayout/RootLayout';
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {

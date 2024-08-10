@@ -1,77 +1,4 @@
 // import React, { FC, useContext } from 'react';
-// import S from '../../styles/CardList.module.css';
-// import { Card } from '../Card/Card';
-// import {
-//   VehicleDetails,
-//   VehicleDetailsDomain,
-//   VehiclesResponse,
-// } from '../../shared/types/types';
-// import { ThemeType } from '../../contexts/Theme/Theme.model';
-// import { ThemeContext } from '../../contexts/Theme/Theme.context';
-// import { useAppSelector } from '../../redux/store';
-// import { domainCardsSelector } from '../../redux/selectors/domainCardsSelectors';
-// import { CustomToastify } from '../CustomToastify/CustomToastify';
-// import { favoritesSelector } from '../../redux/selectors/favoritesSelectors';
-// import { FavoritesItems } from '../../redux/slices/favoritesSlice';
-// import { useRouter } from 'next/router';
-// import { DetailedCard } from '../DetailedCard/DetailedCard';
-//
-// export type CardListProps = {
-//   detailsData?: VehicleDetails | undefined;
-// };
-//
-// const CardList: FC<CardListProps> = ({ detailsData }) => {
-//   const { themeType, theme } = useContext(ThemeContext);
-//   const domainCards =
-//     useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
-//   const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
-//
-//   const router = useRouter();
-//   const { cardId } = router.query;
-//
-//   const textStyle =
-//     themeType === ThemeType.LIGHT
-//       ? { color: theme['--search'] }
-//       : { color: theme['--white'] };
-//
-//   return (
-//     <>
-//       <section className={S.viewContainer}>
-//         {domainCards?.results?.length > 0 ? (
-//           <ul className={S.vehiclesList}>
-//             {domainCards?.results.map((card) => {
-//               return (
-//                 <li key={card.id}>
-//                   <Card
-//                     card={card}
-//                     cardId={card.id}
-//                     isChecked={card.isChecked}
-//                   />
-//                 </li>
-//               );
-//             })}
-//           </ul>
-//         ) : (
-//           <h2 style={textStyle} className={S.notification}>
-//             No results were found for your request...
-//           </h2>
-//         )}
-//       </section>
-//       {cardId && (
-//         <aside>
-//           <DetailedCard detailsData={detailsData} />
-//         </aside>
-//       )}
-//       {Object.keys(favoritesItems)?.length > 0 && <CustomToastify />}
-//     </>
-//   );
-// };
-//
-// export default CardList;
-
-
-
-// import React, { FC, useContext } from 'react';
 // import { ThemeContext } from '../../../contexts/Theme/Theme.context';
 // import { useAppSelector } from '../../../redux/store';
 // import { VehicleDetailsDomain, VehiclesResponse } from '../../../shared/types/types';
@@ -155,16 +82,34 @@
 // export default CardList;
 
 
+
+
+import React, { FC, useContext } from 'react';
+import { ThemeContext } from '../../../contexts/Theme/Theme.context';
+import { useAppSelector } from '../../../redux/store';
+import { VehicleDetailsDomain, VehiclesResponse } from '../../../shared/types/types';
+import { domainCardsSelector, favoritesSelector } from '../../../redux/selectors';
+import { FavoritesItems } from '../../../redux/slices/favoritesSlice';
+import { ThemeType } from '../../../contexts/Theme/Theme.model';
+import S from '../../../styles/CardList.module.css';
+import { Card } from '../../../components/Card/Card';
+import { DetailedCard } from '../../../components/DetailedCard/DetailedCard';
+import { CustomToastify } from '../../../components/CustomToastify/CustomToastify';
+import { CardListProps } from '../../../components/CardList/CardList';
+import { getCards } from '../../../services/getCards';
+import { Suspense } from 'react';
+import { Loader } from '../../../components/Loader/Loader';
+import Detailed from '../../../components/Detailed/Detailed';
+
+
 type Params = {
-  params?: { id: string },
-  searchParams?: { [key: string]: string | undefined },
+  params: { id: string },
+  searchParams: { [key: string]: string | undefined },
 };
 
-import { getCards } from '../../services/getCards';
-import React, { Suspense } from 'react';
-import { Loader } from '../Loader/Loader';
-import S from '../../styles/CardList.module.css';
-import { Card } from '../Card/Card';
+// export async function generateMetadata({ params }: Params) {
+//   return { title: `Post: ${params?.id}` };
+// }
 
 const CardList = async ({ params, searchParams }: Params) => {
   const pageId = Number(params?.id) || 1;
@@ -185,8 +130,8 @@ const CardList = async ({ params, searchParams }: Params) => {
 
   console.log(')))))))))))))))', params, searchParams)
   return (
-      <Suspense fallback={<Loader/>}>
         <>
+        <Suspense key={'cardList'}  fallback={<Loader/>}>
           <section className={S.viewContainer}>
             {domainCards?.results?.length > 0 ?
                 (
@@ -211,15 +156,43 @@ const CardList = async ({ params, searchParams }: Params) => {
                     </h2>
                 )}
           </section>
-          {/*{cardId && (*/}
-          {/*    <aside>*/}
-          {/*      <DetailedCard detailsData={detailsData} />*/}
-          {/*    </aside>*/}
-          {/*)}*/}
+          {searchParams?.card && (
+              <aside className={S.detailedContent}>
+                <Suspense key={'detailed'} fallback={<Loader/>}>
+                  <Detailed params={params} searchParams={searchParams}/>
+                </Suspense>
+              </aside>
+          )}
           {/*{Object.keys(favoritesItems)?.length > 0 && <CustomToastify />}*/}
+        </Suspense>
         </>
-      </Suspense>
   );
 };
 
 export default CardList;
+
+
+
+
+
+// 'use client';
+// import React from 'react';
+// import { useParams, usePathname } from 'next/navigation';
+// import Page from './page';
+// import Card from './card/[cardId]/page';
+// import CardList from '../../../components/CardList/CardList';
+// import Detailed from './card/[cardId]/page';
+//
+// const MainPage = () => {
+//   const { id, cardId } = useParams();
+//   const pathname = usePathname();
+// console.log("")
+//   return (
+//       <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+//         <CardList />
+//         {pathname.includes('card') && <Detailed />}
+//       </div>
+//   );
+// };
+//
+// export default MainPage;

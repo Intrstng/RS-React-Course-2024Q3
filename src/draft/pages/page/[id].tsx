@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import { getCards, getRunningQueriesThunk } from '../../redux/api/cardsApi';
-import { useAppDispatch, useAppSelector, wrapper } from '../../redux/store';
-import { favoritesSelector, statusSelector } from '../../redux/selectors';
-import { appActions } from '../../redux/slices/appSlice';
-import { cardsActions } from '../../redux/slices/cardsSlice';
-import { FavoritesItems } from '../../redux/slices/favoritesSlice';
-import CardList from '../../components/CardList/CardList';
-import { Loader } from '../../components/Loader/Loader';
-import { VehicleDetails, VehiclesResponse } from '../../shared/types/types';
+import { getCards, getRunningQueriesThunk } from '../../../redux/api/cardsApi';
+import { useAppDispatch, useAppSelector, wrapper } from '../../../redux/store';
+import { favoritesSelector, statusSelector } from '../../../redux/selectors';
+import { appActions } from '../../../redux/slices/appSlice';
+import { cardsActions } from '../../../redux/slices/cardsSlice';
+import { FavoritesItems } from '../../../redux/slices/favoritesSlice';
+import CardList from '../../../components/CardList/CardList';
+import { Loader } from '../../../components/Loader/Loader';
+import { VehicleDetails, VehiclesResponse } from '../../../shared/types/types';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import RootLayout from '../../components/RootLayout/RootLayout';
+import RootLayout from '../../../components/RootLayout/RootLayout';
 
 type PageProps = {
   cardsData?: VehiclesResponse<VehicleDetails>;

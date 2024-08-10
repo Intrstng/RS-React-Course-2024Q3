@@ -9,10 +9,10 @@ import {
   appReducer,
   cardsReducer,
   favoritesReducer,
-} from '../../../redux/slices';
-import { cardsApi } from '../../../redux/api/cardsApi';
+} from '../../../../redux/slices';
+import { cardsApi } from '../../../../redux/api/cardsApi';
 import Page, { getServerSideProps } from '../[id]';
-import { mockCardsInit } from '../../../test/mockData';
+import { mockCardsInit } from '../../../../test/mockData';
 
 vi.mock('next/router', () => ({
   useRouter: vi.fn(),

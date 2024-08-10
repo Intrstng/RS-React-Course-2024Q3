@@ -1,8 +1,8 @@
 import React from 'react';
-import errorNotFound from '../assets/error_404.png';
-import S from '../styles/Error404.module.css';
+import errorNotFound from '../../assets/error_404.png';
+import S from '../../styles/Error404.module.css';
 import { useRouter } from 'next/router';
-import { Button } from '../components/Button';
+import { Button } from '../../components/Button';
 import Image from 'next/image';
 
 const Custom404 = () => {

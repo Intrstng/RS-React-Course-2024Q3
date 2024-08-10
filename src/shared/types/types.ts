@@ -14,6 +14,28 @@ export type Vehicle = {
   consumables: string;
 };
 
+export type DetailedVehicle = {
+  name: string;
+  model: string;
+  manufacturer: string;
+  cost_in_credits: string;
+  length: string;
+  max_atmosphering_speed: string;
+  crew: string;
+  passengers: string;
+  cargo_capacity: string;
+  consumables: string;
+  vehicle_class: string;
+  pilots: string[];
+  films: string[];
+  created: Date;
+  edited: Date;
+  url: string;
+  isChecked: boolean;
+  id: string;
+
+};
+
 export type VehicleDetails = Vehicle & {
   cost_in_credits: string;
   pilots: string[];
@@ -70,7 +92,8 @@ export type ButtonProps = {
 
 export type CardProps = {
   card: Vehicle;
-  cardId: string;
+  pageId: number;
+  cardId?: string;
   isChecked: boolean;
 };
 

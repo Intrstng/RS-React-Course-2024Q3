@@ -1,4 +1,5 @@
-import React, { ChangeEvent, FC, useContext } from 'react';
+'use client'
+import React, { ChangeEvent, FC } from 'react';
 import {
   CardProps,
   VehicleDetailsDomain,
@@ -14,48 +15,54 @@ import { favoritesActions } from '../../redux/slices/favoritesSlice';
 import { appActions } from '../../redux/slices/appSlice';
 import { domainCardsSelector } from '../../redux/selectors';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+// import { useRouter } from 'next/router';
 
-export const Card: FC<CardProps> = ({ card, cardId, isChecked }) => {
-  const { themeType, theme } = useContext(ThemeContext);
+export const Card: FC<CardProps> = ({ card, pageId,  cardId, isChecked }) => {
   const { name } = card;
-  const dispatch = useAppDispatch();
-  const domainCards =
-    useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
-
   const router = useRouter();
-  const isActive = router.asPath === `/page/card/${cardId}`;
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const querySearch = searchParams.get('search')
+  // const dispatch = useAppDispatch();
+  // const domainCards =
+  //   useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
+  //
+  // const router = useRouter();
+  const isActive = pathname === `/page/${pageId}` && searchParams.get('card') === cardId.toString();
 
-  const textStyle =
-    themeType === ThemeType.LIGHT
-      ? { color: theme['--secondary'] }
-      : { color: theme['--white'] };
 
-  const onChangeInputStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      cardsActions.toggleDomainCardToFavorites({
-        cardId,
-        isChecked: e.currentTarget.checked,
-      }),
-    );
-    dispatch(
-      favoritesActions.toggleToFavorites({
-        cardId,
-        cards: domainCards.results,
-      }),
-    );
-    dispatch(appActions.showIsToastify());
-  };
+  // const onChangeInputStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  //   dispatch(
+  //     cardsActions.toggleDomainCardToFavorites({
+  //       cardId,
+  //       isChecked: e.currentTarget.checked,
+  //     }),
+  //   );
+  //   dispatch(
+  //     favoritesActions.toggleToFavorites({
+  //       cardId,
+  //       cards: domainCards.results,
+  //     }),
+  //   );
+  //   dispatch(appActions.showIsToastify());
+  // };
+
+  let href = querySearch ? `/page/${pageId}?search=${querySearch}&card=${cardId}` : `/page/${pageId}?card=${cardId}`
+
+
+
 
   return (
     <div className={S.card}>
-      <Link href={`/page/card/${cardId}`} className={isActive ? S.active : ''}>
-        <h2 style={textStyle}>{name}</h2>
+      <Link href={href} className={isActive ? S.active : ''}>
+        <h2 className={'cardListTitle--color'}>{name}</h2>
       </Link>
 
       <SuperCheckBox
         isChecked={isChecked}
-        onChangeHandler={onChangeInputStatusHandler}
+        // onChangeHandler={onChangeInputStatusHandler}
+        onChangeHandler={()=> {}}
       >
         Save to favorites
       </SuperCheckBox>

@@ -1,3 +1,4 @@
+'use client'
 import React, {
   ChangeEvent,
   FormEvent,
@@ -22,7 +23,7 @@ import {
 } from '../../redux/slices/appSlice';
 import { cardsActions } from '../../redux/slices/cardsSlice';
 import { useGetCardsQuery } from '../../redux/api/cardsApi';
-import { useRouter } from 'next/router';
+import { useRouter, usePathname } from 'next/navigation'
 import { favoritesSelector } from '../../redux/selectors';
 import { FavoritesItems } from '../../redux/slices/favoritesSlice';
 
@@ -38,60 +39,60 @@ export const Search = () => {
   const [text, setText] = useState<string>(
     getInitValueFromLS(LOCAL_STORAGE_SEARCH_KEY),
   );
-  const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
-  const searchValue = useAppSelector<string>(searchSelector);
-  const navigationPage = useAppSelector<number>(currentPageSelector);
-  const appError = useAppSelector<string | null>(errorSelector);
-  const { data, isFetching, isError, error } = useGetCardsQuery({
-    search: searchValue,
-    page: navigationPage,
-  });
+  // const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
+  // const searchValue = useAppSelector<string>(searchSelector);
+  // const navigationPage = useAppSelector<number>(currentPageSelector);
+  // const appError = useAppSelector<string | null>(errorSelector);
+  // const { data, isFetching, isError, error } = useGetCardsQuery({
+  //   search: searchValue,
+  //   page: navigationPage,
+  // });
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const router = useRouter();
-  const { id, search } = router.query;
+  // const { id, search } = router.query;
 
-  useEffect(() => {
-    dispatch(
-      appActions.setAppCurrentPage({
-        currentPage: Number(id) || navigationPage,
-      }),
-    );
-    dispatch(appActions.setAppStatus({ isLoading: isFetching }));
-    dispatch(cardsActions.setDomainCards({ cards: data }));
-    dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
-    dispatch(
-      appActions.setAppError({ error: isError === false ? null : error.error }),
-    );
+  // useEffect(() => {
+  //   dispatch(
+  //     appActions.setAppCurrentPage({
+  //       currentPage: Number(id) || navigationPage,
+  //     }),
+  //   );
+  //   dispatch(appActions.setAppStatus({ isLoading: isFetching }));
+  //   dispatch(cardsActions.setDomainCards({ cards: data }));
+  //   dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
+  //   dispatch(
+  //     appActions.setAppError({ error: isError === false ? null : error.error }),
+  //   );
+  //
+  //   if (inputRef.current !== null) {
+  //     inputRef.current!.focus();
+  //   }
+  // }, [searchValue, navigationPage, data, isFetching, isError, error, id]);
 
-    if (inputRef.current !== null) {
-      inputRef.current!.focus();
-    }
-  }, [searchValue, navigationPage, data, isFetching, isError, error, id]);
-
-  useEffect(() => {
-    if (search) {
-      setText(search.trim());
-      dispatch(appActions.setAppSearch({ search }));
-      dispatch(appActions.setAppCurrentPage({ currentPage: id }));
-    }
-    if (search && typeof window !== 'undefined') {
-      localStorage.setItem(LOCAL_STORAGE_SEARCH_KEY, JSON.stringify(search));
-    }
-  }, [search]);
-
-  const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const trimmedText = text.trim();
-    setText(trimmedText);
-    dispatch(appActions.setAppCurrentPage({ currentPage: 1 }));
-    dispatch(appActions.setAppSearch({ search: trimmedText }));
-    router.push({
-      pathname: '/page/1',
-      query: { search: trimmedText },
-    });
-  };
+  // useEffect(() => {
+  //   if (search) {
+  //     setText(search.trim());
+  //     dispatch(appActions.setAppSearch({ search }));
+  //     dispatch(appActions.setAppCurrentPage({ currentPage: id }));
+  //   }
+  //   if (search && typeof window !== 'undefined') {
+  //     localStorage.setItem(LOCAL_STORAGE_SEARCH_KEY, JSON.stringify(search));
+  //   }
+  // }, [search]);
+  //
+  // const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //
+  //   const trimmedText = text.trim();
+  //   setText(trimmedText);
+  //   dispatch(appActions.setAppCurrentPage({ currentPage: 1 }));
+  //   dispatch(appActions.setAppSearch({ search: trimmedText }));
+  //   router.push({
+  //     pathname: '/page/1',
+  //     query: { search: trimmedText },
+  //   });
+  // };
 
   const onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value);
@@ -104,20 +105,20 @@ export const Search = () => {
   };
 
   const onClickSetError = () => {
-    dispatch(
-      appActions.setAppError({
-        error:
-          "An error occurred when user clicked the 'Throw error on click' button",
-      }),
-    );
+    // dispatch(
+    //   appActions.setAppError({
+    //     error:
+    //       "An error occurred when user clicked the 'Throw error on click' button",
+    //   }),
+    // );
   };
 
-  if (appError !== null) throw new Error(appError);
+  // if (appError !== null) throw new Error(appError);
 
   return (
     <section>
       <form
-        onSubmit={onClickFetchVehiclesHandler}
+        // onSubmit={onClickFetchVehiclesHandler}
         className={S.searchContainer}
       >
         <SearchField
@@ -131,7 +132,7 @@ export const Search = () => {
         <div className={S.searchControls}>
           <Button
             type={ButtonType.SUBMIT}
-            disabled={isFetching}
+            // disabled={isFetching}
             color={'search'}
           >
             Search
@@ -141,7 +142,7 @@ export const Search = () => {
           </Button>
         </div>
       </form>
-      {!isFetching && <Pagination />}
+      {/*{!isFetching && <Pagination />}*/}
     </section>
   );
 };

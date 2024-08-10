@@ -2,7 +2,7 @@ import React from 'react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import App from '../../_app';
-import { wrapper } from '../../../redux/store';
+import { wrapper } from '../../../../redux/store';
 
 const TITLE = 'RS School Next.js Task';
 const TEST_COMPONENT_CONTENT = 'Some test component content';
