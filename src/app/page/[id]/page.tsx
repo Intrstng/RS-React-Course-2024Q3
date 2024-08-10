@@ -100,9 +100,11 @@ import { getCards } from '../../../services/getCards';
 import { Suspense } from 'react';
 import { Loader } from '../../../components/Loader/Loader';
 import Detailed from '../../../components/Detailed/Detailed';
+import { Pagination } from '../../../components/Pagination/Pagination';
 
 
-type Params = {
+
+export type Params = {
   params: { id: string },
   searchParams: { [key: string]: string | undefined },
 };
@@ -116,6 +118,8 @@ const CardList = async ({ params, searchParams }: Params) => {
   const querySearch = searchParams?.search || '';
 
   const cards = await getCards({search: querySearch, page: pageId})
+
+  console.log('jjjjjjjjjjjjj', typeof cards.count)
   const domainCards = {
     ...cards,
     results:
@@ -131,31 +135,37 @@ const CardList = async ({ params, searchParams }: Params) => {
   console.log(')))))))))))))))', params, searchParams)
   return (
         <>
-        <Suspense key={'cardList'}  fallback={<Loader/>}>
+        <Suspense key={'cardList'} fallback={<Loader/>}>
           <section className={S.viewContainer}>
-            {domainCards?.results?.length > 0 ?
-                (
-                    <ul className={S.vehiclesList}>
-                      {domainCards?.results.map((card) => {
-                        return (
-                            <li key={card.id}>
-                              <Card
-                                  card={card}
-                                  cardId={card.id}
-                                  pageId={pageId}
-                                  isChecked={card.isChecked}
-                              />
-                            </li>
-                        );
-                      })}
-                    </ul>
-                )
-                : (
-                    <h2 className={`${S.notification} cardListTitle--color`}>
-                      No results were found for your request...
-                    </h2>
-                )}
+            <div>
+              <Pagination cardsCount={cards.count}/>
+              {domainCards?.results?.length > 0 ?
+                  (
+                      <ul className={S.vehiclesList}>
+                        {domainCards?.results.map((card) => {
+                          return (
+                              <li key={card.id}>
+                                <Card
+                                    card={card}
+                                    cardId={card.id}
+                                    pageId={pageId}
+                                    isChecked={card.isChecked}
+                                />
+                              </li>
+                          );
+                        })}
+                      </ul>
+                  )
+                  : (
+                      <h2 className={`${S.notification} cardListTitle--color`}>
+                        No results were found for your request...
+                      </h2>
+                  )}
+            </div>
+
+
           </section>
+
           {searchParams?.card && (
               <aside className={S.detailedContent}>
                 <Suspense key={'detailed'} fallback={<Loader/>}>
@@ -163,6 +173,7 @@ const CardList = async ({ params, searchParams }: Params) => {
                 </Suspense>
               </aside>
           )}
+
           {/*{Object.keys(favoritesItems)?.length > 0 && <CustomToastify />}*/}
         </Suspense>
         </>
