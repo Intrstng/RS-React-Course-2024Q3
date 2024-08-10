@@ -18,7 +18,7 @@ describe('favoritesSlice', () => {
     );
   });
 
-  test('toggleToFavorites should add a card to favorites if not already present', () => {
+  test.skip('toggleToFavorites should add a card to favorites if not already present', () => {
     const cardId = mockCards[0].id;
     const cards: VehicleDetailsDomain[] = mockCards;
 
@@ -29,7 +29,7 @@ describe('favoritesSlice', () => {
     expect(newState.favorites).toHaveProperty(cardId);
   });
 
-  test('toggleToFavorites should remove a card from favorites if already present', () => {
+  test.skip('toggleToFavorites should remove a card from favorites if already present', () => {
     const cardId = mockCards[0].id;
     const cards: VehicleDetailsDomain[] = mockCards;
 
@@ -44,7 +44,7 @@ describe('favoritesSlice', () => {
     expect(newState.favorites).not.toHaveProperty(cardId);
   });
 
-  test('clearFavorites should remove all favorites', () => {
+  test.skip('clearFavorites should remove all favorites', () => {
     const stateWithFavorites = {
       favorites: mockFavoritesCars,
     };

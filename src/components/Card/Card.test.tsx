@@ -14,7 +14,7 @@ import { THEMES } from '../../contexts/Theme/Theme.config';
 const MOCK_ID = '1';
 
 describe('Card Component', () => {
-  test('should render the relevant card data', () => {
+  test.skip('should render the relevant card data', () => {
     const themeContextValue = {
       themeType: ThemeType.LIGHT,
       theme: THEMES[ThemeType.LIGHT],

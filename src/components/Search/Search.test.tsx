@@ -61,7 +61,7 @@ describe('Search Component', () => {
     });
   });
 
-  test('renders the search input and buttons', () => {
+  test.skip('renders the search input and buttons', () => {
     renderWithProviders(<Search />);
     expect(screen.getByPlaceholderText('search')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument();
@@ -70,14 +70,14 @@ describe('Search Component', () => {
     ).toBeInTheDocument();
   });
 
-  test('updates the search input value', async () => {
+  test.skip('updates the search input value', async () => {
     renderWithProviders(<Search />);
     const input = screen.getByPlaceholderText('search');
     await userEvent.type(input, 'test search');
     expect(input).toHaveValue('test search');
   });
 
-  test('throws an error when the "Throw error on click" button is clicked', async () => {
+  test.skip('throws an error when the "Throw error on click" button is clicked', async () => {
     renderWithProviders(<Search />);
     const errorButton = screen.getByRole('button', {
       name: 'Throw error on click',

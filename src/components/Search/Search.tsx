@@ -1,31 +1,11 @@
 'use client'
-import React, {
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { ChangeEvent, FormEvent, useRef, useState, } from 'react';
 import S from '../../styles/Search.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
 import { ButtonType } from '../../shared/types/types';
-import { Pagination } from '../Pagination/Pagination';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
-import {
-  currentPageSelector,
-  errorSelector,
-  searchSelector,
-} from '../../redux/selectors/appSelectors';
-import {
-  appActions,
-  LOCAL_STORAGE_SEARCH_KEY,
-} from '../../redux/slices/appSlice';
-import { cardsActions } from '../../redux/slices/cardsSlice';
-import { useGetCardsQuery } from '../../redux/api/cardsApi';
-import { useRouter, usePathname } from 'next/navigation'
-import { favoritesSelector } from '../../redux/selectors';
-import { FavoritesItems } from '../../redux/slices/favoritesSlice';
+import { LOCAL_STORAGE_SEARCH_KEY, } from '../../redux/slices/appSlice';
+import { useRouter } from 'next/navigation'
 
 export const getInitValueFromLS = (key: string) => {
   return typeof window !== 'undefined'
@@ -39,63 +19,11 @@ export const Search = () => {
   const [text, setText] = useState<string>(
     getInitValueFromLS(LOCAL_STORAGE_SEARCH_KEY),
   );
-  // const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
-  // const searchValue = useAppSelector<string>(searchSelector);
-  // const navigationPage = useAppSelector<number>(currentPageSelector);
-  // const appError = useAppSelector<string | null>(errorSelector);
-  // const { data, isFetching, isError, error } = useGetCardsQuery({
-  //   search: searchValue,
-  //   page: navigationPage,
-  // });
+
 
   const [appError, setAppError] = useState<string | null>(null);
 
-  // const dispatch = useAppDispatch();
   const router = useRouter();
-  // const { id, search } = router.query;
-
-  // useEffect(() => {
-  //   dispatch(
-  //     appActions.setAppCurrentPage({
-  //       currentPage: Number(id) || navigationPage,
-  //     }),
-  //   );
-  //   dispatch(appActions.setAppStatus({ isLoading: isFetching }));
-  //   dispatch(cardsActions.setDomainCards({ cards: data }));
-  //   dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
-  //   dispatch(
-  //     appActions.setAppError({ error: isError === false ? null : error.error }),
-  //   );
-  //
-  //   if (inputRef.current !== null) {
-  //     inputRef.current!.focus();
-  //   }
-  // }, [searchValue, navigationPage, data, isFetching, isError, error, id]);
-
-  // useEffect(() => {
-  //   if (search) {
-  //     setText(search.trim());
-  //     dispatch(appActions.setAppSearch({ search }));
-  //     dispatch(appActions.setAppCurrentPage({ currentPage: id }));
-  //   }
-  //   if (search && typeof window !== 'undefined') {
-  //     localStorage.setItem(LOCAL_STORAGE_SEARCH_KEY, JSON.stringify(search));
-  //   }
-  // }, [search]);
-  //
-  // const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //
-  //   const trimmedText = text.trim();
-  //   setText(trimmedText);
-  //   dispatch(appActions.setAppCurrentPage({ currentPage: 1 }));
-  //   dispatch(appActions.setAppSearch({ search: trimmedText }));
-  //   router.push({
-  //     pathname: '/page/1',
-  //     query: { search: trimmedText },
-  //   });
-  // };
-
 
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
@@ -103,12 +31,6 @@ export const Search = () => {
 
     const trimmedText = text.trim();
     setText(trimmedText);
-    // dispatch(appActions.setAppCurrentPage({ currentPage: 1 }));
-    // dispatch(appActions.setAppSearch({ search: trimmedText }));
-    // router.push({
-    //   pathname: '/page/1',
-    //   query: { search: trimmedText },
-    // });
 
     let href = `/page/1?search=${trimmedText}`
     router.push(href);
@@ -126,12 +48,7 @@ export const Search = () => {
   };
 
   const onClickSetError = () => {
-    // dispatch(
-    //   appActions.setAppError({
-    //     error:
-    //       "An error occurred when user clicked the 'Throw error on click' button",
-    //   }),
-    // );
+
     setAppError("An error occurred when user clicked the 'Throw error on click' button")
   };
 

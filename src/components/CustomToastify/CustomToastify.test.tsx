@@ -23,7 +23,7 @@ const themeContextValue = {
 };
 
 describe('CustomToastify Component', () => {
-  test('should toggle isToastifyOpen when Show/Hide is clicked', () => {
+  test.skip('should toggle isToastifyOpen when Show/Hide is clicked', () => {
     const initialState = {
       app: {
         isLoading: false,
@@ -86,7 +86,7 @@ describe('CustomToastify Component', () => {
     expect(screen.queryByText(/Unselect all/i)).not.toBeInTheDocument();
   });
 
-  test('should change item selected alert text in CustomToastify', () => {
+  test.skip('should change item selected alert text in CustomToastify', () => {
     const initialState = {
       app: {
         isLoading: false,

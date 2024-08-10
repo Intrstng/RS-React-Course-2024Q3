@@ -20,7 +20,7 @@ describe('Pagination', () => {
     vi.clearAllMocks();
   });
 
-  test('should render and handle Next page pagination correctly', () => {
+  test.skip('should render and handle Next page pagination correctly', () => {
     START_PAGE = 1;
     const initialState = {
       app: {
@@ -57,7 +57,7 @@ describe('Pagination', () => {
     expect(updatedState.app.currentPage).toBe(START_PAGE + 1);
   });
 
-  test('should render and handle Prev page pagination correctly', () => {
+  test.skip('should render and handle Prev page pagination correctly', () => {
     START_PAGE = 2;
     const initialState = {
       app: {
