@@ -1,31 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { VehicleDetailsDomain } from '../../shared/types/types';
+import { DetailedVehicle, VehicleDetailsDomain } from '../../shared/types/types';
 
 const favoritesSlice = createSlice({
   name: 'favorites',
   initialState: {
-    favorites: {} as FavoritesItems | object,
+                      favoriteCards: [] as VehicleDetailsDomain[],
   },
   reducers: {
-    toggleToFavorites(
-      state,
-      action: PayloadAction<{ cardId: string; cards: VehicleDetailsDomain[] }>,
+    toggleCardToFavorites(
+        state,
+        action: PayloadAction<{ cardId: string | undefined; card: VehicleDetailsDomain }>,
     ) {
-      if (action.payload.cardId in state.favorites) {
-        delete state.favorites[action.payload.cardId];
+      if (!action.payload.cardId) {
+        return;
+      }
+
+      const idx = state.favoriteCards.findIndex((c) => c.id === action.payload.cardId);
+
+      if (idx === -1) {
+        state.favoriteCards.push(action.payload.card);
       } else {
-        const card = action.payload.cards.find(
-          (c) => c.id === action.payload.cardId,
-        );
-        if (card) {
-          state.favorites[action.payload.cardId] = { ...card };
-        }
+        state.favoriteCards.splice(idx, 1)
       }
     },
+
     clearFavorites(state) {
-      Object.keys(state.favorites).forEach((key) => {
-        delete state.favorites[key];
-      });
+      state.favoriteCards = [];
     },
   },
 });
@@ -33,6 +33,8 @@ const favoritesSlice = createSlice({
 export type FavoritesItems = {
   [key: string]: VehicleDetailsDomain;
 };
+
+
 
 export const favoritesReducer = favoritesSlice.reducer;
 export const favoritesActions = favoritesSlice.actions;

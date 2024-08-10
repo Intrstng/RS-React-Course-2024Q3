@@ -17,40 +17,46 @@ import { domainCardsSelector } from '../../redux/selectors';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { isToastifyOpenSelector } from '../../redux/selectors/appSelectors';
+import { favoriteCardsSelector } from '../../redux/selectors/favoritesSelectors';
 // import { useRouter } from 'next/router';
 
-export const Card: FC<CardProps> = ({ card, pageId,  cardId, isChecked }) => {
+export const Card: FC<CardProps> = ({ card, pageId,  cardId }) => {
   const { name } = card;
   const router = useRouter();
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const querySearch = searchParams.get('search')
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   // const domainCards =
   //   useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
   //
   // const router = useRouter();
   const isActive = pathname === `/page/${pageId}` && searchParams.get('card') === cardId.toString();
 
+  const favoriteCards = useAppSelector(favoriteCardsSelector);
+  const isChecked = favoriteCards.some(favCard => favCard.id === cardId);
 
-  const isToastifyOpen = useAppSelector<boolean>(isToastifyOpenSelector)
-  console.log('isToastifyOpen', isToastifyOpen)
 
-  // const onChangeInputStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-  //   dispatch(
-  //     cardsActions.toggleDomainCardToFavorites({
-  //       cardId,
-  //       isChecked: e.currentTarget.checked,
-  //     }),
-  //   );
-  //   dispatch(
-  //     favoritesActions.toggleToFavorites({
-  //       cardId,
-  //       cards: domainCards.results,
-  //     }),
-  //   );
-  //   dispatch(appActions.showIsToastify());
-  // };
+  const onChangeInputStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    // dispatch(
+    //   cardsActions.toggleDomainCardToFavorites({
+    //     cardId,
+    //     isChecked: e.currentTarget.checked,
+    //   }),
+    // );
+    // dispatch(
+    //   favoritesActions.toggleToFavorites({
+    //     cardId,
+    //     cards: domainCards.results,
+    //   }),
+    // );
+
+    dispatch(favoritesActions.toggleCardToFavorites({cardId, card}));
+
+
+
+    dispatch(appActions.showIsToastify());
+  };
 
 
   let href = querySearch ? `/page/${pageId}?search=${querySearch}&card=${cardId}` : `/page/${pageId}?card=${cardId}`
@@ -66,8 +72,7 @@ export const Card: FC<CardProps> = ({ card, pageId,  cardId, isChecked }) => {
 
       <SuperCheckBox
         isChecked={isChecked}
-        // onChangeHandler={onChangeInputStatusHandler}
-        onChangeHandler={()=> {}}
+        onChangeHandler={onChangeInputStatusHandler}
       >
         Save to favorites
       </SuperCheckBox>

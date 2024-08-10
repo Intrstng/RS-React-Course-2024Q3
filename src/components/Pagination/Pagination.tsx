@@ -47,7 +47,6 @@ export const Pagination: FC<PaginationProps> = ({cardsCount}) => {
     // dispatch(appActions.setAppCurrentPage({ currentPage: currentPage + 1 }));
     router.push(nextHref);
   };
-
   return (
     <div className={S.paginationBlock}>
       <Button

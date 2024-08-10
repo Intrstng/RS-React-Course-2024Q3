@@ -1,3 +1,4 @@
+'use client'
 import React, { useContext } from 'react';
 import S from '../../styles/CustomToastify.module.css';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
@@ -13,16 +14,16 @@ import { isToastifyOpenSelector } from '../../redux/selectors/appSelectors';
 import { appActions } from '../../redux/slices/appSlice';
 import { DownloadCSV } from '../DownloadCSV/DownloadCSV';
 import { refineFavoritesItemsStructureToCSV } from '../../shared/uitils/refineFavoritesItemsStructureToCSV';
+import { favoriteCardsSelector } from '../../redux/selectors/favoritesSelectors';
 
 export const CustomToastify = () => {
   const isToastifyOpen = useAppSelector<boolean>(isToastifyOpenSelector);
-  const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
+  const favoriteCards = useAppSelector<FavoritesItems>(favoriteCardsSelector);
   const { theme } = useContext(ThemeContext);
   const dispatch = useAppDispatch();
 
   const onClickClearFavorites = () => {
     dispatch(favoritesActions.clearFavorites());
-    dispatch(cardsActions.clearAllFromFavorites());
   };
 
   const onClickToggleIsOpenFavorites = () => {
@@ -30,7 +31,7 @@ export const CustomToastify = () => {
   };
 
   const alertText =
-    Object.keys(favoritesItems)?.length > 1
+    favoriteCards.length > 1
       ? ' items selected'
       : ' item selected';
   const toggleButtonStyles = isToastifyOpen
@@ -38,39 +39,44 @@ export const CustomToastify = () => {
     : { color: theme['--alert'] };
 
   return (
-    <div className={S.toastify}>
-      <div className={S.toastifyHeader}>
-        <h2>Favorites</h2>
-        <p>
-          <span>{Object.keys(favoritesItems).length}</span>
-          {alertText}
-        </p>
-        <Button
-          style={toggleButtonStyles}
-          onClickCallBack={onClickToggleIsOpenFavorites}
-        >
-          {isToastifyOpen ? 'Hide' : 'Show'}
-        </Button>
-      </div>
-      {isToastifyOpen && (
-        <div className={S.toastifyItems}>
-          <ol className={S.toastifyList}>
-            {Object.keys(favoritesItems).map((cardId) => (
-              <li key={cardId}>{favoritesItems[cardId].name}</li>
-            ))}
-          </ol>
-          <div className={S.toastifyControls}>
-            <Button onClickCallBack={onClickClearFavorites} color={'delete'}>
-              Unselect all
-            </Button>
-            <DownloadCSV
-              data={refineFavoritesItemsStructureToCSV(favoritesItems)}
-              fileName={'vehicles'}
-              color={'alert'}
-            />
-          </div>
-        </div>
-      )}
-    </div>
+      <>
+        {favoriteCards.length > 0 && (
+            <div className={S.toastify}>
+              <div className={S.toastifyHeader}>
+                <h2>Favorites</h2>
+                <p>
+                  <span>{favoriteCards.length}</span>
+                  {alertText}
+                </p>
+                <Button
+                    style={toggleButtonStyles}
+                    onClickCallBack={onClickToggleIsOpenFavorites}
+                >
+                  {isToastifyOpen ? 'Hide' : 'Show'}
+                </Button>
+              </div>
+
+              {isToastifyOpen && (
+                  <div className={S.toastifyItems}>
+                    <ol className={S.toastifyList}>
+                      {favoriteCards.map((favCard) => (
+                          <li key={favCard.id}>{favCard.name}</li>
+                      ))}
+                    </ol>
+                    <div className={S.toastifyControls}>
+                      <Button onClickCallBack={onClickClearFavorites} color={'delete'}>
+                        Unselect all
+                      </Button>
+                      <DownloadCSV
+                        data={refineFavoritesItemsStructureToCSV(favoriteCards)}
+                        fileName={'vehicles'}
+                        color={'alert'}
+                      />
+                    </div>
+                  </div>
+              )}
+            </div>
+        )}
+      </>
   );
 };

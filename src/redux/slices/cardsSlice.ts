@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  Vehicle,
   VehicleDetails,
   VehicleDetailsDomain,
   VehiclesResponse,
@@ -29,7 +30,7 @@ const cardsSlice = createSlice({
     // },
     toggleDomainCardToFavorites(
       state,
-      action: PayloadAction<{ cardId: string; isChecked: boolean }>,
+      action: PayloadAction<{ cardId: string | undefined; isChecked: boolean }>,
     ) {
       const idx = state.domainCards.results.findIndex(
         (c) => c.id === action.payload.cardId,

@@ -33,7 +33,6 @@ export type DetailedVehicle = {
   url: string;
   isChecked: boolean;
   id: string;
-
 };
 
 export type VehicleDetails = Vehicle & {
@@ -91,10 +90,9 @@ export type ButtonProps = {
 };
 
 export type CardProps = {
-  card: Vehicle;
+  card: VehicleDetailsDomain;
   pageId: number;
   cardId?: string;
-  isChecked: boolean;
 };
 
 export type SearchFieldProps = {

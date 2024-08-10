@@ -119,7 +119,6 @@ const CardList = async ({ params, searchParams }: Params) => {
 
   const cards = await getCards({search: querySearch, page: pageId})
 
-  console.log('jjjjjjjjjjjjj', typeof cards.count)
   const domainCards = {
     ...cards,
     results:
@@ -132,7 +131,8 @@ const CardList = async ({ params, searchParams }: Params) => {
         )
   }
 
-  console.log(')))))))))))))))', params, searchParams)
+  // console.log(')))))))))))))))', params, searchParams)
+  console.log(')))))))))))))))', domainCards?.results)
   return (
         <>
         <Suspense key={'cardList'} fallback={<Loader/>}>
@@ -149,7 +149,6 @@ const CardList = async ({ params, searchParams }: Params) => {
                                     card={card}
                                     cardId={card.id}
                                     pageId={pageId}
-                                    isChecked={card.isChecked}
                                 />
                               </li>
                           );
@@ -174,7 +173,7 @@ const CardList = async ({ params, searchParams }: Params) => {
               </aside>
           )}
 
-          {/*{Object.keys(favoritesItems)?.length > 0 && <CustomToastify />}*/}
+          <CustomToastify />
         </Suspense>
         </>
   );
