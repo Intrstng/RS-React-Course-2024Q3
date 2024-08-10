@@ -48,6 +48,8 @@ export const Search = () => {
   //   page: navigationPage,
   // });
 
+  const [appError, setAppError] = useState<string | null>(null);
+
   // const dispatch = useAppDispatch();
   const router = useRouter();
   // const { id, search } = router.query;
@@ -111,9 +113,10 @@ export const Search = () => {
     //       "An error occurred when user clicked the 'Throw error on click' button",
     //   }),
     // );
+    setAppError("An error occurred when user clicked the 'Throw error on click' button")
   };
 
-  // if (appError !== null) throw new Error(appError);
+  if (appError !== null) throw new Error(appError);
 
   return (
     <section>
@@ -142,7 +145,6 @@ export const Search = () => {
           </Button>
         </div>
       </form>
-      {/*{!isFetching && <Pagination />}*/}
     </section>
   );
 };

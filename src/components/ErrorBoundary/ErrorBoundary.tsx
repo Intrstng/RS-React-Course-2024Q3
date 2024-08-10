@@ -51,7 +51,7 @@ export class ErrorBoundary extends Component<
       return (
         <div className={S.errorContainer}>
           <img src={errorImg.src} alt={'error'} className={S.errorImg} />
-          <h1 className={S.error}>{this.state.errorMessage}</h1>
+          <h2 className={S.error}>{this.state.errorMessage}</h2>
           <Button
             className={S.refreshButton}
             onClickCallBack={this.handleRefresh}

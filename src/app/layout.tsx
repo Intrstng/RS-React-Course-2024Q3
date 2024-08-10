@@ -24,11 +24,11 @@ export default function RootLayout({
       <html lang="en">
       <ThemeProvider>
         {/*<Provider store={store}>*/}
-          <ErrorBoundary>
+        {/*  <ErrorBoundary>*/}
             <body>
               <main>{children}</main>
             </body>
-          </ErrorBoundary>
+          {/*</ErrorBoundary>*/}
         {/*</Provider>*/}
       </ThemeProvider>
       </html>
