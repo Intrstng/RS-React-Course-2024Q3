@@ -48,7 +48,6 @@ export const DetailedCard: FC<DetailedCardProps> = ({
 
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // router.push(`/page/${params.id}?search=${searchValue}`);
     searchParams?.search
       ? router.push(`/page/${params.id}?search=${searchParams?.search}`)
       : router.push(`/page/${params.id}`);

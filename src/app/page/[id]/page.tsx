@@ -12,10 +12,6 @@ export type Params = {
   searchParams: { [key: string]: string | undefined };
 };
 
-// export async function generateMetadata({ params }: Params) {
-//   return { title: `Post: ${params?.id}` };
-// }
-
 const CardList = async ({ params, searchParams }: Params) => {
   const pageId = Number(params?.id) || 1;
   const querySearch = searchParams?.search || '';
@@ -33,8 +29,6 @@ const CardList = async ({ params, searchParams }: Params) => {
     }),
   };
 
-  // console.log(')))))))))))))))', params, searchParams)
-  console.log(')))))))))))))))', domainCards?.results);
   return (
     <>
       <Suspense key={'cardList'} fallback={<Loader />}>

@@ -9,7 +9,6 @@ import { appActions } from '../../redux/slices/appSlice';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { favoriteCardsSelector } from '../../redux/selectors/favoritesSelectors';
-// import { useRouter } from 'next/router';
 
 export const Card: FC<CardProps> = ({ card, pageId, cardId }) => {
   const { name } = card;
@@ -17,10 +16,6 @@ export const Card: FC<CardProps> = ({ card, pageId, cardId }) => {
   const searchParams = useSearchParams();
   const querySearch = searchParams.get('search');
   const dispatch = useAppDispatch();
-  // const domainCards =
-  //   useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
-  //
-  // const router = useRouter();
   const isActive =
     pathname === `/page/${pageId}` &&
     searchParams.get('card') === cardId.toString();

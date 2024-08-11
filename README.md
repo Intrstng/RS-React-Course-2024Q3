@@ -10,7 +10,7 @@
 
 3. Install dependencies - run command in CLI `npm install`
 
-4. Switch to the branch **nextjs-ssr-pages-api** - run in CLI `git checkout nextjs-ssr-pages-api`
+4. Switch to the branch **nextjs-ssr-app-router-api** - run in CLI `git checkout nextjs-ssr-app-router-api`
 
 5. Start the application - run command in CLI `npm run dev`
 
