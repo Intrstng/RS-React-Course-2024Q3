@@ -14,10 +14,11 @@ import { appActions } from '../../redux/slices/appSlice';
 import { DownloadCSV } from '../DownloadCSV/DownloadCSV';
 import { refineFavoritesItemsStructureToCSV } from '../../shared/uitils/refineFavoritesItemsStructureToCSV';
 import { favoriteCardsSelector } from '../../redux/selectors/favoritesSelectors';
+import { VehicleDetailsDomain } from '../../shared/types/types';
 
 export const CustomToastify = () => {
   const isToastifyOpen = useAppSelector<boolean>(isToastifyOpenSelector);
-  const favoriteCards = useAppSelector<FavoritesItems>(favoriteCardsSelector);
+  const favoriteCards = useAppSelector<VehicleDetailsDomain[]>(favoriteCardsSelector);
   const { theme } = useContext(ThemeContext);
   const dispatch = useAppDispatch();
 

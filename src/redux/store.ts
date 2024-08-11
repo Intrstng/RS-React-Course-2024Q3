@@ -24,8 +24,8 @@ export type AppRootState = ReturnType<typeof setupStore>;
 
                               export type RootState = ReturnType<AppRootState['getState']>
                               export type AppDispatch = AppRootState['dispatch']
-                              export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
-                              export const useAppSelector = useSelector.withTypes<RootState>()
+                              // export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
+                              // export const useAppSelector = useSelector.withTypes<RootState>()
                               export const useAppStore = useStore.withTypes<AppRootState>()
 
 // export type AppRootState = ReturnType<typeof setupStore>;
@@ -37,7 +37,7 @@ export type AppRootState = ReturnType<typeof setupStore>;
 //   UnknownAction
 // >;
 //
-// export const useAppDispatch: () => AppDispatch = useDispatch;
-// export const useAppSelector: TypedUseSelectorHook<AppRootState> = useSelector;
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<AppRootState> = useSelector;
 //
 // export const wrapper = createWrapper<AppRootState>(setupStore, { debug: true });

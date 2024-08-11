@@ -73,8 +73,7 @@ describe('Card Component', () => {
               value={{
                 themeType: ThemeType.LIGHT,
                 theme: THEMES[ThemeType.LIGHT],
-                setCurrentTheme: () => {
-                },
+                setCurrentTheme: () => {},
               }}
           >
             <Card card={mockCards[0]} pageId={PAGE_ID} cardId={CARD_ID}/>

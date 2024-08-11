@@ -8,7 +8,7 @@ import '@testing-library/jest-dom';
 import { THEMES } from '../../contexts/Theme/Theme.config';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { describe, expect, test, vi } from 'vitest';
-import { mockCards, mockFavoritesCars } from '../../test/mockData';
+import { mockCards } from '../../test/mockData';
 import { VehicleDetailsDomain } from '../../shared/types/types';
 import { appReducer } from '../../redux/slices/appSlice';
 import { favoritesReducer } from '../../redux/slices/favoritesSlice';
@@ -21,11 +21,11 @@ const themeContextValue = {
   setCurrentTheme: () => {},
 };
 
-describe('CustomToastify Component', () => {
-  test.skip('should toggle isToastifyOpen when Show/Hide is clicked', () => {
+describe('CustomToastify', () => {
+  test('renders the component with no favorites', () => {
     const initialState = {
       app: {
-        isToastifyOpen: false,
+        isToastifyOpen: true,
       },
       favorites: {
         favoriteCards: [] as VehicleDetailsDomain[],
@@ -37,40 +37,23 @@ describe('CustomToastify Component', () => {
         app: appReducer,
         favorites: favoritesReducer,
       },
+      preloadedState: initialState,
     });
-
     render(
-      <Provider store={store}>
-        <ThemeContext.Provider value={themeContextValue}>
-          <CustomToastify />
-        </ThemeContext.Provider>
-      </Provider>,
+        <Provider store={store}>
+          <ThemeContext.Provider value={themeContextValue}>
+            <CustomToastify />
+          </ThemeContext.Provider>
+        </Provider>
     );
 
-    const showButton = screen.getByText(/Show/i);
-    const hideButton = screen.queryByText(/Hide/i);
-    const unselectAllButton = screen.queryByText(/Unselect all/i);
-
-    expect(showButton).toBeInTheDocument();
-    expect(hideButton).not.toBeInTheDocument();
-    expect(unselectAllButton).not.toBeInTheDocument();
-
-    fireEvent.click(showButton);
-
-    expect(screen.getByText(/Hide/i)).toBeInTheDocument();
-    expect(screen.getByText(/Unselect all/i)).toBeInTheDocument();
-
-    fireEvent.click(screen.getByText(/Hide/i));
-
-    expect(screen.getByText(/Show/i)).toBeInTheDocument();
-    expect(screen.queryByText(/Hide/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Unselect all/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/favorites/i)).not.toBeInTheDocument();
   });
 
-  test.skip('should change item selected alert text in CustomToastify', () => {
-    const initialState = {
+  test('renders the component with favorites', () => {
+     const initialState = {
       app: {
-        isToastifyOpen: false,
+        isToastifyOpen: true,
       },
       favorites: {
         favoriteCards: mockCards,
@@ -82,18 +65,87 @@ describe('CustomToastify Component', () => {
         app: appReducer,
         favorites: favoritesReducer,
       },
+      preloadedState: initialState,
     });
 
     render(
-      <Provider store={store}>
-        <ThemeContext.Provider value={themeContextValue}>
-          <CustomToastify />
-        </ThemeContext.Provider>
-      </Provider>,
+        <Provider store={store}>
+          <ThemeContext.Provider value={themeContextValue}>
+            <CustomToastify />
+          </ThemeContext.Provider>
+        </Provider>,
     );
 
-    const customToastifyAlertText = screen.getByText(/item selected/i);
+    expect(screen.getByText(/favorites/i)).toBeInTheDocument();
+    expect(screen.getByText(`${mockCards.length}`)).toBeInTheDocument();
+    expect(screen.getByText(mockCards[0].name)).toBeInTheDocument();
+    expect(screen.getByText(mockCards[1].name)).toBeInTheDocument();
+  });
 
-    expect(customToastifyAlertText).toBeInTheDocument();
+  test('toggles the favorites list', () => {
+    const initialState = {
+      app: {
+        isToastifyOpen: true,
+      },
+      favorites: {
+        favoriteCards: mockCards,
+      },
+    };
+
+    const store = configureStore({
+      reducer: {
+        app: appReducer,
+        favorites: favoritesReducer,
+      },
+      preloadedState: initialState,
+    });
+
+    render(
+        <Provider store={store}>
+          <ThemeContext.Provider value={themeContextValue}>
+            <CustomToastify />
+          </ThemeContext.Provider>
+        </Provider>,
+    );
+
+    expect(screen.getByText(/hide/i)).toBeInTheDocument();
+    expect(screen.getByText(mockCards[0].name)).toBeInTheDocument();
+    expect(screen.getByText(mockCards[1].name)).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Hide'));
+    expect(screen.getByText(/show/i)).toBeInTheDocument();
+    expect(screen.queryByText(mockCards[0].name)).not.toBeInTheDocument();
+    expect(screen.queryByText(mockCards[1].name)).not.toBeInTheDocument();
+  });
+
+  test('clears the favorites list', () => {
+    const initialState = {
+      app: {
+        isToastifyOpen: true,
+      },
+      favorites: {
+        favoriteCards: mockCards,
+      },
+    };
+
+    const store = configureStore({
+      reducer: {
+        app: appReducer,
+        favorites: favoritesReducer,
+      },
+      preloadedState: initialState,
+    });
+
+    render(
+        <Provider store={store}>
+          <ThemeContext.Provider value={themeContextValue}>
+            <CustomToastify />
+          </ThemeContext.Provider>
+        </Provider>,
+    );
+
+    fireEvent.click(screen.getByText('Unselect all'));
+    expect(screen.queryByText(mockCards[0].name)).not.toBeInTheDocument();
+    expect(screen.queryByText(mockCards[1].name)).not.toBeInTheDocument();
+    expect(screen.queryByText(/favorites/i)).not.toBeInTheDocument();
   });
 });

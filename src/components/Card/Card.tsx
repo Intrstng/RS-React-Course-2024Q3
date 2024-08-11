@@ -34,7 +34,7 @@ export const Card: FC<CardProps> = ({ card, pageId,  cardId }) => {
   const isActive = pathname === `/page/${pageId}` && searchParams.get('card') === cardId.toString();
 
   const favoriteCards = useAppSelector(favoriteCardsSelector);
-  const isChecked = favoriteCards?.some(favCard => favCard.id === cardId);
+  const isChecked = favoriteCards.some(favCard => favCard.id === cardId);
 
 
   const onChangeInputStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
