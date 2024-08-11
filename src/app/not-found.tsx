@@ -1,30 +1,9 @@
-//                         'use client'
-// import { useEffect } from 'react';
-//                         import { useRouter } from 'next/navigation'
-//
-// const Error404 = () => {
-// const router = useRouter();
-//
-// useEffect(() => {
-//   router.replace('/error');
-// }, []);
-//
-// return null;
-// };
-//
-// export default Error404;
-
-
-
-
-
-// from app/error
-                      'use client'
+'use client'
 
 import React from 'react';
 import errorNotFound from '../assets/error_404.png';
 import S from '../styles/Error404.module.css';
-                      import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Button } from '../components/Button';
 import Image from 'next/image';
 

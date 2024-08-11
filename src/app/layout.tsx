@@ -1,20 +1,14 @@
 import "./globals.css";
 import { Metadata } from 'next'
-import { ThemeContext, ThemeProvider } from '../contexts/Theme/Theme.context';
-
-import { ErrorBoundary } from '../components/ErrorBoundary/ErrorBoundary';
-import { CSSProperties, ReactNode, useContext } from 'react';
-import { ThemeControl } from '../components/ThemeControl/ThemeControl';
-import { Search } from '../components/Search/Search';
+import { ThemeProvider } from '../contexts/Theme/Theme.context';
+import { ReactNode } from 'react';
 import StoreProvider from './StoreProvider';
-
 
 
 export const metadata: Metadata = {
   title: 'RS School Next.js',
   description: 'RS School Next.js App Routing',
 }
-
 
 export default function RootLayout({
                                      children,
@@ -24,18 +18,12 @@ export default function RootLayout({
   return (
       <html lang="en">
       <ThemeProvider>
-        {/*<Provider store={store}>*/}
-                                            <StoreProvider>
-        {/*  <ErrorBoundary>*/}
-            <body>
-              <main>{children}</main>
-            </body>
-          {/*</ErrorBoundary>*/}
-                                            </StoreProvider>
-        {/*</Provider>*/}
+        <StoreProvider>
+          <body>
+          <main>{children}</main>
+          </body>
+        </StoreProvider>
       </ThemeProvider>
       </html>
   );
 }
-
-
