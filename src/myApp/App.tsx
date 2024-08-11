@@ -1,16 +1,21 @@
 'use client'
 
 import { useRouter, usePathname } from 'next/navigation'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { LOCAL_STORAGE_SEARCH_KEY } from '../redux/slices/appSlice';
+import { getInitValueFromLS } from '../components/Search/Search';
 
 
 export default function App() {
   const router = useRouter()
   const pathname = usePathname()
+  const [text] = useState<string>(
+      getInitValueFromLS(LOCAL_STORAGE_SEARCH_KEY),
+  );
 
   useEffect(() => {
     if (pathname === '/') {
-      router.replace(`/page/1`);
+      text.length > 0 ? router.replace(`/page/1?search=${text}`) : router.replace(`/page/1`);
     }
   }, [router])
 

@@ -1,11 +1,11 @@
 'use client'
-import React, { ChangeEvent, FormEvent, useRef, useState, } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useRef, useState, } from 'react';
 import S from '../../styles/Search.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
 import { ButtonType } from '../../shared/types/types';
 import { LOCAL_STORAGE_SEARCH_KEY, } from '../../redux/slices/appSlice';
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export const getInitValueFromLS = (key: string) => {
   return typeof window !== 'undefined'
@@ -18,8 +18,16 @@ export const Search = () => {
   const [text, setText] = useState<string>(
     getInitValueFromLS(LOCAL_STORAGE_SEARCH_KEY),
   );
+
   const [appError, setAppError] = useState<string | null>(null);
   const router = useRouter();
+                          const searchParams = useSearchParams();
+                          const searchQuery = searchParams.get('search');
+                          console.log('!searchQuery', !searchQuery)
+                          useEffect(() => {
+                            !searchQuery && text.length > 0 && router.push(`/page/1?search=${text}`);
+                            searchQuery ? setText(searchQuery) : setText(text)
+                          }, [])
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
