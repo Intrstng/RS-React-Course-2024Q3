@@ -4,7 +4,7 @@ import { DetailedVehicle, VehicleDetailsDomain } from '../../shared/types/types'
 const favoritesSlice = createSlice({
   name: 'favorites',
   initialState: {
-                      favoriteCards: [] as VehicleDetailsDomain[],
+    favoriteCards: [] as VehicleDetailsDomain[],
   },
   reducers: {
     toggleCardToFavorites(
@@ -33,8 +33,6 @@ const favoritesSlice = createSlice({
 export type FavoritesItems = {
   [key: string]: VehicleDetailsDomain;
 };
-
-
 
 export const favoritesReducer = favoritesSlice.reducer;
 export const favoritesActions = favoritesSlice.actions;

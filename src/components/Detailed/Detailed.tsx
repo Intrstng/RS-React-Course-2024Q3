@@ -9,6 +9,9 @@ type Params = {
   params: {
     id: string;
   };
+  searchParams: {
+    card: string;
+  };
 };
 
 // export async function generateMetadata({ params }: Params) {
@@ -17,8 +20,10 @@ type Params = {
 
 const Detailed = async ({ params, searchParams }: Params) => {
   const response = await getCardDetails(searchParams.card);
-
   return <DetailedCard detailsData={response} params={params} searchParams={searchParams}/>;
 }
 
 export default Detailed
+
+
+

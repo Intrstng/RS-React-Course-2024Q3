@@ -8,7 +8,6 @@ import {
   favoritesActions,
   FavoritesItems,
 } from '../../redux/slices/favoritesSlice';
-import { cardsActions } from '../../redux/slices/cardsSlice';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import { isToastifyOpenSelector } from '../../redux/selectors/appSelectors';
 import { appActions } from '../../redux/slices/appSlice';

@@ -9,7 +9,6 @@ import { THEMES } from '../../contexts/Theme/Theme.config';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { describe, expect, test, vi } from 'vitest';
 import { appReducer } from '../../redux/slices/appSlice';
-import { cardsReducer } from '../../redux/slices/cardsSlice';
 import { favoritesReducer } from '../../redux/slices/favoritesSlice';
 import { mockCards, mockFavoritesCars } from '../../test/mockData';
 import { cardsApi } from '../../redux/api/cardsApi';
@@ -31,31 +30,16 @@ describe('CustomToastify Component', () => {
         currentPage: 1,
         isToastifyOpen: false,
       },
-      cards: {
-        domainCards: mockCards,
-      },
       favorites: {
         favorites: mockFavoritesCars,
-      },
-      [cardsApi.reducerPath]: {
-        queries: {},
-        mutations: {},
-        provided: {},
-        subscriptions: {},
-        config: {},
       },
     };
 
     const store = configureStore({
       reducer: {
         app: appReducer,
-        cards: cardsReducer,
         favorites: favoritesReducer,
-        [cardsApi.reducerPath]: cardsApi.reducer,
       },
-      middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(cardsApi.middleware),
-      preloadedState: initialState,
     });
 
     render(

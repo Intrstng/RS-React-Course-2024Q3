@@ -1,7 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export const LOCAL_STORAGE_SEARCH_KEY = 'searchValue';
-
 
 const appSlice = createSlice({
   name: 'app',

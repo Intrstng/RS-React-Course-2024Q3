@@ -13,7 +13,6 @@ export const setupStore = () => {
   return configureStore({
     reducer: {
       app: appReducer,
-      cards: cardsReducer,
       favorites: favoritesReducer,
     }
   });

@@ -6,9 +6,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { Search } from './Search';
 import { appReducer } from '../../redux/slices/appSlice';
-import { cardsReducer } from '../../redux/slices/cardsSlice';
 import { favoritesReducer } from '../../redux/slices/favoritesSlice';
-import { cardsApi } from '../../redux/api/cardsApi';
 import { useRouter } from 'next/router';
 
 vi.mock('next/router', () => ({
@@ -22,31 +20,16 @@ const initialState = {
     currentPage: 1,
     isToastifyOpen: true,
   },
-  cards: {
-    domainCards: [],
-  },
   favorites: {
     favorites: [],
-  },
-  [cardsApi.reducerPath]: {
-    queries: {},
-    mutations: {},
-    provided: {},
-    subscriptions: {},
-    config: {},
   },
 };
 
 const store = configureStore({
   reducer: {
     app: appReducer,
-    cards: cardsReducer,
     favorites: favoritesReducer,
-    [cardsApi.reducerPath]: cardsApi.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(cardsApi.middleware),
-  preloadedState: initialState,
 });
 
 const renderWithProviders = (component: React.ReactElement) => {
