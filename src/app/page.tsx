@@ -1,3 +1,4 @@
+import React from 'react';
 import App from '../myApp/App';
 
 export const metadata = {
@@ -6,14 +7,14 @@ export const metadata = {
 
 const Home = () => {
   return (
-      <div>
-        {/*<Head>*/}
-        {/*  <title>RS School Next.js</title>*/}
-        {/*  <meta name="description" content="RS School Next.js Page Routing app" />*/}
-        {/*</Head>*/}
-        <App />
-      </div>
+    <div>
+      {/*<Head>*/}
+      {/*  <title>RS School Next.js</title>*/}
+      {/*  <meta name="description" content="RS School Next.js Page Routing app" />*/}
+      {/*</Head>*/}
+      <App />
+    </div>
   );
 };
 
-export default Home
+export default Home;

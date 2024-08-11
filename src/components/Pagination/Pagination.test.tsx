@@ -56,7 +56,9 @@ describe('Pagination Component', () => {
 
     (useParams as vi.Mock).mockReturnValue({ id: PAGE_ID });
 
-    (useSearchParams as vi.Mock).mockReturnValue(new URLSearchParams(`search=${QUERY_PARAMETER}`));
+    (useSearchParams as vi.Mock).mockReturnValue(
+      new URLSearchParams(`search=${QUERY_PARAMETER}`),
+    );
 
     render(<Pagination cardsCount={30} />);
 
@@ -64,18 +66,23 @@ describe('Pagination Component', () => {
 
     fireEvent.click(screen.getByText('Next'));
 
-    expect(mockPush).toHaveBeenCalledWith(`/page/${PAGE_ID + 1}?search=${QUERY_PARAMETER}`);
+    expect(mockPush).toHaveBeenCalledWith(
+      `/page/${PAGE_ID + 1}?search=${QUERY_PARAMETER}`,
+    );
 
     fireEvent.click(screen.getByText('Prev'));
 
-    expect(mockPush).toHaveBeenCalledWith(`/page/${PAGE_ID - 1}?search=${QUERY_PARAMETER}`);
+    expect(mockPush).toHaveBeenCalledWith(
+      `/page/${PAGE_ID - 1}?search=${QUERY_PARAMETER}`,
+    );
   });
 
   test('should disable the Prev button on the first page', () => {
-
     (useParams as vi.Mock).mockReturnValue({ id: '1' });
 
-    (useSearchParams as vi.Mock).mockReturnValue(new URLSearchParams(`search=${QUERY_PARAMETER}`));
+    (useSearchParams as vi.Mock).mockReturnValue(
+      new URLSearchParams(`search=${QUERY_PARAMETER}`),
+    );
 
     render(<Pagination cardsCount={30} />);
 
@@ -83,10 +90,11 @@ describe('Pagination Component', () => {
   });
 
   test('should disable the Next button on the last page', () => {
-
     (useParams as vi.Mock).mockReturnValue({ id: '3' });
 
-    (useSearchParams as vi.Mock).mockReturnValue(new URLSearchParams(`search=${QUERY_PARAMETER}`));
+    (useSearchParams as vi.Mock).mockReturnValue(
+      new URLSearchParams(`search=${QUERY_PARAMETER}`),
+    );
 
     render(<Pagination cardsCount={30} />);
 

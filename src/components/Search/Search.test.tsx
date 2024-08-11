@@ -4,7 +4,6 @@ import { beforeEach, describe, test, expect, vi } from 'vitest';
 import { Search } from './Search';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
   useSearchParams: vi.fn(() => new URLSearchParams()),
@@ -34,11 +33,13 @@ describe('Search', () => {
   const mockPush = vi.fn();
 
   beforeEach(() => {
-    (useRouter as any).mockReturnValue({
+    useRouter.mockReturnValue({
       push: mockPush,
     });
 
-    (useSearchParams).mockReturnValue(new URLSearchParams({ search: 'test search' }));
+    useSearchParams.mockReturnValue(
+      new URLSearchParams({ search: 'test search' }),
+    );
 
     mockPush.mockClear();
     localStorage.removeItem('test');
@@ -68,6 +69,8 @@ describe('Search', () => {
 
     expect(() => {
       fireEvent.click(errorButton);
-    }).toThrow('An error occurred when user clicked the \'Throw error on click\' button');
+    }).toThrow(
+      "An error occurred when user clicked the 'Throw error on click' button",
+    );
   });
 });

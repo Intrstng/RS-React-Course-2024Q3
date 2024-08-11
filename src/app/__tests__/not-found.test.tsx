@@ -4,7 +4,6 @@ import { describe, expect, test, vi } from 'vitest';
 import { useRouter } from 'next/navigation';
 import Custom404 from '../not-found';
 
-
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
 }));

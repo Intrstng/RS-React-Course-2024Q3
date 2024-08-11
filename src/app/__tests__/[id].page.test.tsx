@@ -15,7 +15,6 @@ vi.mock('../../../src/services/getCards', () => ({
   getCards: vi.fn(),
 }));
 
-
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
   useParams: vi.fn(),
@@ -26,7 +25,9 @@ vi.mock('next/navigation', () => ({
 describe('CardList', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    (useSearchParams as vi.Mock).mockReturnValue(new URLSearchParams({ search: QUERY_PARAMETER }));
+    (useSearchParams as vi.Mock).mockReturnValue(
+      new URLSearchParams({ search: QUERY_PARAMETER }),
+    );
     (useParams as vi.Mock).mockReturnValue({ id: PAGE_ID });
   });
 
@@ -38,16 +39,16 @@ describe('CardList', () => {
       count: 2,
       next: '',
       previous: '',
-      results: mockCardsInit
+      results: mockCardsInit,
     });
 
     await render(
-        <Provider store={setupStore()}>
-          {await CardList ({
+      <Provider store={setupStore()}>
+        {await CardList({
           params,
-          searchParams
+          searchParams,
         })}
-        </Provider>
+      </Provider>,
     );
 
     const card1 = await screen.findByText(mockCardsInit[0].name);
@@ -68,16 +69,16 @@ describe('CardList', () => {
     });
 
     await render(
-        <Provider store={setupStore()}>
-          {await CardList ({
-            params,
-            searchParams
-          })}
-        </Provider>
+      <Provider store={setupStore()}>
+        {await CardList({
+          params,
+          searchParams,
+        })}
+      </Provider>,
     );
 
     const noResultsMessage = await screen.findByText(
-        /no results were found for your request/i
+      /no results were found for your request/i,
     );
     expect(noResultsMessage).toBeInTheDocument();
   });

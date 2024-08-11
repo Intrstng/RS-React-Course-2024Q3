@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DetailedVehicle, VehicleDetailsDomain } from '../../shared/types/types';
+import { VehicleDetailsDomain } from '../../shared/types/types';
 
 const favoritesSlice = createSlice({
   name: 'favorites',
@@ -8,19 +8,24 @@ const favoritesSlice = createSlice({
   },
   reducers: {
     toggleCardToFavorites(
-        state,
-        action: PayloadAction<{ cardId: string | undefined; card: VehicleDetailsDomain }>,
+      state,
+      action: PayloadAction<{
+        cardId: string | undefined;
+        card: VehicleDetailsDomain;
+      }>,
     ) {
       if (!action.payload.cardId) {
         return;
       }
 
-      const idx = state.favoriteCards.findIndex((c) => c.id === action.payload.cardId);
+      const idx = state.favoriteCards.findIndex(
+        (c) => c.id === action.payload.cardId,
+      );
 
       if (idx === -1) {
         state.favoriteCards.push(action.payload.card);
       } else {
-        state.favoriteCards.splice(idx, 1)
+        state.favoriteCards.splice(idx, 1);
       }
     },
 

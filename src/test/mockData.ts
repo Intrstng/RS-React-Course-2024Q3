@@ -1,5 +1,8 @@
-import { VehicleDetails, VehicleDetailsDomain } from '../shared/types/types';
-import { FavoritesItems } from '../redux/slices/favoritesSlice';
+import {
+  DetailedVehicle,
+  VehicleDetails,
+  VehicleDetailsDomain,
+} from '../shared/types/types';
 import { RefineFavoritesItemsStructureToCSV } from '../shared/uitils/refineFavoritesItemsStructureToCSV';
 
 export const mockCards: VehicleDetailsDomain[] = [
@@ -84,48 +87,48 @@ export const mockCardsInit: VehicleDetails[] = [
   },
 ];
 
-export const mockFavoritesCars: FavoritesItems = {
-  19: {
-    name: 'AT-ST',
-    model: 'All Terrain Scout Transport',
-    manufacturer: 'Kuat Drive Yards, Imperial Department of Military Research',
-    vehicleClass: 'walker',
-    length: '2',
-    crew: '2',
-    passengers: '0',
-    maxAtmospheringSpeed: '90',
-    cargoCapacity: '200',
-    consumables: 'none',
-    cost_in_credits: 'unknown',
-    pilots: ['https://swapi.dev/api/people/13/'],
-    films: ['https://swapi.dev/api/films/2/', 'https://swapi.dev/api/films/3/'],
-    created: new Date(),
-    edited: new Date(),
-    url: 'https://swapi.dev/api/vehicles/19/',
-    id: '19',
-    isChecked: false,
-  },
-  20: {
+export const mockDetailedVehicle: DetailedVehicle[] = [
+  {
     name: 'Storm IV Twin-Pod cloud car',
     model: 'Storm IV Twin-Pod',
     manufacturer: 'Bespin Motors',
-    vehicleClass: 'repulsorcraft',
+    cost_in_credits: 'repulsorcraft',
     length: '7',
+    max_atmosphering_speed: '1500',
     crew: '2',
     passengers: '0',
-    maxAtmospheringSpeed: '1500',
-    cargoCapacity: '10',
+    cargo_capacity: '10',
     consumables: '1 day',
-    cost_in_credits: '75000',
+    vehicle_class: 'repulsorcraft',
     pilots: [],
     films: ['https://swapi.dev/api/films/2/'],
     created: new Date(),
     edited: new Date(),
     url: 'https://swapi.dev/api/vehicles/20/',
-    id: '20',
     isChecked: false,
+    id: '20',
   },
-};
+  {
+    name: 'AT-ST',
+    model: 'All Terrain Scout Transport',
+    manufacturer: 'Kuat Drive Yards, Imperial Department of Military Research',
+    cost_in_credits: 'walker',
+    length: '2',
+    max_atmosphering_speed: '90',
+    crew: '2',
+    passengers: '0',
+    cargo_capacity: '200',
+    consumables: 'none',
+    vehicle_class: 'walker',
+    pilots: ['https://swapi.dev/api/people/13/'],
+    films: ['https://swapi.dev/api/films/2/', 'https://swapi.dev/api/films/3/'],
+    created: new Date(),
+    edited: new Date(),
+    url: 'https://swapi.dev/api/vehicles/19/',
+    isChecked: false,
+    id: '19',
+  },
+];
 
 export const mockFavoritesCarsForCSV: RefineFavoritesItemsStructureToCSV = [
   {

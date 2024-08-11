@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { favoritesActions, favoritesReducer, } from '../favoritesSlice';
+import { favoritesActions, favoritesReducer } from '../favoritesSlice';
 import { VehicleDetailsDomain } from '../../../shared/types/types';
 import { mockCards } from '../../../test/mockData';
 
@@ -20,7 +20,10 @@ describe('favoritesSlice', () => {
     };
 
     const card: VehicleDetailsDomain = mockCards[0];
-    const action = favoritesActions.toggleCardToFavorites({ cardId: undefined, card });
+    const action = favoritesActions.toggleCardToFavorites({
+      cardId: undefined,
+      card,
+    });
     const newState = favoritesReducer(initialState, action);
 
     expect(newState).toEqual(initialState);

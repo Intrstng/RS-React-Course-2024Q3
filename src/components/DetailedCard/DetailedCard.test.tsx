@@ -1,92 +1,110 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, test, vi } from 'vitest';
+import { useRouter } from 'next/navigation';
 import { DetailedCard } from './DetailedCard';
-import { Provider } from 'react-redux';
-import { setupStore } from '../../redux/store';
-import { ThemeContext } from '../../contexts/Theme/Theme.context';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { afterEach, describe, expect, test, vi } from 'vitest';
-import { useGetCardDetailsQuery } from '../../redux/api/cardsApi';
-import { ThemeType } from '../../contexts/Theme/Theme.model';
-import { THEMES } from '../../contexts/Theme/Theme.config';
+import { mockDetailedVehicle } from '../../test/mockData';
 
-// vi.mock('../../redux/api/cardsApi', async () => {
-//   const originalModule = await vi.importActual('../../redux/api/cardsApi');
-//   return {
-//     ...originalModule,
-//     useGetCardDetailsQuery: vi.fn(),
-//   };
-// });
-//
-// vi.mock('react-redux', async () => {
-//   const originalModule = await vi.importActual('react-redux');
-//   return {
-//     ...originalModule,
-//     useSelector: vi.fn(),
-//   };
-// });
-//
-// vi.mock('react-router-dom', async () => {
-//   const originalModule = await vi.importActual('react-router-dom');
-//   return {
-//     ...originalModule,
-//     useParams: () => ({ pageId: '1', cardId: '10' }),
-//     useNavigate: () => vi.fn(),
-//   };
-// });
-//
-// const renderWithProviders = (
-//   ui: React.ReactElement,
-//   {
-//     reduxStore = setupStore(),
-//     themeType = ThemeType.LIGHT,
-//     theme = THEMES[ThemeType.LIGHT],
-//     setCurrentTheme = () => {},
-//   } = {},
-// ) => {
-//   return render(
-//     <Provider store={reduxStore}>
-//       <ThemeContext.Provider value={{ themeType, theme, setCurrentTheme }}>
-//         <Router>{ui}</Router>
-//       </ThemeContext.Provider>
-//     </Provider>,
-//   );
-// };
-describe('DetailedCard Component', () => {
-  afterEach(() => {
-    vi.clearAllMocks();
+const PAGE_ID = '1';
+const CARD_ID = '4';
+
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
+}));
+
+describe('DetailedCard', () => {
+  const detailsData = mockDetailedVehicle[0];
+
+  const params = {
+    id: PAGE_ID,
+  };
+
+  const searchParams = {
+    card: CARD_ID,
+    search: mockDetailedVehicle[0].name,
+  };
+
+  test('renders detailed card data correctly', () => {
+    useRouter.mockReturnValue({
+      push: vi.fn(),
+    });
+
+    render(
+      <DetailedCard
+        detailsData={detailsData}
+        params={params}
+        searchParams={searchParams}
+      />,
+    );
+
+    expect(screen.getByText(`${detailsData.model}`)).toBeInTheDocument();
+    expect(screen.getByText(`${detailsData.manufacturer}`)).toBeInTheDocument();
+    expect(screen.getByText(`${detailsData.length}`)).toBeInTheDocument();
+    expect(screen.getByText(`${detailsData.crew}`)).toBeInTheDocument();
+    expect(screen.getByText(`${detailsData.passengers}`)).toBeInTheDocument();
+    expect(screen.getByText(`${detailsData.consumables}`)).toBeInTheDocument();
   });
 
-  // test.skip('should display loader when fetching data', () => {
-  //   (useGetCardDetailsQuery as vi.Mock).mockReturnValue({
-  //     data: null,
-  //     isFetching: true,
-  //     isError: false,
-  //   });
-  //
-  //   renderWithProviders(<DetailedCard />);
-  //
-  //   expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
-  // });
-  //
-  // test.skip('should display error message on error', () => {
-  //   (useGetCardDetailsQuery as vi.Mock).mockReturnValue({
-  //     data: null,
-  //     isFetching: false,
-  //     isError: true,
-  //   });
-  //
-  //   renderWithProviders(<DetailedCard />);
-  //
-  //   expect(
-  //     screen.getByText('Error loading detailed cards'),
-  //   ).toBeInTheDocument();
-  // });
+  test('renders error message if detailed card data not loaded', () => {
+    useRouter.mockReturnValue({
+      push: vi.fn(),
+    });
 
-  test('...', () => {
+    const detailsData = undefined;
+
+    render(
+      <DetailedCard
+        detailsData={detailsData}
+        params={params}
+        searchParams={searchParams}
+      />,
+    );
 
     expect(
-      true,
-    ).toBe(true);
+      screen.getByText(/error loading detailed cards/i),
+    ).toBeInTheDocument();
+  });
+
+  test('handles form submit and redirects correctly', () => {
+    const pushMock = vi.fn();
+    useRouter.mockReturnValue({
+      push: pushMock,
+    });
+
+    render(
+      <DetailedCard
+        detailsData={detailsData}
+        params={params}
+        searchParams={searchParams}
+      />,
+    );
+
+    const closeButton = screen.getByText('Close');
+    fireEvent.click(closeButton);
+
+    expect(pushMock).toHaveBeenCalledWith(
+      `/page/${params.id}?search=${searchParams.search}`,
+    );
+  });
+
+  test('handles click outside and redirects correctly', () => {
+    const pushMock = vi.fn();
+    useRouter.mockReturnValue({
+      push: pushMock,
+    });
+
+    render(
+      <DetailedCard
+        detailsData={detailsData}
+        params={params}
+        searchParams={searchParams}
+      />,
+    );
+
+    fireEvent.mouseDown(document);
+
+    expect(pushMock).toHaveBeenCalledWith(
+      `/page/${params.id}?search=${searchParams.search}`,
+    );
   });
 });

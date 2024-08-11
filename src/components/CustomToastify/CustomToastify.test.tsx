@@ -40,18 +40,18 @@ describe('CustomToastify', () => {
       preloadedState: initialState,
     });
     render(
-        <Provider store={store}>
-          <ThemeContext.Provider value={themeContextValue}>
-            <CustomToastify />
-          </ThemeContext.Provider>
-        </Provider>
+      <Provider store={store}>
+        <ThemeContext.Provider value={themeContextValue}>
+          <CustomToastify />
+        </ThemeContext.Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/favorites/i)).not.toBeInTheDocument();
   });
 
   test('renders the component with favorites', () => {
-     const initialState = {
+    const initialState = {
       app: {
         isToastifyOpen: true,
       },
@@ -69,11 +69,11 @@ describe('CustomToastify', () => {
     });
 
     render(
-        <Provider store={store}>
-          <ThemeContext.Provider value={themeContextValue}>
-            <CustomToastify />
-          </ThemeContext.Provider>
-        </Provider>,
+      <Provider store={store}>
+        <ThemeContext.Provider value={themeContextValue}>
+          <CustomToastify />
+        </ThemeContext.Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/favorites/i)).toBeInTheDocument();
@@ -101,11 +101,11 @@ describe('CustomToastify', () => {
     });
 
     render(
-        <Provider store={store}>
-          <ThemeContext.Provider value={themeContextValue}>
-            <CustomToastify />
-          </ThemeContext.Provider>
-        </Provider>,
+      <Provider store={store}>
+        <ThemeContext.Provider value={themeContextValue}>
+          <CustomToastify />
+        </ThemeContext.Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/hide/i)).toBeInTheDocument();
@@ -136,11 +136,11 @@ describe('CustomToastify', () => {
     });
 
     render(
-        <Provider store={store}>
-          <ThemeContext.Provider value={themeContextValue}>
-            <CustomToastify />
-          </ThemeContext.Provider>
-        </Provider>,
+      <Provider store={store}>
+        <ThemeContext.Provider value={themeContextValue}>
+          <CustomToastify />
+        </ThemeContext.Provider>
+      </Provider>,
     );
 
     fireEvent.click(screen.getByText('Unselect all'));

@@ -10,12 +10,12 @@ describe('API functions', () => {
         count: 2,
         next: '',
         previous: null,
-        results: mockCards
+        results: mockCards,
       };
 
-      vi.spyOn(global, 'fetch').mockResolvedValue({
+      vi.spyOn(window, 'fetch').mockResolvedValue({
         ok: true,
-        json: async () => mockResponse
+        json: async () => mockResponse,
       } as Response);
 
       const cardsResponse = await getCards({ search: 'Sand Crawler' });
@@ -23,12 +23,14 @@ describe('API functions', () => {
     });
 
     test('should throw an error if fetch fails', async () => {
-      vi.spyOn(global, 'fetch').mockResolvedValue({
+      vi.spyOn(window, 'fetch').mockResolvedValue({
         ok: false,
-        statusText: 'Internal Server Error'
+        statusText: 'Internal Server Error',
       } as Response);
 
-      await expect(getCards({ search: 'Sand Crawler' })).rejects.toThrow('Unable to fetch cards.');
+      await expect(getCards({ search: 'Sand Crawler' })).rejects.toThrow(
+        'Unable to fetch cards.',
+      );
     });
   });
 
@@ -36,9 +38,9 @@ describe('API functions', () => {
     test('should return a DetailedVehicle object', async () => {
       const mockResponse = mockCards[0];
 
-      vi.spyOn(global, 'fetch').mockResolvedValue({
+      vi.spyOn(window, 'fetch').mockResolvedValue({
         ok: true,
-        json: async () => mockResponse
+        json: async () => mockResponse,
       } as Response);
 
       const cardDetails = await getCardDetails('4');
@@ -51,12 +53,14 @@ describe('API functions', () => {
     });
 
     test('should throw an error if fetch fails', async () => {
-      vi.spyOn(global, 'fetch').mockResolvedValue({
+      vi.spyOn(window, 'fetch').mockResolvedValue({
         ok: false,
-        statusText: 'Not Found'
+        statusText: 'Not Found',
       } as Response);
 
-      await expect(getCardDetails('4')).rejects.toThrow('Unable to card Details.');
+      await expect(getCardDetails('4')).rejects.toThrow(
+        'Unable to card Details.',
+      );
     });
   });
 });

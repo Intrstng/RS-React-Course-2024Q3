@@ -1,11 +1,9 @@
-import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import Detailed from './Detailed';
 import { getCardDetails } from '../../services/getCards';
 import { useRouter } from 'next/navigation';
 import { mockCards } from '../../test/mockData';
-
 
 const PAGE_ID = '1';
 const CARD_ID = '4';
@@ -36,10 +34,12 @@ describe('Detailed Component', () => {
     const params = { id: PAGE_ID };
     const searchParams = { card: CARD_ID };
 
-    render(await Detailed ({
-      params,
-      searchParams
-    }));
+    render(
+      await Detailed({
+        params,
+        searchParams,
+      }),
+    );
 
     await waitFor(() => {
       expect(screen.getByText(mockCards[0].model)).toBeInTheDocument();

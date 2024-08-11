@@ -7,7 +7,6 @@ import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import { THEMES } from '../../contexts/Theme/Theme.config';
 
-
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
   useSearchParams: vi.fn(() => new URLSearchParams()),
@@ -26,16 +25,18 @@ const mockThemeContextValue = {
 
 describe('PageLayout', () => {
   beforeEach(() => {
-    (useSearchParams).mockReturnValue(new URLSearchParams({ search: 'test search' }));
+    useSearchParams.mockReturnValue(
+      new URLSearchParams({ search: 'test search' }),
+    );
   });
 
   test('should render children', () => {
     const { getByText } = render(
-        <ThemeContext.Provider value={mockThemeContextValue}>
-          <PageLayout>
-            <div>Test component</div>
-          </PageLayout>
-        </ThemeContext.Provider>
+      <ThemeContext.Provider value={mockThemeContextValue}>
+        <PageLayout>
+          <div>Test component</div>
+        </PageLayout>
+      </ThemeContext.Provider>,
     );
 
     expect(getByText(/test component/i)).toBeInTheDocument();

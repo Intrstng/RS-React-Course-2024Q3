@@ -12,7 +12,8 @@ export default [
       "prettier/prettier": "error",
       "@typescript-eslint/no-explicit-any": "error",
       "no-undef": "error",
-      "@typescript-eslint/no-unused-vars": "off"
+      "@typescript-eslint/no-unused-vars": "off",
+      "no-unused-vars": "off",
     },
     settings: {
       react: {

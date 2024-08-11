@@ -17,6 +17,8 @@ vi.mock('next/navigation', () => ({
 describe('Home', () => {
   test('should render the App component', () => {
     render(<Home />);
-    expect(screen.getByText(/Welcome to RS School Next.js App Routing/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Welcome to RS School Next.js App Routing/i),
+    ).toBeInTheDocument();
   });
 });

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { createContext, FC, useState } from 'react';
 import { THEMES } from './Theme.config';

@@ -9,7 +9,10 @@ import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { ThemeProvider } from '../../contexts/Theme/Theme.context';
 import { THEMES } from '../../contexts/Theme/Theme.config';
 import { appActions, appReducer } from '../../redux/slices/appSlice';
-import { favoritesActions, favoritesReducer } from '../../redux/slices/favoritesSlice';
+import {
+  favoritesActions,
+  favoritesReducer,
+} from '../../redux/slices/favoritesSlice';
 import { useParams, useSearchParams } from 'next/navigation';
 
 const PAGE_ID = 1;
@@ -42,8 +45,10 @@ vi.mock('next/navigation', () => ({
 
 describe('Card Component', () => {
   beforeEach(() => {
-    (useSearchParams as vi.Mock).mockReturnValue(new URLSearchParams({search: QUERY_PARAMETER}));
-    (useParams as vi.Mock).mockReturnValue({id: PAGE_ID});
+    (useSearchParams as vi.Mock).mockReturnValue(
+      new URLSearchParams({ search: QUERY_PARAMETER }),
+    );
+    (useParams as vi.Mock).mockReturnValue({ id: PAGE_ID });
   });
 
   test('should render the relevant card data', () => {
@@ -53,11 +58,11 @@ describe('Card Component', () => {
       setCurrentTheme: () => {},
     };
     render(
-        <ThemeProvider value={themeContextValue}>
-          <Provider store={store}>
-            <Card card={mockCards[0]} pageId={PAGE_ID} cardId={CARD_ID} />
-          </Provider>
-        </ThemeProvider>,
+      <ThemeProvider value={themeContextValue}>
+        <Provider store={store}>
+          <Card card={mockCards[0]} pageId={PAGE_ID} cardId={CARD_ID} />
+        </Provider>
+      </ThemeProvider>,
     );
 
     const cardTitle = screen.getByText(mockCards[0].name);
@@ -68,17 +73,17 @@ describe('Card Component', () => {
     const dispatchSpy = vi.spyOn(store, 'dispatch');
 
     render(
-        <Provider store={store}>
-          <ThemeProvider
-              value={{
-                themeType: ThemeType.LIGHT,
-                theme: THEMES[ThemeType.LIGHT],
-                setCurrentTheme: () => {},
-              }}
-          >
-            <Card card={mockCards[0]} pageId={PAGE_ID} cardId={CARD_ID}/>
-          </ThemeProvider>
-        </Provider>
+      <Provider store={store}>
+        <ThemeProvider
+          value={{
+            themeType: ThemeType.LIGHT,
+            theme: THEMES[ThemeType.LIGHT],
+            setCurrentTheme: () => {},
+          }}
+        >
+          <Card card={mockCards[0]} pageId={PAGE_ID} cardId={CARD_ID} />
+        </ThemeProvider>
+      </Provider>,
     );
 
     const checkbox = screen.getByRole('checkbox');
@@ -87,7 +92,10 @@ describe('Card Component', () => {
     await waitFor(() => {
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
       expect(dispatchSpy).toHaveBeenCalledWith(
-          favoritesActions.toggleCardToFavorites({cardId: CARD_ID, card: mockCards[0]})
+        favoritesActions.toggleCardToFavorites({
+          cardId: CARD_ID,
+          card: mockCards[0],
+        }),
       );
       expect(dispatchSpy).toHaveBeenCalledWith(appActions.showIsToastify());
     });

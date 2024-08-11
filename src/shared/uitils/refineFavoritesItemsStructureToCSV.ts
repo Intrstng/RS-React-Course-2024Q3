@@ -1,7 +1,8 @@
-import { FavoritesItems } from '../../redux/slices/favoritesSlice';
 import { VehicleDetailsDomain } from '../types/types';
 
-export const refineFavoritesItemsStructureToCSV = (data: VehicleDetailsDomain[]) => {
+export const refineFavoritesItemsStructureToCSV = (
+  data: VehicleDetailsDomain[],
+) => {
   return data.map((card) => {
     return {
       ...card,
