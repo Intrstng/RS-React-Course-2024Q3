@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import PageLayout from '../page/layout';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
 import { THEMES } from '../../contexts/Theme/Theme.config';
@@ -10,6 +10,7 @@ import { THEMES } from '../../contexts/Theme/Theme.config';
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
+  useSearchParams: vi.fn(() => new URLSearchParams()),
 }));
 
 (useRouter as vi.Mock).mockReturnValue({
@@ -24,6 +25,10 @@ const mockThemeContextValue = {
 };
 
 describe('PageLayout', () => {
+  beforeEach(() => {
+    (useSearchParams).mockReturnValue(new URLSearchParams({ search: 'test search' }));
+  });
+
   test('should render children', () => {
     const { getByText } = render(
         <ThemeContext.Provider value={mockThemeContextValue}>
@@ -33,6 +38,6 @@ describe('PageLayout', () => {
         </ThemeContext.Provider>
     );
 
-    expect(getByText(/Test component/i)).toBeInTheDocument();
+    expect(getByText(/test component/i)).toBeInTheDocument();
   });
 });

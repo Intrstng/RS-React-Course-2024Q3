@@ -2,11 +2,12 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { beforeEach, describe, test, expect, vi } from 'vitest';
 import { Search } from './Search';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
+  useSearchParams: vi.fn(() => new URLSearchParams()),
 }));
 
 const localStorageMock = (() => {
@@ -36,6 +37,8 @@ describe('Search', () => {
     (useRouter as any).mockReturnValue({
       push: mockPush,
     });
+
+    (useSearchParams).mockReturnValue(new URLSearchParams({ search: 'test search' }));
 
     mockPush.mockClear();
     localStorage.removeItem('test');

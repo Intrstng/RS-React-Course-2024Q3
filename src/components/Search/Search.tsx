@@ -26,7 +26,7 @@ export const Search = () => {
                           console.log('!searchQuery', !searchQuery)
                           useEffect(() => {
                             !searchQuery && text.length > 0 && router.push(`/page/1?search=${text}`);
-                            searchQuery ? setText(searchQuery) : setText(text)
+                            searchQuery ? setText(searchQuery) : setText(text);
                           }, [])
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
