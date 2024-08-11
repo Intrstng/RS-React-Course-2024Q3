@@ -1,28 +1,33 @@
-import React, { FormEvent, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import S from './DetailedCard.module.css';
-import { DetailsPageParams } from '../../shared/types/types';
-import { Loader } from '../Loader/Loader';
+'use client';
+import React, { FC, FormEvent, useEffect, useRef, useState } from 'react';
+import S from '../../styles/DetailedCard.module.css';
+import { DetailedVehicle } from '../../shared/types/types';
 import defaultImage from '../../assets/image_default.jpg';
-import { useGetCardDetailsQuery } from '../../redux/api/cardsApi';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-export const DetailedCard = () => {
+export type DetailedCardProps = {
+  detailsData?: DetailedVehicle | undefined;
+  params: {
+    id: string;
+  };
+  searchParams?: { [key: string]: string | undefined };
+};
+
+export const DetailedCard: FC<DetailedCardProps> = ({
+  detailsData,
+  params,
+  searchParams,
+}) => {
   const [imgSrc, setImgSrc] = useState<string | null>(null);
-  const [detailedCardId, setDetailedCardId] = useState('');
-  const { data, isFetching, isError } = useGetCardDetailsQuery(detailedCardId);
   const detailsRef = useRef<HTMLDivElement | null>(null);
-  const { pageId, cardId } = useParams<DetailsPageParams>();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchData = async () => {
-      await setDetailedCardId(cardId);
-      await setImgSrc(
-        `https://starwars-visualguide.com/assets/img/vehicles/${cardId}.jpg`,
-      );
-    };
-    fetchData();
-  }, [cardId]);
+    setImgSrc(
+      `https://starwars-visualguide.com/assets/img/vehicles/${searchParams?.card}.jpg`,
+    );
+  }, [searchParams?.card]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -30,71 +35,69 @@ export const DetailedCard = () => {
         detailsRef.current &&
         !detailsRef.current!.contains(e.target as Node)
       ) {
-        navigate(`/page/${pageId}`);
+        searchParams?.search
+          ? router.push(`/page/${params.id}?search=${searchParams?.search}`)
+          : router.push(`/page/${params.id}`);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [pageId]);
+  }, [params.id]);
 
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate(`/page/${pageId}`);
+    searchParams?.search
+      ? router.push(`/page/${params.id}?search=${searchParams?.search}`)
+      : router.push(`/page/${params.id}`);
   };
 
   const handleImageError = () => {
-    setImgSrc(defaultImage);
+    setImgSrc(defaultImage.src);
   };
-
-  if (isError) {
-    return (
-      <div className={S.details} ref={detailsRef}>
-        <p className={S.error}>Error loading detailed cards</p>
-      </div>
-    );
-  }
 
   return (
     <div className={S.details} ref={detailsRef}>
-      {isFetching ? (
-        <Loader />
-      ) : (
-        <div className={S.detailsCard}>
-          {imgSrc && (
-            <img
-              src={imgSrc}
-              alt="card"
-              className={S.card}
-              onError={handleImageError}
-            />
-          )}
-          <p>
-            Model: <span>{data.model}</span>
-          </p>
-          <p>
-            Manufacturer: <span>{data.manufacturer}</span>
-          </p>
-          <p>
-            Length: <span>{data.length}</span>
-          </p>
-          <p>
-            Crew: <span>{data.crew}</span>
-          </p>
-          <p>
-            Passengers: <span>{data.passengers}</span>
-          </p>
-          <p>
-            Consumables: <span>{data.consumables}</span>
-          </p>
-          <form onSubmit={onSubmitHandler}>
-            <button type="submit" disabled={isFetching}>
-              Close
-            </button>
-          </form>
-        </div>
-      )}
+      <div className={S.detailsCard}>
+        {imgSrc && (
+          <Image
+            src={imgSrc}
+            alt="card"
+            className={S.card}
+            onError={handleImageError}
+            width={230}
+            height={155}
+          />
+        )}
+        {detailsData ? (
+          <>
+            <p>
+              Model: <span>{detailsData.model}</span>
+            </p>
+            <p>
+              Manufacturer: <span>{detailsData.manufacturer}</span>
+            </p>
+            <p>
+              Length: <span>{detailsData.length}</span>
+            </p>
+            <p>
+              Crew: <span>{detailsData.crew}</span>
+            </p>
+            <p>
+              Passengers: <span>{detailsData.passengers}</span>
+            </p>
+            <p>
+              Consumables: <span>{detailsData.consumables}</span>
+            </p>
+          </>
+        ) : (
+          <p className={S.error}>Error loading detailed cards</p>
+        )}
+        <form onSubmit={onSubmitHandler}>
+          <button type="submit">Close</button>
+        </form>
+      </div>
     </div>
   );
 };

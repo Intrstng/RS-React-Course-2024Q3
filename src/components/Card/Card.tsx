@@ -1,54 +1,42 @@
-import React, { ChangeEvent, FC, useContext } from 'react';
-import {
-  CardProps,
-  VehicleDetailsDomain,
-  VehiclesResponse,
-} from '../../shared/types/types';
-import { NavLink } from 'react-router-dom';
-import S from './Card.module.css';
-import { ThemeContext } from '../../contexts/Theme/Theme.context';
-import { ThemeType } from '../../contexts/Theme/Theme.model';
+'use client';
+import React, { FC } from 'react';
+import { CardProps } from '../../shared/types/types';
+import S from '../../styles/Card.module.css';
 import { SuperCheckBox } from '../SuperCheckBox/SuperCheckBox';
-import { cardsActions } from '../../redux/slices/cardsSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { favoritesActions } from '../../redux/slices/favoritesSlice';
-import { appActions } from '../../redux/slices/appSlice';
-import { domainCardsSelector } from '../../redux/selectors';
+import { useAppDispatch, useAppSelector } from '../../lib/store';
+import { favoritesActions } from '../../lib/features/favorites/favoritesSlice';
+import { appActions } from '../../lib/features/app/appSlice';
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { favoriteCardsSelector } from '../../lib/features/favorites/selectors/favoritesSelectors';
 
-export const Card: FC<CardProps> = ({ card, cardId, isChecked }) => {
-  const { themeType, theme } = useContext(ThemeContext);
+export const Card: FC<CardProps> = ({ card, pageId, cardId }) => {
   const { name } = card;
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const querySearch = searchParams.get('search');
   const dispatch = useAppDispatch();
-  const domainCards =
-    useAppSelector<VehiclesResponse<VehicleDetailsDomain>>(domainCardsSelector);
-  const linkStyles = ({ isActive }) => `${isActive ? S.active : ''}`;
+  const isActive =
+    pathname === `/page/${pageId}` &&
+    searchParams.get('card') === cardId.toString();
 
-  const textStyle =
-    themeType === ThemeType.LIGHT
-      ? { color: theme['--secondary'] }
-      : { color: theme['--white'] };
+  const favoriteCards = useAppSelector(favoriteCardsSelector);
+  const isChecked = favoriteCards.some((favCard) => favCard.id === cardId);
 
-  const onChangeInputStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      cardsActions.toggleDomainCardToFavorites({
-        cardId,
-        isChecked: e.currentTarget.checked,
-      }),
-    );
-    dispatch(
-      favoritesActions.toggleToFavorites({
-        cardId,
-        cards: domainCards.results,
-      }),
-    );
+  const onChangeInputStatusHandler = () => {
+    dispatch(favoritesActions.toggleCardToFavorites({ cardId, card }));
     dispatch(appActions.showIsToastify());
   };
 
+  const href = querySearch
+    ? `/page/${pageId}?search=${querySearch}&card=${cardId}`
+    : `/page/${pageId}?card=${cardId}`;
+
   return (
     <div className={S.card}>
-      <NavLink to={`card/${cardId}`} className={linkStyles}>
-        <h2 style={textStyle}>{name}</h2>
-      </NavLink>
+      <Link href={href} className={isActive ? S.active : ''}>
+        <h2 className={'cardListTitle--color'}>{name}</h2>
+      </Link>
 
       <SuperCheckBox
         isChecked={isChecked}

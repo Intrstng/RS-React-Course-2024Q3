@@ -1,8 +1,7 @@
 import React from 'react';
-import { vi, describe, test, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, expect, test, vi } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { ErrorBoundary } from './ErrorBoundary';
-import errorImg from '../../assets/error-page.jpg';
 
 const MESSAGE_OK = 'No errors occurred';
 const MESSAGE_ERROR = 'Some error occurred...';
@@ -21,8 +20,6 @@ describe('ErrorBoundary', () => {
 
     const imgElement = getByAltText('error');
     expect(imgElement).toBeInTheDocument();
-
-    expect(imgElement).toHaveAttribute('src', errorImg);
 
     const errorMessage = getByText(MESSAGE_ERROR);
     expect(errorMessage).toBeInTheDocument();

@@ -1,0 +1,24 @@
+.viewContainer {
+  width: 100%;
+  text-align: center;
+  flex: 0 0 69%;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.vehiclesList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.notification {
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+
+.detailedContent {
+  margin: 0 auto;
+}

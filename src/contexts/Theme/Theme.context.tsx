@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, FC, useState } from 'react';
 import { THEMES } from './Theme.config';
 import { ThemeContextProps, ThemeType } from './Theme.model';

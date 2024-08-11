@@ -1,74 +1,61 @@
-import React, { ChangeEvent, FormEvent, useEffect, useRef } from 'react';
-import S from './Search.module.css';
+'use client';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import S from '../../styles/Search.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
 import { ButtonType } from '../../shared/types/types';
-import useLocalStorageAdvanced from '../hooks/useLocalStorageAdvanced';
-import { Pagination } from '../Pagination/Pagination';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
-import {
-  currentPageSelector,
-  errorSelector,
-  searchSelector,
-} from '../../redux/selectors/appSelectors';
-import {
-  appActions,
-  LOCAL_STORAGE_SEARCH_KEY,
-} from '../../redux/slices/appSlice';
-import { cardsActions } from '../../redux/slices/cardsSlice';
-import { useGetCardsQuery } from '../../redux/api/cardsApi';
-import { useNavigate } from 'react-router-dom';
-import { favoritesSelector } from '../../redux/selectors';
-import { FavoritesItems } from '../../redux/slices/favoritesSlice';
+import { LOCAL_STORAGE_SEARCH_KEY } from '../../lib/features/app/appSlice';
+import { useRouter, useSearchParams } from 'next/navigation';
+
+export const getInitValueFromLS = (key: string) => {
+  return typeof window !== 'undefined'
+    ? JSON.parse(localStorage.getItem(key)) || ''
+    : '';
+};
 
 export const Search = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [text, setText] = useLocalStorageAdvanced<string>(
-    LOCAL_STORAGE_SEARCH_KEY,
+  const [text, setText] = useState<string>(
+    getInitValueFromLS(LOCAL_STORAGE_SEARCH_KEY),
   );
-  const searchValue = useAppSelector<string>(searchSelector);
-  const navigationPage = useAppSelector<number>(currentPageSelector);
-  const appError = useAppSelector<string | null>(errorSelector);
-  const { data, isFetching, isError, error } = useGetCardsQuery({
-    search: searchValue,
-    page: navigationPage,
-  });
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const favoritesItems = useAppSelector<FavoritesItems>(favoritesSelector);
+
+  const [appError, setAppError] = useState<string | null>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get('search');
 
   useEffect(() => {
-    dispatch(appActions.setAppStatus({ isLoading: isFetching }));
-    dispatch(cardsActions.setDomainCards({ cards: data }));
-    dispatch(cardsActions.restoreToFavorites({ favorites: favoritesItems }));
-    dispatch(
-      appActions.setAppError({ error: isError === false ? null : error.error }),
-    );
-
-    if (inputRef.current !== null) {
-      inputRef.current!.focus();
-    }
-  }, [searchValue, navigationPage, data, isFetching, isError, error]);
+    !searchQuery && text.length > 0 && router.push(`/page/1?search=${text}`);
+    searchQuery ? setText(searchQuery) : setText(text);
+  }, []);
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate(`/page/1`);
-    dispatch(appActions.setAppCurrentPage({ currentPage: 1 }));
     const trimmedText = text.trim();
     setText(trimmedText);
-    dispatch(appActions.setAppSearch({ search: trimmedText }));
+    const href = `/page/1?search=${trimmedText}`;
+    router.push(href);
   };
 
   const onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(
+        LOCAL_STORAGE_SEARCH_KEY,
+        JSON.stringify(e.currentTarget.value),
+      );
+    }
   };
 
   const onClickSetError = () => {
-    dispatch(
-      appActions.setAppError({
-        error:
-          "An error occurred when user clicked the 'Throw error on click' button",
-      }),
+    setAppError(
+      "An error occurred when user clicked the 'Throw error on click' button",
     );
   };
 
@@ -87,13 +74,8 @@ export const Search = () => {
           onChangeHandler={onChangeSetInputValueHandler}
           color={'primary'}
         />
-
         <div className={S.searchControls}>
-          <Button
-            type={ButtonType.SUBMIT}
-            disabled={isFetching}
-            color={'search'}
-          >
+          <Button type={ButtonType.SUBMIT} color={'search'}>
             Search
           </Button>
           <Button onClickCallBack={onClickSetError} color={'error'}>
@@ -101,7 +83,6 @@ export const Search = () => {
           </Button>
         </div>
       </form>
-      {!isFetching && <Pagination />}
     </section>
   );
 };

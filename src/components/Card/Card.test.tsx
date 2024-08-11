@@ -1,19 +1,56 @@
 import React from 'react';
-import { describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { Card } from './Card';
-import '@testing-library/jest-dom';
-import { mockCards } from '../../test/mockData';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
+import { configureStore } from '@reduxjs/toolkit';
+import { Card } from './Card';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { ThemeProvider } from '../../contexts/Theme/Theme.context';
 import { THEMES } from '../../contexts/Theme/Theme.config';
+import { appActions, appReducer } from '../../lib/features/app/appSlice';
+import {
+  favoritesActions,
+  favoritesReducer,
+} from '../../lib/features/favorites/favoritesSlice';
+import { useParams, useSearchParams } from 'next/navigation';
+import { mockCards } from '../../mocks/mockData';
 
-const MOCK_ID = '1';
+const PAGE_ID = 1;
+const CARD_ID = '4';
+const QUERY_PARAMETER = 'test';
+
+const initialState = {
+  app: {
+    isToastifyOpen: true,
+  },
+  favorites: {
+    favoriteCards: mockCards,
+  },
+};
+
+const store = configureStore({
+  reducer: {
+    app: appReducer,
+    favorites: favoritesReducer,
+  },
+  preloadedState: initialState,
+});
+
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
+  usePathname: vi.fn(),
+  useSearchParams: vi.fn(),
+  useParams: vi.fn(),
+}));
 
 describe('Card Component', () => {
+  beforeEach(() => {
+    (useSearchParams as vi.Mock).mockReturnValue(
+      new URLSearchParams({ search: QUERY_PARAMETER }),
+    );
+    (useParams as vi.Mock).mockReturnValue({ id: PAGE_ID });
+  });
+
   test('should render the relevant card data', () => {
     const themeContextValue = {
       themeType: ThemeType.LIGHT,
@@ -23,9 +60,7 @@ describe('Card Component', () => {
     render(
       <ThemeProvider value={themeContextValue}>
         <Provider store={store}>
-          <BrowserRouter>
-            <Card card={mockCards[0]} cardId={MOCK_ID} isChecked={false} />
-          </BrowserRouter>
+          <Card card={mockCards[0]} pageId={PAGE_ID} cardId={CARD_ID} />
         </Provider>
       </ThemeProvider>,
     );
@@ -34,21 +69,37 @@ describe('Card Component', () => {
     expect(cardTitle).toBeVisible();
   });
 
-  test('should navigate to detailed card component on click', async () => {
+  test('dispatches the correct actions on input change', async () => {
+    const dispatchSpy = vi.spyOn(store, 'dispatch');
+
     render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Card card={mockCards[0]} cardId={MOCK_ID} isChecked={false} />
-        </BrowserRouter>
-        ,
+        <ThemeProvider
+          value={{
+            themeType: ThemeType.LIGHT,
+            theme: THEMES[ThemeType.LIGHT],
+            setCurrentTheme: () => {},
+          }}
+        >
+          <Card card={mockCards[0]} pageId={PAGE_ID} cardId={CARD_ID} />
+        </ThemeProvider>
       </Provider>,
     );
 
-    const cardLink = screen.getByRole('link');
-    fireEvent.click(cardLink);
+    const checkbox = screen.getByRole('checkbox');
+    fireEvent.click(checkbox);
 
     await waitFor(() => {
-      expect(window.location.pathname).toBe(`/card/${MOCK_ID}`);
+      expect(dispatchSpy).toHaveBeenCalledTimes(2);
+      expect(dispatchSpy).toHaveBeenCalledWith(
+        favoritesActions.toggleCardToFavorites({
+          cardId: CARD_ID,
+          card: mockCards[0],
+        }),
+      );
+      expect(dispatchSpy).toHaveBeenCalledWith(appActions.showIsToastify());
     });
+
+    dispatchSpy.mockRestore();
   });
 });

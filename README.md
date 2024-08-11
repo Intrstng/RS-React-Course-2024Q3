@@ -1,6 +1,6 @@
 # Rolling Scopes School React Course 2024Q3
 
-## [Redux. Redux Toolkit, RTK Query. Context api.](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/redux.md)
+## [Next.js. Server Side Rendering - using Pages Router](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/nextjs-ssr-ssg.md)
 
 ### How to start
 
@@ -10,7 +10,7 @@
 
 3. Install dependencies - run command in CLI `npm install`
 
-4. Switch to the branch **app-state-management** - run in CLI `git checkout app-state-management`
+4. Switch to the branch **nextjs-ssr-app-router-api** - run in CLI `git checkout nextjs-ssr-app-router-api`
 
 5. Start the application - run command in CLI `npm run dev`
 

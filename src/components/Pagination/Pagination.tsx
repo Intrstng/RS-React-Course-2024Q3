@@ -1,31 +1,37 @@
-import React from 'react';
-import S from './Pagination.module.css';
+'use client';
+import React, { FC } from 'react';
+import S from '../../styles/Pagination.module.css';
 import { Button } from '../Button';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { currentPageSelector } from '../../redux/selectors/appSelectors';
-import { appActions } from '../../redux/slices/appSlice';
-import { domainCardsSelector } from '../../redux/selectors/domainCardsSelectors';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 
-export const Pagination = () => {
-  const navigate = useNavigate();
-  const currentPage = useAppSelector(currentPageSelector);
-  const dispatch = useAppDispatch();
-  const domainCards = useAppSelector(domainCardsSelector);
-  const pagesCount = Math.ceil(domainCards?.count / 10);
+type PaginationProps = {
+  cardsCount: number;
+};
+
+export const Pagination: FC<PaginationProps> = ({ cardsCount }) => {
+  const pagesCount = Math.ceil(cardsCount / 10);
+  const router = useRouter();
+  const params = useParams();
+  const querySearch = useSearchParams();
+  const currentPage = Number(params.id);
+
+  const prevHref = querySearch
+    ? `/page/${currentPage - 1}?${querySearch}`
+    : `/page/${currentPage - 1}`;
+
+  const nextHref = querySearch
+    ? `/page/${currentPage + 1}?${querySearch}`
+    : `/page/${currentPage + 1}`;
 
   const onClickPrevPageHandler = () => {
     if (currentPage > 1) {
-      dispatch(appActions.setAppCurrentPage({ currentPage: currentPage - 1 }));
-      navigate(`/page/${currentPage - 1}`);
+      router.push(prevHref);
     }
   };
 
   const onClickNextPageHandler = () => {
-    dispatch(appActions.setAppCurrentPage({ currentPage: currentPage + 1 }));
-    navigate(`/page/${currentPage + 1}`);
+    router.push(nextHref);
   };
-
   return (
     <div className={S.paginationBlock}>
       <Button

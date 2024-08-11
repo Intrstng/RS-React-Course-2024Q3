@@ -1,16 +1,14 @@
 import React from 'react';
 import errorNotFound from '../../assets/error_404.png';
-import S from './Error404.module.css';
-import { useNavigate, useRouteError } from 'react-router-dom';
+import S from '../../styles/Error404.module.css';
+import { useRouter } from 'next/router';
 import { Button } from '../Button';
 
 export const Error404 = () => {
-  const navigate = useNavigate();
-  const error = useRouteError();
-  console.error(error);
+  const router = useRouter();
 
   const onClickRedirectHomeHandler = () => {
-    navigate('/');
+    router.push('/');
   };
 
   return (

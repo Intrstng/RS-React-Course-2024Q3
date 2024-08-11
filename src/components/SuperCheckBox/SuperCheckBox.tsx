@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FC, ReactNode } from 'react';
-import S from './SuperCheckBox.module.css';
+import S from '../../styles/SuperCheckBox.module.css';
 
 export const SuperCheckBox: FC<SuperCheckBoxProps> = ({
   isChecked,
@@ -14,8 +14,9 @@ export const SuperCheckBox: FC<SuperCheckBoxProps> = ({
     <div className={S.checkbox}>
       <label className={S.formControl}>
         <input
-          type="checkbox"
-          name="checkbox"
+          className={S.inputCheckbox}
+          type={'checkbox'}
+          name={'checkbox'}
           checked={isChecked}
           onChange={onChangeInputHandler}
         />

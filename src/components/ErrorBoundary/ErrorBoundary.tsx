@@ -1,9 +1,11 @@
+'use client';
+
 import React, { Component, ErrorInfo } from 'react';
 import {
   ErrorBoundaryProps,
   ErrorBoundaryState,
 } from '../../shared/types/types';
-import S from './ErrorBoundary.module.css';
+import S from '../../styles/ErrorBoundary.module.css';
 import errorImg from '../../assets/error-page.jpg';
 import { Button } from '../Button';
 
@@ -48,8 +50,8 @@ export class ErrorBoundary extends Component<
     if (this.state.hasError) {
       return (
         <div className={S.errorContainer}>
-          <img src={errorImg} alt={'error'} className={S.errorImg} />
-          <h1 className={S.error}>{this.state.errorMessage}</h1>
+          <img src={errorImg.src} alt={'error'} className={S.errorImg} />
+          <h2 className={S.error}>{this.state.errorMessage}</h2>
           <Button
             className={S.refreshButton}
             onClickCallBack={this.handleRefresh}

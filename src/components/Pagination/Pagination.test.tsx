@@ -1,96 +1,103 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, test, vi } from 'vitest';
 import { Pagination } from './Pagination';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import { appReducer, cardsReducer } from '../../redux/slices';
-import { mockCards } from '../../test/mockData';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { describe, expect, test, vi } from 'vitest';
 
-const mockNavigate = vi.fn();
-vi.mock('react-router-dom', () => ({
-  ...vi.importActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
+const PAGE_ID = 2;
+const QUERY_PARAMETER = 'testQuery';
+
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
+  usePathname: vi.fn(),
+  useParams: vi.fn(),
+  useSearchParams: vi.fn(),
 }));
 
-let START_PAGE: number;
+(useRouter as vi.Mock).mockReturnValue({
+  push: vi.fn(),
+});
 
-describe('Pagination', () => {
-  afterEach(() => {
-    vi.clearAllMocks();
+(useParams as vi.Mock).mockReturnValue({
+  id: PAGE_ID,
+});
+
+(useSearchParams as vi.Mock).mockReturnValue({
+  get: vi.fn().mockReturnValue('searchValue'),
+});
+
+describe('Pagination Component', () => {
+  test('renders the Pagination component with correct page number', () => {
+    render(<Pagination cardsCount={20} />);
+    expect(screen.getByText(PAGE_ID)).toBeInTheDocument();
   });
 
-  test('should render and handle Next page pagination correctly', () => {
-    START_PAGE = 1;
-    const initialState = {
-      app: {
-        currentPage: START_PAGE,
-      },
-      cards: {
-        domainCards: mockCards,
-      },
-    };
-
-    const store = configureStore({
-      reducer: {
-        app: appReducer,
-        cards: cardsReducer,
-      },
-      preloadedState: initialState,
+  test('disables the Prev button on the first page', () => {
+    (useParams as vi.Mock).mockReturnValue({
+      id: '1',
     });
-
-    render(
-      <Provider store={store}>
-        <Pagination />
-      </Provider>,
-    );
-
+    render(<Pagination cardsCount={20} />);
     const prevButton = screen.getByText('Prev');
-    const nextButton = screen.getByText('Next');
-
     expect(prevButton).toBeDisabled();
-    expect(nextButton).not.toBeDisabled();
-
-    fireEvent.click(nextButton);
-
-    const updatedState = store.getState();
-    expect(updatedState.app.currentPage).toBe(START_PAGE + 1);
   });
 
-  test('should render and handle Prev page pagination correctly', () => {
-    START_PAGE = 2;
-    const initialState = {
-      app: {
-        currentPage: START_PAGE,
-      },
-      cards: {
-        domainCards: mockCards,
-      },
-    };
+  test('disables the Next button on the last page', () => {
+    render(<Pagination cardsCount={10} />);
+    const nextButton = screen.getByText('Next');
+    expect(nextButton).toBeDisabled();
+  });
 
-    const store = configureStore({
-      reducer: {
-        app: appReducer,
-        cards: cardsReducer,
-      },
-      preloadedState: initialState,
+  test('should render correctly and navigate to the next and previous pages', () => {
+    const mockPush = vi.fn();
+
+    (useRouter as vi.Mock).mockReturnValue({
+      push: mockPush,
     });
 
-    render(
-      <Provider store={store}>
-        <Pagination />
-      </Provider>,
+    (useParams as vi.Mock).mockReturnValue({ id: PAGE_ID });
+
+    (useSearchParams as vi.Mock).mockReturnValue(
+      new URLSearchParams(`search=${QUERY_PARAMETER}`),
     );
 
-    const prevButton = screen.getByText('Prev');
-    const nextButton = screen.getByText('Next');
+    render(<Pagination cardsCount={30} />);
 
-    expect(prevButton).not.toBeDisabled();
-    expect(nextButton).not.toBeDisabled();
+    expect(screen.getByText(PAGE_ID)).toBeInTheDocument();
 
-    fireEvent.click(prevButton);
+    fireEvent.click(screen.getByText('Next'));
 
-    const updatedState = store.getState();
-    expect(updatedState.app.currentPage).toBe(START_PAGE - 1);
+    expect(mockPush).toHaveBeenCalledWith(
+      `/page/${PAGE_ID + 1}?search=${QUERY_PARAMETER}`,
+    );
+
+    fireEvent.click(screen.getByText('Prev'));
+
+    expect(mockPush).toHaveBeenCalledWith(
+      `/page/${PAGE_ID - 1}?search=${QUERY_PARAMETER}`,
+    );
+  });
+
+  test('should disable the Prev button on the first page', () => {
+    (useParams as vi.Mock).mockReturnValue({ id: '1' });
+
+    (useSearchParams as vi.Mock).mockReturnValue(
+      new URLSearchParams(`search=${QUERY_PARAMETER}`),
+    );
+
+    render(<Pagination cardsCount={30} />);
+
+    expect(screen.getByText('Prev')).toBeDisabled();
+  });
+
+  test('should disable the Next button on the last page', () => {
+    (useParams as vi.Mock).mockReturnValue({ id: '3' });
+
+    (useSearchParams as vi.Mock).mockReturnValue(
+      new URLSearchParams(`search=${QUERY_PARAMETER}`),
+    );
+
+    render(<Pagination cardsCount={30} />);
+
+    expect(screen.getByText('Next')).toBeDisabled();
   });
 });
