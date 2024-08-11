@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { favoritesActions, favoritesReducer } from '../favoritesSlice';
-import { VehicleDetailsDomain } from '../../../shared/types/types';
-import { mockCards } from '../../../test/mockData';
+import { favoritesActions, favoritesReducer } from '../../favoritesSlice';
+import { VehicleDetailsDomain } from '../../../../../shared/types/types';
+import { mockCards } from '../../../../../mocks/mockData';
 
 describe('favoritesSlice', () => {
   const initialState = {

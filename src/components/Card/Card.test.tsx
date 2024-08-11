@@ -4,16 +4,16 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { Card } from './Card';
-import { mockCards } from '../../test/mockData';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { ThemeProvider } from '../../contexts/Theme/Theme.context';
 import { THEMES } from '../../contexts/Theme/Theme.config';
-import { appActions, appReducer } from '../../redux/slices/appSlice';
+import { appActions, appReducer } from '../../lib/features/app/appSlice';
 import {
   favoritesActions,
   favoritesReducer,
-} from '../../redux/slices/favoritesSlice';
+} from '../../lib/features/favorites/favoritesSlice';
 import { useParams, useSearchParams } from 'next/navigation';
+import { mockCards } from '../../mocks/mockData';
 
 const PAGE_ID = 1;
 const CARD_ID = '4';

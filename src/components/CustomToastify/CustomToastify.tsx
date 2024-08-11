@@ -1,15 +1,15 @@
 'use client';
 import React, { useContext } from 'react';
 import S from '../../styles/CustomToastify.module.css';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../lib/store';
 import { Button } from '../Button';
-import { favoritesActions } from '../../redux/slices/favoritesSlice';
+import { favoritesActions } from '../../lib/features/favorites/favoritesSlice';
 import { ThemeContext } from '../../contexts/Theme/Theme.context';
-import { isToastifyOpenSelector } from '../../redux/selectors/appSelectors';
-import { appActions } from '../../redux/slices/appSlice';
+import { isToastifyOpenSelector } from '../../lib/features/app/selectors/appSelectors';
+import { appActions } from '../../lib/features/app/appSlice';
 import { DownloadCSV } from '../DownloadCSV/DownloadCSV';
 import { refineFavoritesItemsStructureToCSV } from '../../shared/uitils/refineFavoritesItemsStructureToCSV';
-import { favoriteCardsSelector } from '../../redux/selectors/favoritesSelectors';
+import { favoriteCardsSelector } from '../../lib/features/favorites/selectors/favoritesSelectors';
 import { VehicleDetailsDomain } from '../../shared/types/types';
 
 export const CustomToastify = () => {

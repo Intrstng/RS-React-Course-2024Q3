@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
 import { useRouter } from 'next/navigation';
 import { DetailedCard } from './DetailedCard';
-import { mockDetailedVehicle } from '../../test/mockData';
+import { mockDetailedVehicle } from '../../mocks/mockData';
 
 const PAGE_ID = '1';
 const CARD_ID = '4';

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { VehicleDetailsDomain } from '../../shared/types/types';
+import { VehicleDetailsDomain } from '../../../shared/types/types';
 
 const favoritesSlice = createSlice({
   name: 'favorites',

@@ -8,10 +8,10 @@ import '@testing-library/jest-dom';
 import { THEMES } from '../../contexts/Theme/Theme.config';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { describe, expect, test, vi } from 'vitest';
-import { mockCards } from '../../test/mockData';
 import { VehicleDetailsDomain } from '../../shared/types/types';
-import { appReducer } from '../../redux/slices/appSlice';
-import { favoritesReducer } from '../../redux/slices/favoritesSlice';
+import { appReducer } from '../../lib/features/app/appSlice';
+import { favoritesReducer } from '../../lib/features/favorites/favoritesSlice';
+import { mockCards } from '../../mocks/mockData';
 
 URL['createObjectURL'] = vi.fn();
 

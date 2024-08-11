@@ -3,10 +3,10 @@ import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import CardList from '../page/[id]/page';
-import * as cardService from '../../../src/services/getCards';
-import { setupStore } from '../../redux/store';
+import * as cardService from '../../shared/services/getCards';
+import { setupStore } from '../../lib/store';
 import { useParams, useSearchParams } from 'next/navigation';
-import { mockCardsInit } from '../../test/mockData';
+import { mockCardsInit } from '../../mocks/mockData';
 
 const PAGE_ID = '1';
 const QUERY_PARAMETER = 'test';

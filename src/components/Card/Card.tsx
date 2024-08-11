@@ -3,12 +3,12 @@ import React, { FC } from 'react';
 import { CardProps } from '../../shared/types/types';
 import S from '../../styles/Card.module.css';
 import { SuperCheckBox } from '../SuperCheckBox/SuperCheckBox';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { favoritesActions } from '../../redux/slices/favoritesSlice';
-import { appActions } from '../../redux/slices/appSlice';
+import { useAppDispatch, useAppSelector } from '../../lib/store';
+import { favoritesActions } from '../../lib/features/favorites/favoritesSlice';
+import { appActions } from '../../lib/features/app/appSlice';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { favoriteCardsSelector } from '../../redux/selectors/favoritesSelectors';
+import { favoriteCardsSelector } from '../../lib/features/favorites/selectors/favoritesSelectors';
 
 export const Card: FC<CardProps> = ({ card, pageId, cardId }) => {
   const { name } = card;

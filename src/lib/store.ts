@@ -5,8 +5,8 @@ import {
   useSelector,
   useStore,
 } from 'react-redux';
-import { appReducer } from './slices/appSlice';
-import { favoritesReducer } from './slices/favoritesSlice';
+import { appReducer } from './features/app/appSlice';
+import { favoritesReducer } from './features/favorites/favoritesSlice';
 
 export const setupStore = () => {
   return configureStore({

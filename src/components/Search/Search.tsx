@@ -10,7 +10,7 @@ import S from '../../styles/Search.module.css';
 import { Button } from '../Button';
 import { SearchField } from '../SearchField/SearchField';
 import { ButtonType } from '../../shared/types/types';
-import { LOCAL_STORAGE_SEARCH_KEY } from '../../redux/slices/appSlice';
+import { LOCAL_STORAGE_SEARCH_KEY } from '../../lib/features/app/appSlice';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export const getInitValueFromLS = (key: string) => {
@@ -29,7 +29,7 @@ export const Search = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search');
-  console.log('!searchQuery', !searchQuery);
+
   useEffect(() => {
     !searchQuery && text.length > 0 && router.push(`/page/1?search=${text}`);
     searchQuery ? setText(searchQuery) : setText(text);

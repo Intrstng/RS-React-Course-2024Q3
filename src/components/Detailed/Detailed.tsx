@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCardDetails } from '../../services/getCards';
+import { getCardDetails } from '../../shared/services/getCards';
 import { DetailedCard } from '../DetailedCard/DetailedCard';
 
 type Params = {

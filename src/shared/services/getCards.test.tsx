@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from 'vitest';
-import { VehicleDetails, VehiclesResponse } from '../shared/types/types';
+import { VehicleDetails, VehiclesResponse } from '../types/types';
 import { getCardDetails, getCards } from './getCards';
-import { mockCards } from '../test/mockData';
+import { mockCards } from '../../mocks/mockData';
 
 describe('API functions', () => {
   describe('getCards', () => {

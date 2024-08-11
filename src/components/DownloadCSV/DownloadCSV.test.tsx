@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
-import { mockFavoritesCarsForCSV } from '../../test/mockData';
 import { DownloadCSV } from './DownloadCSV';
 import '@testing-library/jest-dom';
+import { mockFavoritesCarsForCSV } from '../../mocks/mockData';
 
 URL['createObjectURL'] = vi.fn();
 

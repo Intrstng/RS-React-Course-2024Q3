@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import S from '../../../styles/CardList.module.css';
 import { Card } from '../../../components/Card/Card';
 import { CustomToastify } from '../../../components/CustomToastify/CustomToastify';
-import { getCards } from '../../../services/getCards';
+import { getCards } from '../../../shared/services/getCards';
 import { Loader } from '../../../components/Loader/Loader';
 import Detailed from '../../../components/Detailed/Detailed';
 import { Pagination } from '../../../components/Pagination/Pagination';

@@ -2,7 +2,7 @@ import {
   DetailedVehicle,
   VehicleDetails,
   VehiclesResponse,
-} from '../shared/types/types';
+} from '../types/types';
 
 type GetCardsParams = {
   search?: string;

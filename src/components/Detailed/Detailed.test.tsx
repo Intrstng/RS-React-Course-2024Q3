@@ -1,14 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import Detailed from './Detailed';
-import { getCardDetails } from '../../services/getCards';
+import { getCardDetails } from '../../shared/services/getCards';
 import { useRouter } from 'next/navigation';
-import { mockCards } from '../../test/mockData';
+import { mockCards } from '../../mocks/mockData';
 
 const PAGE_ID = '1';
 const CARD_ID = '4';
 
-vi.mock('../../services/getCards', () => ({
+vi.mock('../../shared/services/getCards', () => ({
   getCardDetails: vi.fn(),
 }));
 
