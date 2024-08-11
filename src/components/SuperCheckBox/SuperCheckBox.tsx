@@ -12,7 +12,7 @@ export const SuperCheckBox: FC<SuperCheckBoxProps> = ({
 
   return (
     <div className={S.checkbox}>
-      <label className={S.formControl}>
+      <label className={S.formControl} >
         <input
           className={S.inputCheckbox}
           type={'checkbox'}

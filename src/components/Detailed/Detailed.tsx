@@ -10,7 +10,7 @@ type Params = {
     id: string;
   };
   searchParams: {
-    card: string;
+    [key: string]: string | undefined
   };
 };
 
@@ -19,6 +19,7 @@ type Params = {
 // }
 
 const Detailed = async ({ params, searchParams }: Params) => {
+
   const response = await getCardDetails(searchParams.card);
   return <DetailedCard detailsData={response} params={params} searchParams={searchParams}/>;
 }

@@ -15,27 +15,19 @@ export const getInitValueFromLS = (key: string) => {
 
 export const Search = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-
   const [text, setText] = useState<string>(
     getInitValueFromLS(LOCAL_STORAGE_SEARCH_KEY),
   );
-
-
   const [appError, setAppError] = useState<string | null>(null);
-
   const router = useRouter();
-
 
   const onClickFetchVehiclesHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const trimmedText = text.trim();
     setText(trimmedText);
-
     let href = `/page/1?search=${trimmedText}`
     router.push(href);
   };
-
 
   const onChangeSetInputValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value);
@@ -48,7 +40,6 @@ export const Search = () => {
   };
 
   const onClickSetError = () => {
-
     setAppError("An error occurred when user clicked the 'Throw error on click' button")
   };
 
@@ -67,11 +58,9 @@ export const Search = () => {
           onChangeHandler={onChangeSetInputValueHandler}
           color={'primary'}
         />
-
         <div className={S.searchControls}>
           <Button
             type={ButtonType.SUBMIT}
-            // disabled={isFetching}
             color={'search'}
           >
             Search

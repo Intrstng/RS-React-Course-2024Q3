@@ -8,10 +8,10 @@ import '@testing-library/jest-dom';
 import { THEMES } from '../../contexts/Theme/Theme.config';
 import { ThemeType } from '../../contexts/Theme/Theme.model';
 import { describe, expect, test, vi } from 'vitest';
+import { mockCards, mockFavoritesCars } from '../../test/mockData';
+import { VehicleDetailsDomain } from '../../shared/types/types';
 import { appReducer } from '../../redux/slices/appSlice';
 import { favoritesReducer } from '../../redux/slices/favoritesSlice';
-import { mockCards, mockFavoritesCars } from '../../test/mockData';
-import { cardsApi } from '../../redux/api/cardsApi';
 
 URL['createObjectURL'] = vi.fn();
 
@@ -25,13 +25,10 @@ describe('CustomToastify Component', () => {
   test.skip('should toggle isToastifyOpen when Show/Hide is clicked', () => {
     const initialState = {
       app: {
-        isLoading: false,
-        error: null,
-        currentPage: 1,
         isToastifyOpen: false,
       },
       favorites: {
-        favorites: mockFavoritesCars,
+        favoriteCards: [] as VehicleDetailsDomain[],
       },
     };
 
@@ -73,36 +70,18 @@ describe('CustomToastify Component', () => {
   test.skip('should change item selected alert text in CustomToastify', () => {
     const initialState = {
       app: {
-        isLoading: false,
-        error: null,
-        currentPage: 1,
         isToastifyOpen: false,
       },
-      cards: {
-        domainCards: mockCards,
-      },
       favorites: {
-        favorites: { 19: mockFavoritesCars[19] },
-      },
-      [cardsApi.reducerPath]: {
-        queries: {},
-        mutations: {},
-        provided: {},
-        subscriptions: {},
-        config: {},
+        favoriteCards: mockCards,
       },
     };
 
     const store = configureStore({
       reducer: {
         app: appReducer,
-        cards: cardsReducer,
         favorites: favoritesReducer,
-        [cardsApi.reducerPath]: cardsApi.reducer,
       },
-      middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(cardsApi.middleware),
-      preloadedState: initialState,
     });
 
     render(

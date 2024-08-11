@@ -14,7 +14,8 @@ export const getCards = async ({ search = '', page = 1 }: GetCardsParams): Promi
 };
 
 
-export const getCardDetails = async (id: string): Promise<DetailedVehicle> => {
+export const getCardDetails = async (id?: string): Promise<DetailedVehicle> => {
+  if (!id) return;
   const response = await fetch(
       `https://swapi.dev/api/vehicles/${id}/`,
       { headers: { 'Content-type': 'application/json' } }

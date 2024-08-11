@@ -6,7 +6,9 @@ import '@testing-library/jest-dom';
 import { mockCards, mockFavoritesCars } from '../../test/mockData';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { appReducer, cardsReducer, favoritesReducer } from '../../redux/slices';
+import { appReducer } from '../../redux/slices/appSlice';
+import { favoritesReducer } from '../../redux/slices/favoritesSlice';
+
 
 URL['createObjectURL'] = vi.fn();
 
@@ -27,7 +29,6 @@ describe('CardList Component', () => {
     const store = configureStore({
       reducer: {
         app: appReducer,
-        cards: cardsReducer,
         favorites: favoritesReducer,
       },
       preloadedState: initialState,
@@ -54,9 +55,6 @@ describe('CardList Component', () => {
       app: {
         isToastifyOpen: true,
       },
-      cards: {
-        domainCards: mockCards,
-      },
       favorites: {
         favorites: mockFavoritesCars,
       },
@@ -65,7 +63,6 @@ describe('CardList Component', () => {
     const store = configureStore({
       reducer: {
         app: appReducer,
-        cards: cardsReducer,
         favorites: favoritesReducer,
       },
       preloadedState: initialState,

@@ -1,76 +1,130 @@
-import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { beforeEach, describe, expect, test, vi } from 'vitest';
-import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import { Search } from './Search';
-import { appReducer } from '../../redux/slices/appSlice';
-import { favoritesReducer } from '../../redux/slices/favoritesSlice';
-import { useRouter } from 'next/router';
+// import React from 'react';
+// import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+// import { beforeEach, describe, expect, test, vi } from 'vitest';
+// import userEvent from '@testing-library/user-event';
+// import { Provider } from 'react-redux';
+// import { configureStore } from '@reduxjs/toolkit';
+// import { Search } from './Search';
+// import { appReducer } from '../../redux/slices/appSlice';
+// import { favoritesReducer } from '../../redux/slices/favoritesSlice';
+// import { useRouter } from 'next/router';
+//
+// // Mock next/router
+// vi.mock('next/router', () => ({
+//   useRouter: vi.fn(),
+// }));
+//
+// (useRouter as vi.Mock).mockReturnValue({
+//   push: vi.fn(),
+// });
+//
+// describe('Search Component', () => {
+//   test('renders the Search component', () => {
+//     render(<Search />);
+//     expect(screen.getByPlaceholderText('search')).toBeInTheDocument();
+//   });
+//
+//   test('updates the input value on change', () => {
+//     render(<Search />);
+//     const input = screen.getByPlaceholderText('search');
+//     fireEvent.change(input, { target: { value: 'test search' } });
+//     expect(input).toHaveValue('test search');
+//   });
+//
+//   test('navigates to the correct URL on form submit', () => {
+//     render(<Search />);
+//     const input = screen.getByPlaceholderText('search');
+//     fireEvent.change(input, { target: { value: 'test search' } });
+//     fireEvent.submit(screen.getByRole('form'));
+//     expect(useRouter().push).toHaveBeenCalledWith('/page/1?search=test%20search');
+//   });
+//
+//   test('throws an error when the "Throw error on click" button is clicked', () => {
+//     render(<Search />);
+//     const errorButton = screen.getByText('Throw error on click');
+//     expect(() => fireEvent.click(errorButton)).toThrow(
+//         "An error occurred when user clicked the 'Throw error on click' button",
+//     );
+//   });
+// });
 
-vi.mock('next/router', () => ({
+
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { beforeEach, describe, test, expect, vi } from 'vitest';
+import { Search } from './Search';
+import { useRouter } from 'next/navigation';
+
+
+vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
 }));
 
-const initialState = {
-  app: {
-    isLoading: false,
-    error: null,
-    currentPage: 1,
-    isToastifyOpen: true,
-  },
-  favorites: {
-    favorites: [],
-  },
-};
+const localStorageMock = (() => {
+  let store = {};
+  return {
+    getItem: (key) => store[key] || null,
+    setItem: (key, value) => {
+      store[key] = value.toString();
+    },
+    removeItem: (key) => {
+      delete store[key];
+    },
+    clear: () => {
+      store = {};
+    },
+  };
+})();
 
-const store = configureStore({
-  reducer: {
-    app: appReducer,
-    favorites: favoritesReducer,
-  },
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
 });
 
-const renderWithProviders = (component: React.ReactElement) => {
-  return render(<Provider store={store}>{component}</Provider>);
-};
+describe('Search', () => {
+  const mockPush = vi.fn();
 
-describe('Search Component', () => {
   beforeEach(() => {
-    (useRouter as vi.Mock).mockReturnValue({
-      query: {},
-      push: vi.fn(),
+    (useRouter as any).mockReturnValue({
+      push: mockPush,
     });
+
+    mockPush.mockClear();
+    localStorage.clear();
   });
 
-  test.skip('renders the search input and buttons', () => {
-    renderWithProviders(<Search />);
+  test('renders the Search component', () => {
+    render(<Search />);
     expect(screen.getByPlaceholderText('search')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: 'Throw error on click' }),
-    ).toBeInTheDocument();
+    expect(screen.getByText('Search')).toBeInTheDocument();
+    expect(screen.getByText('Throw error on click')).toBeInTheDocument();
   });
 
-  test.skip('updates the search input value', async () => {
-    renderWithProviders(<Search />);
-    const input = screen.getByPlaceholderText('search');
-    await userEvent.type(input, 'test search');
-    expect(input).toHaveValue('test search');
+  // it.skip('handles input change and updates localStorage', () => {
+  //   render(<Search />);
+  //   const input = screen.getByPlaceholderText('search') as HTMLInputElement;
+  //
+  //   fireEvent.change(input, { target: { value: 'test search' } });
+  //
+  //   expect(input.value).toBe('test search');
+  //   expect(localStorage.getItem('LOCAL_STORAGE_SEARCH_KEY')).toBe(JSON.stringify('test search'));
+  // });
+
+  test('navigates to the correct URL on form submit', () => {
+    render(<Search />);
+    const input = screen.getByPlaceholderText('search') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: 'test search' } });
+    fireEvent.submit(screen.getByText(/Search/i));
+
+    expect(mockPush).toHaveBeenCalledWith('/page/1?search=test search');
   });
 
-  test.skip('throws an error when the "Throw error on click" button is clicked', async () => {
-    renderWithProviders(<Search />);
-    const errorButton = screen.getByRole('button', {
-      name: 'Throw error on click',
-    });
+  test('throws an error when the error button is clicked', () => {
+    render(<Search />);
+    const errorButton = screen.getByText('Throw error on click');
 
-    await expect(async () => {
+    expect(() => {
       fireEvent.click(errorButton);
-      await waitFor(() => {
-        expect(screen.getByText(/An error occurred/i)).toBeInTheDocument();
-      });
-    }).rejects.toThrow();
+    }).toThrow('An error occurred when user clicked the \'Throw error on click\' button');
   });
 });
