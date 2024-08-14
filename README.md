@@ -1,39 +1,50 @@
-# Rolling Scopes School React Course 2024Q3
+# React + TypeScript + Vite
 
-## [Next.js. Server Side Rendering - using Pages Router](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/nextjs-ssr-ssg.md)
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-### How to start
+Currently, two official plugins are available:
 
-1. Clone the repo - run command in CLI `git clone https://github.com/Intrstng/RS-React-Course-2024Q3.git`
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-2. Move to the root folder of the app - run command in CLI `cd RS-React-Course-2024Q3`
+## Expanding the ESLint configuration
 
-3. Install dependencies - run command in CLI `npm install`
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-4. Switch to the branch **nextjs-ssr-pages-api** - run in CLI `git checkout nextjs-ssr-pages-api`
+- Configure the top-level `parserOptions` property like this:
 
-5. Start the application - run command in CLI `npm run dev`
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-6. Start the application in browser by provided link in CLI
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-## Script commands
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-1. Start **esLint** to run code analysis and verification for compliance with established rules - run command in CLI `npm run lint`
-
-2. Start **Prettier** to automatically format code - run command in CLI `npm run format:fix`
-
-3. **Husky** is configured to automatically start **esLint** and **Prettier** during `pre-commit` Git-operations
-
-4. **Husky** is configured to automatically run tests on the pre-push hook, ensuring that tests are automatically executed before any code is pushed.
-
-5. To start **testing** - run command in CLI `npm run test`
-
-6. To start **testing with coverage report** - run command in CLI `npm run test:coverage`
-
-7. To check how is data saved to Local Storage on unmount of the Search component, please click on the **Throw error on click** button to unmount Search component and control console in DevTools in your browser.
-
-8. Downloaded CSV you can preview in online CSV viewers:
-
-   [www.convertcsv.com](https://www.convertcsv.com/csv-viewer-editor.htm)
-
-   [csv-viewer-online.github.io](https://csv-viewer-online.github.io/)
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
