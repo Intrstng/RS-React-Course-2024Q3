@@ -40,7 +40,7 @@
   },
   "lint-staged": {
     "**/*.{js,mjs,cjs,ts,jsx,tsx}": [
-      "npx prettier --write",
+      "npx prettier --write --ignore-unknown",
       "eslint --fix"
     ]
   }
