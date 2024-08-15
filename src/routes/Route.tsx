@@ -4,6 +4,7 @@ import { Error404 } from '../components/Error404/Error404';
 import { Uncontrolled } from '../components/Uncontrolled/Uncontrolled';
 import { Controlled } from '../components/Controlled/Controlled';
 import { PATH } from '../shared/consts/consts';
+import { Form } from '../components/Form/Form';
 
 export const router = createBrowserRouter([
   {
@@ -13,7 +14,8 @@ export const router = createBrowserRouter([
     children: [
       {
         path: PATH.UNCONTROLLED,
-        element: <Uncontrolled />
+        // element: <Uncontrolled />
+        element: <Form />
       },
       {
         path: PATH.CONTROLLED,

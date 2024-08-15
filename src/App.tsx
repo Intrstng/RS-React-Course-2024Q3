@@ -11,8 +11,8 @@ function App() {
   return (
     <>
       <nav>
-        <NavLink to={PATH.CONTROLLED}>Controlled</NavLink>
         <NavLink to={PATH.UNCONTROLLED}>Uncontrolled</NavLink>
+        <NavLink to={PATH.CONTROLLED}>Controlled</NavLink>
       </nav>
       <main>
         <Outlet />
