@@ -145,16 +145,13 @@ export const UncontrolledForm = () => {
         </div>
         <div className={S.formGroup}>
           <label htmlFor="image">Upload Picture</label>
-          <label className={S.fileUpload}>
-            Choose File
-            <input
-              type="file"
-              id="image"
-              name="image"
-              ref={imageRef}
-              className={S.hidden}
-            />
-          </label>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            ref={imageRef}
+            className={S.uploadFile}
+          />
         </div>
         <UncontrolledSearchBar errors={errors?.country} countries={countries} />
         <button type="submit" className={S.submitButton}>

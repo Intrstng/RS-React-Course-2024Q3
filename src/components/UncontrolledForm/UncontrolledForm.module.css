@@ -101,8 +101,9 @@
   background-color: rgba(5, 52, 163, 0.9);
 }
 
-.hidden {
-  display: none;
+.uploadFile {
+  margin-top: 0.5rem;
+  cursor: pointer;
 }
 
 .formSelect {
