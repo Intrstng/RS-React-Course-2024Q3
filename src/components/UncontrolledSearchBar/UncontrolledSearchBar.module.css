@@ -1,0 +1,57 @@
+.searchBarGroup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.searchBarInput {
+  width: 95%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  color: rgba(26, 26, 26, 0.6);
+}
+
+.searchBarGroup label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  opacity: 0.5;
+}
+
+.listItems {
+  position: absolute;
+  top: 3.5rem;
+  width: 100%;
+  text-align: left;
+  max-height: 11rem;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-color: rgba(255, 255, 255);
+  border: 1px solid rgba(130, 129, 129, 0.5);
+  z-index: 2;
+}
+
+.listItem {
+  width: 100%;
+  list-style-type: none;
+  padding: 0.6rem;
+  cursor: pointer;
+    transition: 0.25s all ease;
+}
+
+.listItem:hover {
+  background-color: #a7a7a7;
+  color: #ffffff;
+}
+
+.error {
+  color: red;
+}

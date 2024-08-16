@@ -1,10 +1,11 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from '../App';
 import { Error404 } from '../components/Error404/Error404';
-import { Uncontrolled } from '../components/Uncontrolled/Uncontrolled';
 import { Controlled } from '../components/Controlled/Controlled';
-import { PATH } from '../shared/consts/consts';
 import { Form } from '../components/Form/Form';
+import { PATH } from '../shared/consts';
+import { UncontrolledForm } from '../components/UncontrolledForm/UncontrolledForm';
+import { MainPage } from '../components/MainPage/MainPage';
 
 export const router = createBrowserRouter([
   {
@@ -13,9 +14,13 @@ export const router = createBrowserRouter([
     errorElement: <Navigate to={PATH.PAGE_ERROR} />,
     children: [
       {
+        index: true,
+        element: <MainPage />
+      },
+      {
         path: PATH.UNCONTROLLED,
-        // element: <Uncontrolled />
-        element: <Form />
+        element: <UncontrolledForm />
+        // element: <Form />
       },
       {
         path: PATH.CONTROLLED,

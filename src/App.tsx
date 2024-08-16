@@ -1,13 +1,8 @@
 import './App.css';
-import { PATH } from './shared/consts/consts';
 import { NavLink, Outlet } from 'react-router-dom';
+import { PATH } from './shared/consts';
 
 function App() {
-  const sum = (a: number, b: number): void => {
-    console.log(a + b);
-  };
-  sum(2, 2);
-
   return (
     <>
       <nav>

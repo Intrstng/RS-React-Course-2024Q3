@@ -5,7 +5,7 @@ export const PATH = {
   PAGE_ERROR: '/error'
 } as const;
 
-const countries: string[] = [
+export const countries: string[] = [
   'Afghanistan',
   'Albania',
   'Algeria',
