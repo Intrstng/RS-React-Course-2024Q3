@@ -22,7 +22,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  position: relative;
 }
 
 .formGroup label {

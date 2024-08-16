@@ -1,26 +1,28 @@
-import React, { FormEvent, FormEventHandler, useRef, useState } from 'react';
+import React, { FormEvent, useRef, useState } from 'react';
 import S from './UncontrolledForm.module.css';
 import { useAppDispatch, useAppSelector } from '../../shared/hooks/hooks';
 import { countrySelector } from '../../redux/selectors/formSelectors';
 import { UncontrolledSearchBar } from '../UncontrolledSearchBar/UncontrolledSearchBar';
 import { userSchema } from '../../validations/userValidation';
-import * as yup from 'yup';
-import { NavLink, useNavigate } from 'react-router-dom';
 import { ValidationError } from 'yup';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { formActions } from '../../redux/slices/formSlice';
-import { PasswordBar } from '../PasswordBar/PasswordBar';
+import { PasswordStrengthMeter } from '../PasswordStrengthMeter/PasswordStrengthMeter';
 import { PATH } from '../../shared/consts';
+import { CustomError } from '../CustomError/CustomError'
 
-type FormValueError = { [index: string]: ValidationError };
+export type FormValueError = { [index: string]: ValidationError };
 
 export const UncontrolledForm = () => {
   const countries = useAppSelector<string[]>(countrySelector);
   const dispatch = useAppDispatch();
   const [errors, setErrors] = useState<FormValueError>({});
   const formRef = useRef<HTMLFormElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
   const agreementRef = useRef<HTMLInputElement | null>(null);
   const imageRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
+                                        const [password, setPassword] = useState<string | undefined>('');
 
   const formSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,7 +52,6 @@ export const UncontrolledForm = () => {
 
       if (Object.keys(currentErrors).length === 0 && image) {
         reader.readAsDataURL(image[0]);
-
         reader.onloadend = function () {
           const base64Image = reader.result as string;
           if (base64Image) {
@@ -80,26 +81,31 @@ export const UncontrolledForm = () => {
         <div className={S.formGroup}>
           <label htmlFor="name">Name</label>
           <input type="text" id="name" name="name" className={S.formInput} />
+          {errors?.name && <CustomError error={errors.name}/>}
         </div>
         <div className={S.formGroup}>
           <label htmlFor="age">Age</label>
           <input type="number" id="age" name="age" className={S.formInput} />
+          {errors?.age && <CustomError error={errors.age}/>}
         </div>
         <div className={S.formGroup}>
           <label htmlFor="email">Email</label>
           <input type="email" id="email" name="email" className={S.formInput} />
+          {errors?.email && <CustomError error={errors.email}/>}
         </div>
         <div className={S.formGroup}>
           <label htmlFor="password">Password</label>
           <input
+            ref={passwordRef}
             type="password"
             id="password"
             name="password"
             className={S.formInput}
+                                                            onChange={() => setPassword(passwordRef?.current?.value)}
           />
-          <p>Password strength</p>
+          {errors?.password && <CustomError error={errors.password}/>}
         </div>
-        {/*<PasswordBar/>*/}
+        <PasswordStrengthMeter ref={passwordRef}/>
         <div className={S.formGroup}>
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
@@ -108,6 +114,7 @@ export const UncontrolledForm = () => {
             name="confirmPassword"
             className={S.formInput}
           />
+          {errors?.confirmPassword && <CustomError error={errors.confirmPassword}/>}
         </div>
         <div className={S.formGroup}>
           <label>Gender</label>
@@ -132,6 +139,7 @@ export const UncontrolledForm = () => {
               />
               Female
             </label>
+            {errors?.gender && <CustomError error={errors.gender}/>}
           </div>
         </div>
         <div className={S.formGroup}>
@@ -145,6 +153,7 @@ export const UncontrolledForm = () => {
             />
             I accept the Terms and Conditions
           </label>
+          {errors?.agreement && <CustomError error={errors.agreement}/>}
         </div>
         <div className={S.formGroup}>
           <label htmlFor="image">Upload Picture</label>
@@ -155,8 +164,9 @@ export const UncontrolledForm = () => {
             ref={imageRef}
             className={S.uploadFile}
           />
+          {errors?.image && <CustomError error={errors.image}/>}
         </div>
-        <UncontrolledSearchBar errors={errors?.country} countries={countries} />
+        <UncontrolledSearchBar error={errors?.country} countries={countries} />
         <button type="submit" className={S.submitButton}>
           Submit
         </button>

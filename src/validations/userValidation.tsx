@@ -24,7 +24,7 @@ export const userSchema = yup.object().shape({
     .required('Password is required')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
-      'Password must contain at least one number, one capitalized letter, one lowercased letter, one special character'
+      'Pass must have number, upper/lowercased letter, special character'
     ),
   confirmPassword: yup
     .string()

@@ -1,11 +1,10 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from '../App';
 import { Error404 } from '../components/Error404/Error404';
-import { Controlled } from '../components/Controlled/Controlled';
-import { Form } from '../components/Form/Form';
 import { PATH } from '../shared/consts';
 import { UncontrolledForm } from '../components/UncontrolledForm/UncontrolledForm';
 import { MainPage } from '../components/MainPage/MainPage';
+import { ControlledForm } from '../components/ControlledForm/ControlledForm';
 
 export const router = createBrowserRouter([
   {
@@ -20,11 +19,10 @@ export const router = createBrowserRouter([
       {
         path: PATH.UNCONTROLLED,
         element: <UncontrolledForm />
-        // element: <Form />
       },
       {
         path: PATH.CONTROLLED,
-        element: <Controlled />
+        element: <ControlledForm />
       },
       {
         path: PATH.PAGE_ERROR,

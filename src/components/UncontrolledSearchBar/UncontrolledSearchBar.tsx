@@ -1,27 +1,21 @@
-import React, {
-  ChangeEvent,
-  MouseEvent,
-  forwardRef,
-  useMemo,
-  useState,
-  MouseEventHandler,
-  FC
-} from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 import S from './UncontrolledSearchBar.module.css';
 import { ValidationError } from 'yup';
+import { CustomError } from '../CustomError/CustomError';
 
 interface UncontrolledSearchBarProps {
   countries: string[];
-  errors?: ValidationError | undefined;
+  error?: ValidationError | undefined;
+  resetError?: () => void
 }
 
 export const UncontrolledSearchBar: FC<UncontrolledSearchBarProps> = ({
-  errors,
-  countries
+  error,
+  countries,
+  resetError
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [currentSearch, setCurrentSearch] = useState<string>('');
-  console.log(currentSearch);
 
   const filteredCountries = countries.filter((country) =>
     country.toLocaleLowerCase().startsWith(currentSearch.toLowerCase())
@@ -33,6 +27,7 @@ export const UncontrolledSearchBar: FC<UncontrolledSearchBarProps> = ({
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCurrentSearch(e.target.value);
+    resetError && resetError();
   };
 
   const onClickSelectItem = (e: React.MouseEvent<HTMLLIElement>) => {
@@ -68,7 +63,7 @@ export const UncontrolledSearchBar: FC<UncontrolledSearchBarProps> = ({
           ))}
         </ul>
       )}
-      {/*{errors && <p className={S.error}>{errors}</p>}*/}
+      {error && <CustomError error={error}/>}
     </div>
   );
 };
