@@ -6,8 +6,18 @@ function App() {
   return (
     <>
       <nav>
-        <NavLink to={PATH.UNCONTROLLED}>Uncontrolled</NavLink>
-        <NavLink to={PATH.CONTROLLED}>Controlled</NavLink>
+        <NavLink
+          className={({ isActive }) => (isActive ? 'active' : 'navLink')}
+          to={PATH.UNCONTROLLED}
+        >
+          Uncontrolled
+        </NavLink>
+        <NavLink
+          className={({ isActive }) => (isActive ? 'active' : 'navLink')}
+          to={PATH.CONTROLLED}
+        >
+          Controlled
+        </NavLink>
       </nav>
       <main>
         <Outlet />

@@ -5,9 +5,11 @@ import { countrySelector } from '../../redux/selectors/formSelectors';
 import { UncontrolledSearchBar } from '../UncontrolledSearchBar/UncontrolledSearchBar';
 import { userSchema } from '../../validations/userValidation';
 import * as yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ValidationError } from 'yup';
 import { formActions } from '../../redux/slices/formSlice';
+import { PasswordBar } from '../PasswordBar/PasswordBar';
+import { PATH } from '../../shared/consts';
 
 type FormValueError = { [index: string]: ValidationError };
 
@@ -97,6 +99,7 @@ export const UncontrolledForm = () => {
           />
           <p>Password strength</p>
         </div>
+        {/*<PasswordBar/>*/}
         <div className={S.formGroup}>
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
@@ -158,6 +161,9 @@ export const UncontrolledForm = () => {
           Submit
         </button>
       </form>
+      <NavLink className={'home'} to={PATH.PAGE_ROOT}>
+        Home
+      </NavLink>
     </div>
   );
 };
