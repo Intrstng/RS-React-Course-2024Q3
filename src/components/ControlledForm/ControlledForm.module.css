@@ -1,0 +1,125 @@
+.formContainer {
+    width: 300px;
+    padding: 1.5rem;
+    background-color: #ddd;
+    border-radius: 0.3rem;
+    box-shadow:
+            0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.formTitle {
+    font-family: Inter, sans-serif;
+    font-size: 1rem;
+    margin: 0 0 1rem;
+    color: rgba(47, 79, 79, 0.85);
+    letter-spacing: 0.02rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+    position: relative;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    opacity: 0.5;
+}
+
+.formGroup p {
+    font-size: 0.7rem;
+}
+
+.formInput {
+    width: 95%;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    outline: none;
+}
+
+.genderOptions {
+    display: flex;
+    align-items: center;
+}
+
+.genderOptions label {
+    margin-right: 1rem;
+}
+
+.formRadio {
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.formCheckbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.formCheckboxInput {
+    margin-right: 0.5rem;
+}
+
+.fileUpload {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.6rem;
+    cursor: pointer;
+    background-color: #5e68d0;
+    color: white;
+    transition: 0.25s all ease;
+}
+
+.fileUpload:hover {
+    background-color: rgba(5, 52, 163, 0.9);
+    opacity: 1;
+}
+
+.submitButton {
+    width: 9rem;
+    height: 2.5rem;
+    background-color: #5e68d0;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: 0.25s all ease;
+}
+
+.submitButton:hover {
+    background-color: rgba(5, 52, 163, 0.9);
+}
+
+.uploadFile {
+    margin-top: 0.5rem;
+    cursor: pointer;
+}
+
+.formSelect {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    appearance: none;
+    background: url('../../assets/down-arrow.svg') no-repeat right 0.75rem
+    center/15px 15px;
+    background-color: white;
+    cursor: pointer;
+    outline: none;
+    color: rgba(10, 10, 10, 0.8);
+}

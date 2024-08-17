@@ -49,7 +49,7 @@ export const userSchema = yup.object().shape({
     )
     .test(
       'fileFormat',
-      'Unsupported file format. Only images with extension .png and .jpeg files are allowed.',
+      'Only images with extension .png and .jpeg files are allowed.',
       (value: FileList) =>
         value[0] && SUPPORTED_IMAGE_FORMATS.includes(value[0].type)
     ),

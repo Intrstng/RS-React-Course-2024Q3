@@ -77,7 +77,7 @@ export const UncontrolledForm = () => {
   return (
     <div className={S.formContainer}>
       <h2 className={S.formTitle}>Registration Form</h2>
-      <form ref={formRef} onSubmit={formSubmitHandler}>
+      <form ref={formRef} onSubmit={formSubmitHandler} noValidate>
         <div className={S.formGroup}>
           <label htmlFor="name">Name</label>
           <input
