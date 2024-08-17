@@ -7,7 +7,7 @@ import S from './MainPage.module.css';
 
 export const MainPage = () => {
   const filledForms = useAppSelector<Form[]>(filledFormsSelector);
-  console.log(filledForms);
+
   return (
     <div className={S.container}>
       {filledForms.length > 0 ? (
