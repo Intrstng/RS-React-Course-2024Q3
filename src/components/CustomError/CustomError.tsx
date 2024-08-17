@@ -6,7 +6,5 @@ import S from './CustomError.module.css';
 type CustomErrorProps = FieldError | ValidationError | undefined;
 
 export const CustomError: FC<CustomErrorProps> = ({ error }) => {
-  return (
-    <p className={S.errorMessage}>{error.message}</p>
-  );
+  return <p className={S.errorMessage}>{error.message}</p>;
 };

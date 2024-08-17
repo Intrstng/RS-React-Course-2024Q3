@@ -44,7 +44,7 @@
   list-style-type: none;
   padding: 0.6rem;
   cursor: pointer;
-    transition: 0.25s all ease;
+  transition: 0.25s all ease;
 }
 
 .listItem:hover {

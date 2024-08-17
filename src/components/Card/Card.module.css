@@ -1,50 +1,50 @@
 .cardItem {
-    width: 230px;
-    height: auto;
-    padding: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    overflow: hidden;
-    border: 2px dashed grey;
-    border-radius: 1rem;
-    background-color: rgba(255, 255, 255, 0.70);
+  width: 230px;
+  height: auto;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+  border: 2px dashed grey;
+  border-radius: 1rem;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .cardItem h3 {
-    margin: 0 0 0.8rem;
-    padding: 0;
-    font-size: 1rem;
-    color: #5e68d0;
+  margin: 0 0 0.8rem;
+  padding: 0;
+  font-size: 1rem;
+  color: #5e68d0;
 }
 
 .cardItem span {
-    margin: 0;
-    padding: 0;
-    font-size: 1rem;
-    font-weight: bold;
-    color: rgba(212, 88, 0, 0.69);
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgba(212, 88, 0, 0.69);
 }
 
 .cardItem img {
-    margin: 0 0 0.8rem;
-    align-self: center;
-    width: 200px;
-    height: 165px;
-    object-fit: fill;
+  margin: 0 0 0.8rem;
+  align-self: center;
+  width: 200px;
+  height: 165px;
+  object-fit: fill;
 }
 
 .cardItem p {
-    margin: 0 0 0.2rem;
-    padding: 0;
-    font-size: 1rem;
-    font-weight: bold;
-    color: rgb(49, 111, 123);
-    letter-spacing: 0.02rem;
+  margin: 0 0 0.2rem;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgb(49, 111, 123);
+  letter-spacing: 0.02rem;
 }
 
 .active {
-    border: 3px solid #00ff00;
-    background-color: #FFFFFF;
+  border: 3px solid #00ff00;
+  background-color: #ffffff;
 }

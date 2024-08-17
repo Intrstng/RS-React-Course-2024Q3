@@ -6,7 +6,7 @@ import { CustomError } from '../CustomError/CustomError';
 interface UncontrolledSearchBarProps {
   countries: string[];
   error?: ValidationError | undefined;
-  resetError?: () => void
+  resetError?: () => void;
 }
 
 export const UncontrolledSearchBar: FC<UncontrolledSearchBarProps> = ({
@@ -27,7 +27,7 @@ export const UncontrolledSearchBar: FC<UncontrolledSearchBarProps> = ({
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCurrentSearch(e.target.value);
-    resetError && resetError();
+    resetError();
   };
 
   const onClickSelectItem = (e: React.MouseEvent<HTMLLIElement>) => {
@@ -63,7 +63,7 @@ export const UncontrolledSearchBar: FC<UncontrolledSearchBarProps> = ({
           ))}
         </ul>
       )}
-      {error && <CustomError error={error}/>}
+      {error && <CustomError error={error} />}
     </div>
   );
 };
