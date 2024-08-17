@@ -1,11 +1,11 @@
 import React, { FormEvent, useRef, useState } from 'react';
-import S from './UncontrolledForm.module.css';
+import S from './UncontrolledFormLive.module.css';
 import { useAppDispatch, useAppSelector } from '../../shared/hooks/hooks';
 import { countrySelector } from '../../redux/selectors/formSelectors';
 import { UncontrolledSearchBar } from '../UncontrolledSearchBar/UncontrolledSearchBar';
 import { userSchema } from '../../validations/userValidation';
-import { ValidationError } from 'yup';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { ValidationError } from 'yup';
 import { formActions } from '../../redux/slices/formSlice';
 import { PasswordStrengthMeter } from '../PasswordStrengthMeter/PasswordStrengthMeter';
 import { PATH } from '../../shared/consts';
@@ -13,7 +13,7 @@ import { CustomError } from '../CustomError/CustomError';
 
 export type FormValueError = { [index: string]: ValidationError };
 
-export const UncontrolledForm = () => {
+export const UncontrolledFormLive = () => {
   const countries = useAppSelector<string[]>(countrySelector);
   const dispatch = useAppDispatch();
   const [errors, setErrors] = useState<FormValueError>({});
@@ -22,7 +22,6 @@ export const UncontrolledForm = () => {
   const agreementRef = useRef<HTMLInputElement | null>(null);
   const imageRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
-  const [, setPassword] = useState<string | undefined>('');
 
   const formSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,6 +73,10 @@ export const UncontrolledForm = () => {
     }
   };
 
+  const resetInputCountryError = () => {
+    setErrors({ ...errors, country: undefined });
+  };
+
   return (
     <div className={S.formContainer}>
       <h2 className={S.formTitle}>Registration Form</h2>
@@ -86,6 +89,9 @@ export const UncontrolledForm = () => {
             name="name"
             className={S.formInput}
             autoComplete="name"
+            onChange={() => {
+              setErrors({ ...errors, name: undefined });
+            }}
           />
           {errors?.name && <CustomError error={errors.name} />}
         </div>
@@ -97,6 +103,9 @@ export const UncontrolledForm = () => {
             name="age"
             className={S.formInput}
             autoComplete="age"
+            onChange={() => {
+              setErrors({ ...errors, age: undefined });
+            }}
           />
           {errors?.age && <CustomError error={errors.age} />}
         </div>
@@ -108,6 +117,9 @@ export const UncontrolledForm = () => {
             name="email"
             className={S.formInput}
             autoComplete="email"
+            onChange={() => {
+              setErrors({ ...errors, email: undefined });
+            }}
           />
           {errors?.email && <CustomError error={errors.email} />}
         </div>
@@ -118,9 +130,11 @@ export const UncontrolledForm = () => {
             type="password"
             id="password"
             name="password"
+            autoComplete="password"
             className={S.formInput}
-            autoComplete="current-password"
-            onChange={() => setPassword(passwordRef?.current?.value)}
+            onChange={(e) => {
+              setErrors({ ...errors, password: undefined });
+            }}
           />
           {errors?.password && <CustomError error={errors.password} />}
         </div>
@@ -133,6 +147,9 @@ export const UncontrolledForm = () => {
             name="confirmPassword"
             className={S.formInput}
             autoComplete="confirmPassword"
+            onChange={() => {
+              setErrors({ ...errors, confirmPassword: undefined });
+            }}
           />
           {errors?.confirmPassword && (
             <CustomError error={errors.confirmPassword} />
@@ -148,6 +165,9 @@ export const UncontrolledForm = () => {
                 name="gender"
                 value="male"
                 className={S.formRadio}
+                onChange={() => {
+                  setErrors({ ...errors, gender: undefined });
+                }}
               />
               Male
             </label>
@@ -158,6 +178,9 @@ export const UncontrolledForm = () => {
                 name="gender"
                 value="female"
                 className={S.formRadio}
+                onChange={() => {
+                  setErrors({ ...errors, gender: undefined });
+                }}
               />
               Female
             </label>
@@ -172,6 +195,9 @@ export const UncontrolledForm = () => {
               name="agreement"
               ref={agreementRef}
               className={S.formCheckboxInput}
+              onChange={() => {
+                setErrors({ ...errors, agreement: undefined });
+              }}
             />
             I accept the Terms and Conditions
           </label>
@@ -185,10 +211,17 @@ export const UncontrolledForm = () => {
             name="image"
             ref={imageRef}
             className={S.uploadFile}
+            onChange={() => {
+              setErrors({ ...errors, image: undefined });
+            }}
           />
           {errors?.image && <CustomError error={errors.image} />}
         </div>
-        <UncontrolledSearchBar error={errors?.country} countries={countries} />
+        <UncontrolledSearchBar
+          error={errors?.country}
+          countries={countries}
+          resetError={resetInputCountryError}
+        />
         <button type="submit" className={S.submitButton}>
           Submit
         </button>

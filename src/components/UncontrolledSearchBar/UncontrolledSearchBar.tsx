@@ -27,7 +27,9 @@ export const UncontrolledSearchBar: FC<UncontrolledSearchBarProps> = ({
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCurrentSearch(e.target.value);
-    resetError();
+    if (resetError) {
+      resetError();
+    }
   };
 
   const onClickSelectItem = (e: React.MouseEvent<HTMLLIElement>) => {
