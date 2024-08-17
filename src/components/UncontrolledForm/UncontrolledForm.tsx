@@ -17,12 +17,12 @@ export const UncontrolledForm = () => {
   const countries = useAppSelector<string[]>(countrySelector);
   const dispatch = useAppDispatch();
   const [errors, setErrors] = useState<FormValueError>({});
+  const [, setPassword] = useState<string | undefined>('');
   const formRef = useRef<HTMLFormElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const agreementRef = useRef<HTMLInputElement | null>(null);
   const imageRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
-  const [, setPassword] = useState<string | undefined>('');
 
   const formSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -120,7 +120,7 @@ export const UncontrolledForm = () => {
             name="password"
             className={S.formInput}
             autoComplete="current-password"
-            onChange={() => setPassword(passwordRef?.current?.value)}
+            onChange={() => setPassword(passwordRef.current?.value)}
           />
           {errors?.password && <CustomError error={errors.password} />}
         </div>

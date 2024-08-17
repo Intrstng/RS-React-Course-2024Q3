@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { countries } from '../shared/consts';
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024;
 const SUPPORTED_IMAGE_FORMATS: string[] = ['image/jpeg', 'image/png'];
@@ -52,5 +53,8 @@ export const userSchema = yup.object().shape({
       (value: FileList) =>
         value[0] && SUPPORTED_IMAGE_FORMATS.includes(value[0].type)
     ),
-  country: yup.string().required('Country is required')
+  country: yup
+    .string()
+    .required('Country is required')
+    .oneOf(countries, 'Invalid country selected')
 });
