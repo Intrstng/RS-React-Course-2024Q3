@@ -26,7 +26,6 @@ export const ControlledForm = () => {
   });
 
   const countries = useAppSelector<string[]>(countrySelector);
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [password, setPassword] = useState<string>('');
