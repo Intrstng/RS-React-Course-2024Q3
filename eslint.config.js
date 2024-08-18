@@ -43,5 +43,7 @@ export default tseslint.config({
         "@typescript-eslint/no-explicit-any": "error",
         "no-undef": "error",
         "@typescript-eslint/no-unused-vars": "off",
+        "no-empty-pattern": 'off',
+        "@typescript-eslint/no-empty-object-type": "off",
     },
 });

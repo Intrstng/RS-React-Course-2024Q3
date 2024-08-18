@@ -1,17 +1,16 @@
-import React, { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import S from './UncontrolledFormLive.module.css';
-import { useAppDispatch, useAppSelector } from '../../shared/hooks/hooks';
-import { countrySelector } from '../../redux/selectors/formSelectors';
+import { useAppDispatch, useAppSelector } from '../../../shared/hooks/hooks';
+import { countrySelector } from '../../../redux/selectors/formSelectors';
 import { UncontrolledSearchBar } from '../UncontrolledSearchBar/UncontrolledSearchBar';
-import { userSchema } from '../../validations/userValidation';
+import { userSchema } from '../../../validations/userValidation';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ValidationError } from 'yup';
-import { formActions } from '../../redux/slices/formSlice';
+import { formActions } from '../../../redux/slices/formSlice';
 import { PasswordStrengthMeter } from '../PasswordStrengthMeter/PasswordStrengthMeter';
-import { PATH } from '../../shared/consts';
-import { CustomError } from '../CustomError/CustomError';
-
-export type FormValueError = { [index: string]: ValidationError };
+import { PATH } from '../../../shared/consts';
+import { CustomError } from '../../CustomError/CustomError';
+import { FormType, FormValueError } from '../../../shared/consts/types';
 
 export const UncontrolledFormLive = () => {
   const countries = useAppSelector<string[]>(countrySelector);
@@ -56,7 +55,7 @@ export const UncontrolledFormLive = () => {
           if (base64Image) {
             const formToPrint = {
               id: `${Date.now()}`,
-              type: 'uncontrolled',
+              type: 'uncontrolled' as FormType,
               data: { ...formDataUpdated, image: base64Image }
             };
             dispatch(formActions.addFilledForm({ form: formToPrint }));
@@ -80,7 +79,7 @@ export const UncontrolledFormLive = () => {
   return (
     <div className={S.formContainer}>
       <h2 className={S.formTitle}>Registration Form</h2>
-      <form ref={formRef} onSubmit={formSubmitHandler}>
+      <form ref={formRef} onSubmit={formSubmitHandler} noValidate>
         <div className={S.formGroup}>
           <label htmlFor="name">Name</label>
           <input
@@ -132,7 +131,7 @@ export const UncontrolledFormLive = () => {
             name="password"
             autoComplete="password"
             className={S.formInput}
-            onChange={(e) => {
+            onChange={() => {
               setErrors({ ...errors, password: undefined });
             }}
           />

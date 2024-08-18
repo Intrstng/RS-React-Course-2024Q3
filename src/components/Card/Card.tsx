@@ -1,19 +1,20 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Form } from '../../shared/consts';
 import S from './Card.module.css';
 
 import { useAppSelector } from '../../shared/hooks/hooks';
-import { isHighlightedSelector } from '../../redux/selectors/formSelectors';
-type CardProps = {
-  card: Form;
-  count: number;
-};
+import {
+  filledFormsSelector,
+  isHighlightedSelector
+} from '../../redux/selectors/formSelectors';
+import { CardProps } from '../../shared/consts/types';
 
-export const Card: FC<CardProps> = ({ card, count }: CardProps) => {
+export const Card: FC<CardProps> = ({ card, count }) => {
+  const filledForms = useAppSelector<Form[]>(filledFormsSelector);
   const isHighlighted = useAppSelector<boolean>(isHighlightedSelector);
   const { type, data } = card;
 
-  const cardItemStyles = `${S.cardItem} ${count === 0 && isHighlighted && S.active}`;
+  const cardItemStyles = `${S.cardItem} ${count === filledForms.length - 1 && isHighlighted && S.active}`;
 
   return (
     <div className={cardItemStyles}>

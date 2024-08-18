@@ -1,5 +1,5 @@
 import { AppRootState } from '../store';
-import { Form } from '../../shared/consts';
+import { Form } from '../../shared/consts/types';
 
 export const countrySelector = (state: AppRootState): string[] =>
   state.form.countries;

@@ -31,7 +31,7 @@
   margin: 0 0 0.8rem;
   align-self: center;
   width: 200px;
-  height: 165px;
+  height: 265px;
   object-fit: fill;
 }
 
@@ -42,6 +42,7 @@
   font-weight: bold;
   color: rgb(49, 111, 123);
   letter-spacing: 0.02rem;
+  white-space: pre;
 }
 
 .active {

@@ -1,50 +1,25 @@
-# React + TypeScript + Vite
+# Rolling Scopes School React Course 2024Q3
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## [React forms](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/forms.md)
 
-Currently, two official plugins are available:
+### How to start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Clone the repo - run command in CLI `git clone https://github.com/Intrstng/RS-React-Course-2024Q3.git`
 
-## Expanding the ESLint configuration
+2. Move to the root folder of the app - run command in CLI `cd RS-React-Course-2024Q3`
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+3. Install dependencies - run command in CLI `npm install`
 
-- Configure the top-level `parserOptions` property like this:
+4. Switch to the branch **forms** - run in CLI `git checkout forms`
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+5. Start the application - run command in CLI `npm run dev`
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+6. Start the application in browser by provided link in CLI
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
+## Script commands
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
-```
+1. Start **esLint** to run code analysis and verification for compliance with established rules - run command in CLI `npm run lint`
+
+2. Start **Prettier** to automatically format code - run command in CLI `npm run format:fix`
+
+3. **Husky** is configured to automatically start **esLint** and **Prettier** during `pre-commit` Git-operations

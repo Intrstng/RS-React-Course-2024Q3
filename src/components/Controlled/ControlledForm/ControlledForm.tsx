@@ -1,16 +1,16 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import S from './ControlledForm.module.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { PATH } from '../../shared/consts';
-import { CustomError } from '../CustomError/CustomError';
+import { PATH } from '../../../shared/consts';
+import { CustomError } from '../../CustomError/CustomError';
 import { Controller, useForm } from 'react-hook-form';
-import { HookFormData } from '../../shared/consts/types';
-import { formActions } from '../../redux/slices/formSlice';
-import { useAppDispatch, useAppSelector } from '../../shared/hooks/hooks';
-import { countrySelector } from '../../redux/selectors/formSelectors';
+import { FormType, HookFormData } from '../../../shared/consts/types';
+import { formActions } from '../../../redux/slices/formSlice';
+import { useAppDispatch, useAppSelector } from '../../../shared/hooks/hooks';
+import { countrySelector } from '../../../redux/selectors/formSelectors';
 import { ControlledSearchBar } from '../ControlledSearchBar/ControlledSearchBar';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { userSchema } from '../../validations/userValidation';
+import { userSchema } from '../../../validations/userValidation';
 import { ControlledPasswordStrengthMeter } from '../ControlledPasswordStrength/ControlledPasswordStrengthMeter';
 
 export const ControlledForm = () => {
@@ -18,7 +18,8 @@ export const ControlledForm = () => {
     register,
     handleSubmit,
     control,
-    formState: { errors, isValid }
+    reset,
+    formState: { errors }
   } = useForm<HookFormData>({
     mode: 'all',
     resolver: yupResolver(userSchema)
@@ -31,7 +32,6 @@ export const ControlledForm = () => {
   const [password, setPassword] = useState<string>('');
 
   const onSubmit = (data: HookFormData) => {
-    console.log(data);
     const reader = new FileReader();
     reader.readAsDataURL(data.image[0]);
 
@@ -40,7 +40,7 @@ export const ControlledForm = () => {
       if (base64Image) {
         const formToPrint = {
           id: `${Date.now()}`,
-          type: 'controlled',
+          type: 'controlled' as FormType,
           data: { ...data, image: base64Image }
         };
         dispatch(formActions.addFilledForm({ form: formToPrint }));
@@ -50,6 +50,7 @@ export const ControlledForm = () => {
         () => dispatch(formActions.toggleIsHighlighted({ flag: false })),
         2500
       );
+      reset();
       navigate('/');
     };
   };
@@ -182,9 +183,6 @@ export const ControlledForm = () => {
         <button type="submit" className={S.submitButton}>
           Submit
         </button>
-        {/*<button type="submit" className={S.submitButton} disabled={!isValid}>*/}
-        {/*  Submit*/}
-        {/*</button>*/}
       </form>
       <NavLink className={'home'} to={PATH.PAGE_ROOT}>
         Home

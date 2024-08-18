@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { countries } from '../../shared/consts/consts';
+import { countries } from '../../shared/consts';
 import { Form } from '../../shared/consts';
 
 const formSlice = createSlice({
@@ -11,7 +11,7 @@ const formSlice = createSlice({
   },
   reducers: {
     addFilledForm(state, action: PayloadAction<{ form: Form }>) {
-      state.filledForms.unshift(action.payload.form);
+      state.filledForms.push(action.payload.form);
     },
     toggleIsHighlighted(state, action: PayloadAction<{ flag: boolean }>) {
       state.isHighlighted = action.payload.flag;

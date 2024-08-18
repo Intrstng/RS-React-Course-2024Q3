@@ -1,8 +1,7 @@
-import React from 'react';
 import { filledFormsSelector } from '../../redux/selectors/formSelectors';
 import { useAppSelector } from '../../shared/hooks/hooks';
 import { Card } from '../Card/Card';
-import { Form } from '../../shared/consts';
+import { Form } from '../../shared/consts/types';
 import S from './MainPage.module.css';
 
 export const MainPage = () => {

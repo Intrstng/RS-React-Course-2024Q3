@@ -116,7 +116,7 @@
   border: 1px solid #ccc;
   border-radius: 0.25rem;
   appearance: none;
-  background: url('../../assets/down-arrow.svg') no-repeat right 0.75rem
+  background: url('../../../assets/down-arrow.svg') no-repeat right 0.75rem
     center/15px 15px;
   background-color: white;
   cursor: pointer;

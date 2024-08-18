@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import S from './ControlledPasswordStrengthMeter.module.css';
 
 type ControlledPasswordStrengthMeterProps = {
@@ -8,7 +8,7 @@ type ControlledPasswordStrengthMeterProps = {
 export const ControlledPasswordStrengthMeter: FC<
   ControlledPasswordStrengthMeterProps
 > = ({ password }) => {
-  const passStrengthMeterRef = useRef(null);
+  const passStrengthMeterRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const passStrengthMeter = passStrengthMeterRef.current as HTMLElement;
@@ -30,18 +30,17 @@ export const ControlledPasswordStrengthMeter: FC<
     };
 
     const selectStrengthMeterColor = (passStrength: number): string => {
-      let color: string;
       switch (passStrength) {
         case 1:
-          return (color = '#ff0000');
+          return '#ff0000';
         case 2:
-          return (color = '#ff7f47');
+          return '#ff7f47';
         case 3:
-          return (color = '#fff200');
+          return '#fff200';
         case 4:
-          return (color = '#00ff03');
+          return '#00ff03';
         default:
-          return (color = '#909090');
+          return '#909090';
       }
     };
 

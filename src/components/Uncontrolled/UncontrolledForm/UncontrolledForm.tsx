@@ -1,17 +1,16 @@
-import React, { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import S from './UncontrolledForm.module.css';
-import { useAppDispatch, useAppSelector } from '../../shared/hooks/hooks';
-import { countrySelector } from '../../redux/selectors/formSelectors';
+import { useAppDispatch, useAppSelector } from '../../../shared/hooks/hooks';
+import { countrySelector } from '../../../redux/selectors/formSelectors';
 import { UncontrolledSearchBar } from '../UncontrolledSearchBar/UncontrolledSearchBar';
-import { userSchema } from '../../validations/userValidation';
+import { userSchema } from '../../../validations/userValidation';
 import { ValidationError } from 'yup';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { formActions } from '../../redux/slices/formSlice';
+import { formActions } from '../../../redux/slices/formSlice';
 import { PasswordStrengthMeter } from '../PasswordStrengthMeter/PasswordStrengthMeter';
-import { PATH } from '../../shared/consts';
-import { CustomError } from '../CustomError/CustomError';
-
-export type FormValueError = { [index: string]: ValidationError };
+import { PATH } from '../../../shared/consts';
+import { CustomError } from '../../CustomError/CustomError';
+import { FormType, FormValueError } from '../../../shared/consts/types';
 
 export const UncontrolledForm = () => {
   const countries = useAppSelector<string[]>(countrySelector);
@@ -57,7 +56,7 @@ export const UncontrolledForm = () => {
           if (base64Image) {
             const formToPrint = {
               id: `${Date.now()}`,
-              type: 'uncontrolled',
+              type: 'uncontrolled' as FormType,
               data: { ...formDataUpdated, image: base64Image }
             };
             dispatch(formActions.addFilledForm({ form: formToPrint }));

@@ -1,24 +1,24 @@
-import React, { ChangeEvent, useState, forwardRef } from 'react';
-import S from './ControlledSearchBar.module.css';
+import React, { ChangeEvent, FC, useState } from 'react';
+import S from './UncontrolledSearchBar.module.css';
 import { ValidationError } from 'yup';
-import { CustomError } from '../CustomError/CustomError';
+import { CustomError } from '../../CustomError/CustomError';
 
-type ControlledSearchBarProps = {
+interface UncontrolledSearchBarProps {
   countries: string[];
-  error?: ValidationError | undefined;
+  error: ValidationError | undefined;
   resetError?: () => void;
-  onChange: (value: string) => void;
-  value: string;
-};
+}
 
-export const ControlledSearchBar = forwardRef<
-  HTMLInputElement,
-  ControlledSearchBarProps
->(({ error, countries, onChange, value }, ref) => {
+export const UncontrolledSearchBar: FC<UncontrolledSearchBarProps> = ({
+  error,
+  countries,
+  resetError
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [currentSearch, setCurrentSearch] = useState<string>('');
 
   const filteredCountries = countries.filter((country) =>
-    country.toLocaleLowerCase().startsWith(value.toLowerCase())
+    country.toLocaleLowerCase().startsWith(currentSearch.toLowerCase())
   );
 
   const onClickOpenMenu = () => {
@@ -26,16 +26,20 @@ export const ControlledSearchBar = forwardRef<
   };
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
+    setCurrentSearch(e.target.value);
+    if (resetError) {
+      resetError();
+    }
   };
 
   const onClickSelectItem = (e: React.MouseEvent<HTMLLIElement>) => {
     e.stopPropagation();
     setIsOpen(false);
-    if (e.currentTarget.textContent) {
-      onChange(e.currentTarget.textContent);
+    const target = e.target as HTMLLIElement;
+    if (target.textContent) {
+      setCurrentSearch(target.textContent);
     } else {
-      onChange('');
+      setCurrentSearch('');
     }
   };
 
@@ -43,18 +47,17 @@ export const ControlledSearchBar = forwardRef<
     <div className={S.searchBarGroup}>
       <label htmlFor="country">Country</label>
       <input
-        ref={ref}
         id="country"
         name="country"
         type="text"
         placeholder="Select country..."
-        value={value}
+        value={currentSearch}
         onClick={onClickOpenMenu}
         onChange={onChangeHandler}
         className={S.searchBarInput}
       />
 
-      {value.length > 0 && isOpen && (
+      {currentSearch.length > 0 && isOpen && (
         <ul className={S.listItems}>
           {filteredCountries.map((country, index) => (
             <li key={index} className={S.listItem} onClick={onClickSelectItem}>
@@ -66,4 +69,4 @@ export const ControlledSearchBar = forwardRef<
       {error && <CustomError error={error} />}
     </div>
   );
-});
+};
